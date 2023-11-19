@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import com.example.compose.rally.R
-import com.example.compose.rally.data.UserData
+import com.example.compose.rally.data.UserRepository
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
 
@@ -19,10 +19,10 @@ import com.example.compose.rally.ui.components.StatementBody
 fun AccountsScreen(
     onAccountClick: (String) -> Unit = {},
 ) {
-    val amountsTotal = remember { UserData.accounts.map { account -> account.balance }.sum() }
+    val amountsTotal = remember { UserRepository.accounts.map { account -> account.balance }.sum() }
     StatementBody(
         modifier = Modifier.semantics { contentDescription = "Accounts Screen" },
-        items = UserData.accounts,
+        items = UserRepository.accounts,
         amounts = { account -> account.balance },
         colors = { account -> account.color },
         amountsTotal = amountsTotal,
@@ -33,7 +33,7 @@ fun AccountsScreen(
                     onAccountClick(account.name)
                 },
                 name = account.name,
-                number = account.number,
+                number = account.cardNumber,
                 amount = account.balance,
                 color = account.color
             )
@@ -46,9 +46,9 @@ fun AccountsScreen(
  */
 @Composable
 fun SingleAccountScreen(
-    accountType: String? = UserData.accounts.first().name
+    accountType: String? = UserRepository.accounts.first().name
 ) {
-    val account = remember(accountType) { UserData.getAccount(accountType) }
+    val account = remember(accountType) { UserRepository.getAccount(accountType) }
     StatementBody(
         items = listOf(account),
         colors = { account.color },
@@ -58,7 +58,7 @@ fun SingleAccountScreen(
     ) { row ->
         AccountRow(
             name = row.name,
-            number = row.number,
+            number = row.cardNumber,
             amount = row.balance,
             color = row.color
         )

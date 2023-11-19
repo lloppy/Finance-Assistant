@@ -1,31 +1,9 @@
 package com.example.compose.rally.data
 
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 
-/* Hard-coded data for the Rally sample. */
-
-@Immutable
-data class Account(
-    val name: String,
-    val number: Int,
-    val balance: Float,
-    val color: Color
-)
-
-@Immutable
-data class Bill(
-    val name: String,
-    val due: String,
-    val amount: Float,
-    val color: Color
-)
-
-/**
- * Pretend repository for user's data.
- */
-object UserData {
-    val accounts: List<Account> = listOf(
+object UserRepository {
+    var accounts: List<Account> = listOf(
         Account(
             "Checking",
             1234,
@@ -51,7 +29,8 @@ object UserData {
             Color(0xFF37EFBA)
         )
     )
-    val bills: List<Bill> = listOf(
+
+    var bills: List<Bill> = listOf(
         Bill(
             "RedPay Credit",
             "Jan 29",
@@ -86,5 +65,13 @@ object UserData {
 
     fun getAccount(accountName: String?): Account {
         return accounts.first { it.name == accountName }
+    }
+
+    fun addAccount(account: Account) {
+        accounts = accounts + account
+    }
+
+    fun removeAccount(accountName: String) {
+        accounts = accounts.filterNot { it.name == accountName }
     }
 }

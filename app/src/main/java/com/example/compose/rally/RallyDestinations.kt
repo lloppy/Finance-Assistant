@@ -14,7 +14,7 @@ import androidx.navigation.navDeepLink
  * Contract for information needed on every Rally navigation destination
  */
 
-interface   RallyDestination {
+interface RallyDestination {
     val icon: ImageVector
     val route: String
 }

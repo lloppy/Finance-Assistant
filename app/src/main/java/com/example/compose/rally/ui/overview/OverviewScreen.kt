@@ -34,7 +34,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.R
-import com.example.compose.rally.data.UserData
+import com.example.compose.rally.data.UserRepository
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.RallyAlertDialog
@@ -210,19 +210,19 @@ private fun <T> OverViewDivider(
  */
 @Composable
 private fun AccountsCard(onClickSeeAll: () -> Unit, onAccountClick: (String) -> Unit) {
-    val amount = UserData.accounts.map { account -> account.balance }.sum()
+    val amount = UserRepository.accounts.map { account -> account.balance }.sum()
     OverviewScreenCard(
         title = stringResource(R.string.accounts),
         amount = amount,
         onClickSeeAll = onClickSeeAll,
-        data = UserData.accounts,
+        data = UserRepository.accounts,
         colors = { it.color },
         values = { it.balance }
     ) { account ->
         AccountRow(
             modifier = Modifier.clickable { onAccountClick(account.name) },
             name = account.name,
-            number = account.number,
+            number = account.cardNumber,
             amount = account.balance,
             color = account.color
         )
@@ -234,12 +234,12 @@ private fun AccountsCard(onClickSeeAll: () -> Unit, onAccountClick: (String) -> 
  */
 @Composable
 private fun BillsCard(onClickSeeAll: () -> Unit) {
-    val amount = UserData.bills.map { bill -> bill.amount }.sum()
+    val amount = UserRepository.bills.map { bill -> bill.amount }.sum()
     OverviewScreenCard(
         title = stringResource(R.string.bills),
         amount = amount,
         onClickSeeAll = onClickSeeAll,
-        data = UserData.bills,
+        data = UserRepository.bills,
         colors = { it.color },
         values = { it.amount }
     ) { bill ->
