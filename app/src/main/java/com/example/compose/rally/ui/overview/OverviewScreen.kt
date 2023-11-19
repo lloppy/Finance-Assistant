@@ -228,7 +228,6 @@ private fun AccountsCard(onClickSeeAll: () -> Unit, onAccountClick: (String) -> 
         )
     }
 }
-
 /**
  * The Bills card within the Rally Overview screen.
  */

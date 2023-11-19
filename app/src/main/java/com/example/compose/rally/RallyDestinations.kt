@@ -2,6 +2,7 @@ package com.example.compose.rally
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AttachMoney
+import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Money
 import androidx.compose.material.icons.filled.MoneyOff
 import androidx.compose.material.icons.filled.PieChart
@@ -37,6 +38,11 @@ object Bills : RallyDestination {
     override val route = "bills"
 }
 
+object ChatGPT : RallyDestination {
+    override val icon = Icons.Filled.Chat
+    override val route = "chatGPT"
+}
+
 object SingleAccount : RallyDestination {
     // Added for simplicity, this icon will not in fact be used, as SingleAccount isn't
     // part of the RallyTabRow selection
@@ -53,4 +59,4 @@ object SingleAccount : RallyDestination {
 }
 
 // Screens to be displayed in the top RallyTabRow
-val rallyTabRowScreens = listOf(Overview, Accounts, Bills)
+val rallyTabRowScreens = listOf(Overview, Accounts, Bills, ChatGPT)

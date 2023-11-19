@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.example.compose.rally.ui.accounts.AccountsScreen
 import com.example.compose.rally.ui.accounts.SingleAccountScreen
 import com.example.compose.rally.ui.bills.BillsScreen
+import com.example.compose.rally.ui.chat.ChatGPTScreen
 import com.example.compose.rally.ui.overview.OverviewScreen
 
 @Composable
@@ -43,6 +44,9 @@ fun RallyNavHost(
         }
         composable(route = Bills.route) {
             BillsScreen()
+        }
+        composable(route = ChatGPT.route){
+            ChatGPTScreen()
         }
         composable(
             route = SingleAccount.routeWithArgs,
