@@ -8,7 +8,7 @@ data class Account(
     val name: String,
     val cardNumber: Int,
     val balance: Float,
-    val color: Color  = listColors.get(1)// изменить тут
+    val color: Color = listColors[1]// изменить тут
 )
 
 val listColors = listOf<Color>(
