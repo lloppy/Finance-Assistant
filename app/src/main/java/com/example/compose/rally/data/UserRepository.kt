@@ -27,6 +27,12 @@ object UserRepository {
             3456,
             253f,
             Color(0xFF37EFBA)
+        ),
+        Account(
+            "add_account",
+            3456,
+            253f,
+            Color(0xFF37EFBA)
         )
     )
 
@@ -70,6 +76,7 @@ object UserRepository {
     fun addAccount(account: Account) {
         accounts = accounts + account
     }
+
 
     fun removeAccount(accountName: String) {
         accounts = accounts.filterNot { it.name == accountName }

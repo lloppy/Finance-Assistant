@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,16 +30,5 @@
                     android:scheme="rally" />
             </intent-filter>
         </activity>
-
-        <receiver
-            android:name="com.example.compose.rally.widget.MyReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/my_app_widget_info" />
-        </receiver>
     </application>
 </manifest>
