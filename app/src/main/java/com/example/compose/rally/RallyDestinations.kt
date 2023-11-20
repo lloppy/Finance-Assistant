@@ -60,8 +60,6 @@ object AddAccount : RallyDestination {
 }
 
 object SingleAccount : RallyDestination {
-    // Added for simplicity, this icon will not in fact be used, as SingleAccount isn't
-    // part of the RallyTabRow selection
     override val icon = Icons.Filled.Money
     override val route = "single_account"
     const val accountTypeArg = "account_type"

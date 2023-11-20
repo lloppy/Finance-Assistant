@@ -1,6 +1,8 @@
 package com.example.compose.rally.ui.accounts
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -8,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -47,13 +50,18 @@ fun AccountsScreen(
             )
         }
     )
-    FloatingActionButton(
-        onClick = { onAddAccountClick("add_account") },
-        modifier = Modifier
-            .padding(16.dp)
-            .semantics { contentDescription = "Add Account" }
-    ) {
-        Icon(imageVector = Icons.Default.Add, contentDescription = "Add Account")
+    Box(modifier = Modifier.fillMaxSize()) {
+
+        FloatingActionButton(
+            onClick = { onAddAccountClick("add_account") },
+            modifier = Modifier
+                .padding(16.dp)
+                .semantics { contentDescription = "Add Account" }
+                .align(alignment = Alignment.BottomEnd)
+
+        ) {
+            Icon(imageVector = Icons.Default.Add, contentDescription = "Add Account")
+        }
     }
 }
 

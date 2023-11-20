@@ -3,6 +3,7 @@ package com.example.compose.rally
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -13,6 +14,7 @@ import com.example.compose.rally.ui.accounts.AddAccountScreen
 import com.example.compose.rally.ui.accounts.SingleAccountScreen
 import com.example.compose.rally.ui.bills.BillsScreen
 import com.example.compose.rally.ui.chat.ChatGPTScreen
+import com.example.compose.rally.ui.chat.ChatViewModel
 import com.example.compose.rally.ui.overview.OverviewScreen
 
 @Composable
@@ -36,7 +38,6 @@ fun RallyNavHost(
                 onAccountClick = { accountType ->
                     navController.navigateToSingleAccount(accountType)
                 }
-
             )
         }
         composable(route = Accounts.route) {
@@ -56,7 +57,8 @@ fun RallyNavHost(
             BillsScreen()
         }
         composable(route = ChatGPT.route) {
-            ChatGPTScreen()
+            val chatViewModel = viewModel<ChatViewModel>()
+            ChatGPTScreen(chatViewModel)
         }
         composable(
             route = SingleAccount.routeWithArgs,
