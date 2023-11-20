@@ -7,4 +7,12 @@
     <string name="bills">Bills</string>
     <string name="sort">Sort</string>
     <string name="see_all">SEE ALL</string>
+    <string name="add_account">add_account</string>
+    <string name="account_name">Account name</string>
+    <string name="save">Save account</string>
+    <string name="card_number">Сard number</string>
+    <string name="balance">Balance</string>
+    <string name="phone_number">Phone number</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>

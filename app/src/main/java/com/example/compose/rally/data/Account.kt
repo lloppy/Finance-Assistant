@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 
 @Immutable
 data class Account(
-    val name: String,
+    var name: String,
     val cardNumber: Int,
     val balance: Float,
     val color: Color = listColors[1]// изменить тут
