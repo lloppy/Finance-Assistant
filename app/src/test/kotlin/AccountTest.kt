@@ -15,7 +15,7 @@ class AccountTest {
         )
 
       // Uncomment this!
-      //  val account = Account("Buy coffee", 1234, 1000)
-      //  assertTrue(listColors.contains(account.color))
+        val account = Account("Buy coffee", 1234, 1000f)
+        assertTrue(listColors.contains(account.color))
     }
 }

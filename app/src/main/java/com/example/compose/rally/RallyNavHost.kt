@@ -16,6 +16,7 @@ import com.example.compose.rally.ui.bills.BillsScreen
 import com.example.compose.rally.ui.chat.ChatGPTScreen
 import com.example.compose.rally.ui.chat.ChatViewModel
 import com.example.compose.rally.ui.overview.OverviewScreen
+import com.example.compose.rally.ui.settings.SettingsScreen
 
 @Composable
 fun RallyNavHost(
@@ -55,6 +56,9 @@ fun RallyNavHost(
         }
         composable(route = Bills.route) {
             BillsScreen()
+        }
+        composable(route = Settings.route) {
+            SettingsScreen()
         }
         composable(route = ChatGPT.route) {
             val chatViewModel = viewModel<ChatViewModel>()
