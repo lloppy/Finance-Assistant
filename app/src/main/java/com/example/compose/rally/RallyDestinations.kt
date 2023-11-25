@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Money
 import androidx.compose.material.icons.filled.MoneyOff
 import androidx.compose.material.icons.filled.PieChart
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -46,6 +47,11 @@ object ChatGPT : RallyDestination {
     override val route = "chatGPT"
 }
 
+object Settings : RallyDestination {
+    override val icon = Icons.Filled.Settings
+    override val route = "settings"
+}
+
 object AddAccount : RallyDestination {
     override val icon = Icons.Filled.Money
     override val route = "add_account"
@@ -73,4 +79,4 @@ object SingleAccount : RallyDestination {
 }
 
 // Screens to be displayed in the top RallyTabRow
-val rallyTabRowScreens = listOf(Overview, Accounts, Bills, ChatGPT)
+val rallyTabRowScreens = listOf(Overview, Accounts, Bills, ChatGPT, Settings)
