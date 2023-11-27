@@ -15,4 +15,6 @@
     <string name="phone_number">Phone number</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="content_desc_toggle_password_visibility">content_desc_toggle_password_visibility</string>
+    <string name="pin">pin</string>
 </resources>

@@ -110,6 +110,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
 
+    // biometric fingerprint
+    implementation "androidx.biometric:biometric-ktx:1.2.0-alpha05"
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
