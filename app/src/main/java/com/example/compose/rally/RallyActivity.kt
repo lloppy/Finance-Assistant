@@ -2,16 +2,13 @@ package com.example.compose.rally
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Colors
 import androidx.compose.material.Scaffold
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -27,11 +24,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -39,7 +33,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.compose.rally.ui.authentication.AuthenticationScreen
 import com.example.compose.rally.ui.components.RallyTabRow
 import com.example.compose.rally.ui.theme.RallyTheme
-import java.net.PasswordAuthentication
 
 class RallyActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +57,11 @@ fun RallyAuthenticationWrapper() {
                     isAuthenticated = true
                 },
                 onAuthenticationFailed = {
-                    Toast.makeText(context as FragmentActivity, "Authentication Failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context as FragmentActivity,
+                        "Authentication Failed",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     isAuthenticated = false
                 }
             )
@@ -146,7 +143,7 @@ fun PasswordAuthentication(
                 showError = false
             },
 
-            label = { Text(text = "Enter your password", color = Color.White)},
+            label = { Text(text = "Enter your password", color = Color.White) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedTextColor = Color.White,
                 unfocusedTextColor = Color.White,
