@@ -17,8 +17,7 @@ object UserRepository {
             "add_account",
             3456,
             253f,
-            "Default",
-            Color(0xFF37EFBA)
+            "Default"
         )
     )
 
