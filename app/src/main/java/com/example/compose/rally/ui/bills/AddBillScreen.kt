@@ -1,7 +1,9 @@
-package com.example.compose.rally.ui.accounts
+package com.example.compose.rally.ui.bills
 
+import android.os.Build
 import android.util.Log
 import android.widget.CalendarView
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,15 +19,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,39 +30,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.compose.rally.R
-import com.example.compose.rally.data.Account
+import com.example.compose.rally.data.Bill
 import com.example.compose.rally.data.UserRepository
-import com.example.compose.rally.ui.theme.RallyTheme
+import java.time.LocalDateTime
 
-/**
- * Composable for the screen where a user can manually add a new account.
- */
-@Composable
-@Preview
-fun AddAccountScreenPreview() {
-    RallyTheme {
-        Surface {
-            AddAccountScreen()
-        }
-    }
-}
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun AddAccountScreen(
-    accountType: String? = UserRepository.accounts.first().name,
-    onSaveClick: (Account) -> Unit = {},
- //   onBackClick: () -> Unit = {},
+fun AddBillScreen(
+    billType: String? = UserRepository.bills.first().name,
+    onSaveClick: (Bill) -> Unit = {},
+//    onBackClick: () -> Unit = {},
 ) {
-    val account = remember(accountType) { UserRepository.getAccount(accountType) }
-    Log.e("route", "account name is ${account.name}")
+    val bill = remember(billType) { UserRepository.getBill(billType) }
+    Log.e("route", "bill name is ${bill.name}")
 
-    var selectedCategory by remember { mutableStateOf(UserRepository.accountCategories.first()) }
-
-    var accountName by remember { mutableStateOf(TextFieldValue()) }
+    var selectedCategory by remember { mutableStateOf(UserRepository.billCategories.first()) }
+    var billName by remember { mutableStateOf(TextFieldValue()) }
+    var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
     var cardNumber by remember { mutableStateOf(TextFieldValue()) }
     var balance by remember { mutableStateOf(TextFieldValue()) }
 
@@ -76,11 +59,12 @@ fun AddAccountScreen(
             .fillMaxSize()
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
+
     ) {
 //        TopAppBar(
 //            title = {
 //                Text(
-//                    text = stringResource(id = R.string.add_account),
+//                    text = stringResource(id = R.string.add_bill),
 //                    style = MaterialTheme.typography.h6
 //                )
 //            },
@@ -98,10 +82,11 @@ fun AddAccountScreen(
 //
 //        Spacer(modifier = Modifier.height(16.dp))
 
+
         TextField(
-            value = accountName,
-            onValueChange = { accountName = it },
-            label = { Text(stringResource(id = R.string.account_name)) },
+            value = billName,
+            onValueChange = { billName = it },
+            label = { Text(stringResource(id = R.string.bill_name)) },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text
             ),
@@ -135,7 +120,7 @@ fun AddAccountScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         CategoryDropdown(
-            categories = UserRepository.accountCategories,
+            categories = UserRepository.billCategories,
             selectedCategory = selectedCategory,
             onCategorySelected = { selectedCategory = it }
         )
@@ -147,20 +132,34 @@ fun AddAccountScreen(
         Button(
             onClick = {
                 onSaveClick(
-                    Account(
-                        name = accountName.text,
-                        cardNumber = cardNumber.text.toInt(),
-                        balance = balance.text.toFloat(),
-                        category = selectedCategory
+                    Bill(
+                        name = billName.text,
+                        date = selectedDate,
+                        category = selectedCategory,
+                        amount = balance.text.toFloat()
                     )
                 )
             },
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Text(text = stringResource(id = R.string.save_account))
+            Text(text = stringResource(id = R.string.save_bill))
         }
     }
+}
+
+
+@Composable
+fun showDatePicker() {
+    AndroidView(
+        { CalendarView(it) },
+        modifier = Modifier.wrapContentWidth(),
+        update = { views ->
+            views.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
+                Log.e("datePick", "$calendarView, $year, $month, $dayOfMonth")
+            }
+        }
+    )
 }
 
 @Composable
@@ -200,17 +199,4 @@ fun CategoryDropdown(
             }
         }
     }
-}
-
-@Composable
-fun showDatePicker() {
-    AndroidView(
-        { CalendarView(it) },
-        modifier = Modifier.wrapContentWidth(),
-        update = { views ->
-            views.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
-                Log.e("datePick", "$calendarView, $year, $month, $dayOfMonth")
-            }
-        }
-    )
 }

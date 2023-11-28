@@ -1,8 +1,11 @@
 package com.example.compose.rally
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -12,12 +15,15 @@ import com.example.compose.rally.data.UserRepository
 import com.example.compose.rally.ui.accounts.AccountsScreen
 import com.example.compose.rally.ui.accounts.AddAccountScreen
 import com.example.compose.rally.ui.accounts.SingleAccountScreen
+import com.example.compose.rally.ui.bills.AddBillScreen
 import com.example.compose.rally.ui.bills.BillsScreen
+import com.example.compose.rally.ui.bills.SingleBillScreen
 import com.example.compose.rally.ui.chat.ChatGPTScreen
 import com.example.compose.rally.ui.chat.ChatViewModel
 import com.example.compose.rally.ui.overview.OverviewScreen
 import com.example.compose.rally.ui.settings.SettingsScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RallyNavHost(
     navController: NavHostController,
@@ -38,6 +44,9 @@ fun RallyNavHost(
                 },
                 onAccountClick = { accountType ->
                     navController.navigateToSingleAccount(accountType)
+                },
+                onBillClick = { billType ->
+                    navController.navigateToSingleBill(billType)
                 }
             )
         }
@@ -55,7 +64,16 @@ fun RallyNavHost(
 
         }
         composable(route = Bills.route) {
-            BillsScreen()
+            BillsScreen(
+                onBillClick = { billType ->
+                    navController.navigateToSingleBill(billType)
+                    Log.e("route", "billType is $billType")
+                },
+                onAddBillClick = {
+                    navController.navigateToAddBill(AddBill.route)
+                    Log.e("route", "AddBill route is ${AddBill.route}")
+                }
+            )
         }
         composable(route = Settings.route) {
             SettingsScreen()
@@ -80,11 +98,40 @@ fun RallyNavHost(
         ) { navBackStackEntry ->
             val accountType =
                 navBackStackEntry.arguments?.getString(AddAccount.accountTypeArg)
+
             AddAccountScreen(
                 accountType,
+
                 onSaveClick = { account ->
                     UserRepository.addAccount(account)
                     navController.navigateSingleTopTo(Accounts.route)
+                }
+            )
+        }
+
+        composable(
+            route = SingleBill.routeWithArgs,
+            arguments = SingleBill.arguments,
+            deepLinks = SingleBill.deepLinks
+        ) { navBackStackEntry ->
+            val billType =
+                navBackStackEntry.arguments?.getString(SingleBill.billTypeArg)
+            SingleBillScreen(billType)
+        }
+        composable(
+            route = AddBill.routeWithArgs,
+            arguments = AddBill.arguments,
+            deepLinks = AddBill.deepLinks
+        ) { navBackStackEntry ->
+            val billType =
+                navBackStackEntry.arguments?.getString(AddBill.billTypeArg)
+
+            AddBillScreen(
+                billType,
+
+                onSaveClick = { bill ->
+                    UserRepository.addBill(bill)
+                    navController.navigateSingleTopTo(Bills.route)
                 }
             )
         }
@@ -115,4 +162,13 @@ private fun NavHostController.navigateToSingleAccount(accountType: String) {
 private fun NavHostController.navigateToAddAccount(accountType: String) {
     this.navigateSingleTopTo("${AddAccount.route}/$accountType")
     Log.e("route", "navigateToAddAccount is ${AddAccount.route}/$accountType ")
+}
+
+private fun NavHostController.navigateToSingleBill(billType: String) {
+    this.navigateSingleTopTo("${SingleBill.route}/$billType")
+}
+
+private fun NavHostController.navigateToAddBill(billType: String) {
+    this.navigateSingleTopTo("${AddBill.route}/$billType")
+    Log.e("route", "navigateToAddBill is ${AddBill.route}/$billType ")
 }

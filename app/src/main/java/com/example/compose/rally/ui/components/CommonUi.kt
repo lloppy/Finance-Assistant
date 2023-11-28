@@ -28,6 +28,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.R
 import java.text.DecimalFormat
+import java.time.LocalDateTime
 
 /**
  * A row representing the basic information of an Account.
@@ -38,6 +39,7 @@ fun AccountRow(
     name: String,
     number: Int,
     amount: Float,
+    category: String,
     color: Color
 ) {
     BaseRow(
@@ -45,6 +47,7 @@ fun AccountRow(
         color = color,
         title = name,
         subtitle = stringResource(R.string.account_redacted) + AccountDecimalFormat.format(number),
+        category = category,
         amount = amount,
         negative = false
     )
@@ -54,11 +57,20 @@ fun AccountRow(
  * A row representing the basic information of a Bill.
  */
 @Composable
-fun BillRow(name: String, due: String, amount: Float, color: Color) {
+fun BillRow(
+    modifier: Modifier = Modifier,
+    name: String,
+    date: LocalDateTime,
+    category: String,
+    amount: Float,
+    color: Color
+) {
     BaseRow(
+        modifier = modifier,
         color = color,
         title = name,
-        subtitle = "Due $due",
+        subtitle = "Date $date",
+        category = category,
         amount = amount,
         negative = true
     )
@@ -70,6 +82,7 @@ private fun BaseRow(
     color: Color,
     title: String,
     subtitle: String,
+    category: String,
     amount: Float,
     negative: Boolean
 ) {
@@ -91,7 +104,7 @@ private fun BaseRow(
         )
         Spacer(Modifier.width(12.dp))
         Column(Modifier) {
-            Text(text = title, style = typography.body1)
+            Text(text = "$category: $title", style = typography.body1)
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                 Text(text = subtitle, style = typography.subtitle1)
             }

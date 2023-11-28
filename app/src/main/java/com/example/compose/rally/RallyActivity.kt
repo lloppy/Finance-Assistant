@@ -1,8 +1,10 @@
 package com.example.compose.rally
 
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,11 +32,13 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.rally.data.UserRepository
 import com.example.compose.rally.ui.authentication.AuthenticationScreen
 import com.example.compose.rally.ui.components.RallyTabRow
 import com.example.compose.rally.ui.theme.RallyTheme
 
 class RallyActivity : FragmentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -43,6 +47,7 @@ class RallyActivity : FragmentActivity() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RallyAuthenticationWrapper() {
     RallyTheme {
@@ -74,6 +79,7 @@ fun RallyAuthenticationWrapper() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RallyApp() {
     RallyTheme {
@@ -82,6 +88,8 @@ fun RallyApp() {
         val currentDestination = currentBackStack?.destination
         val currentScreen =
             rallyTabRowScreens.find { it.route == currentDestination?.route } ?: Overview
+
+       // UserRepository.readFile(context)
 
         Scaffold(
             topBar = {
