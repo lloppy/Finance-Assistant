@@ -45,6 +45,7 @@ fun AccountsScreen(
                 },
                 name = account.name,
                 number = account.cardNumber,
+                category = account.category,
                 amount = account.balance,
                 color = account.color
             )
@@ -83,6 +84,7 @@ fun SingleAccountScreen(
         AccountRow(
             name = row.name,
             number = row.cardNumber,
+            category = row.category,
             amount = row.balance,
             color = row.color
         )

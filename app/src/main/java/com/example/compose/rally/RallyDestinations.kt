@@ -65,6 +65,18 @@ object AddAccount : RallyDestination {
     )
 }
 
+object AddBill : RallyDestination {
+    override val icon = Icons.Filled.MoneyOff
+    override val route = "add_bill"
+    const val billTypeArg = "bill_type"
+    val routeWithArgs = "$route/{$billTypeArg}"
+    val arguments = listOf(
+        navArgument(billTypeArg) { type = NavType.StringType }
+    )
+    val deepLinks = listOf(
+        navDeepLink { uriPattern = "rally://$route/{$billTypeArg}" }
+    )
+}
 object SingleAccount : RallyDestination {
     override val icon = Icons.Filled.Money
     override val route = "single_account"
@@ -75,6 +87,19 @@ object SingleAccount : RallyDestination {
     )
     val deepLinks = listOf(
         navDeepLink { uriPattern = "rally://$route/{$accountTypeArg}" }
+    )
+}
+
+object SingleBill : RallyDestination {
+    override val icon = Icons.Filled.MoneyOff
+    override val route = "single_bill"
+    const val billTypeArg = "bill_type"
+    val routeWithArgs = "$route/{$billTypeArg}"
+    val arguments = listOf(
+        navArgument(billTypeArg) { type = NavType.StringType }
+    )
+    val deepLinks = listOf(
+        navDeepLink { uriPattern = "rally://$route/{$billTypeArg}" }
     )
 }
 

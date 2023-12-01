@@ -9,10 +9,17 @@
     <string name="see_all">SEE ALL</string>
     <string name="add_account">add_account</string>
     <string name="account_name">Account name</string>
-    <string name="save">Save account</string>
+    <string name="save_account">Save account</string>
+    <string name="save_bill">Save bill</string>
     <string name="card_number">Сard number</string>
     <string name="balance">Balance</string>
     <string name="phone_number">Phone number</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="content_desc_toggle_password_visibility">content_desc_toggle_password_visibility</string>
+    <string name="pin">pin</string>
+    <string name="new_category">new_category</string>
+    <string name="category">category</string>
+    <string name="add_bill">add_bill</string>
+    <string name="bill_name">bill_name</string>
 </resources>

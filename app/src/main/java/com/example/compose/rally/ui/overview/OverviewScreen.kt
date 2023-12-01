@@ -1,5 +1,7 @@
 package com.example.compose.rally.ui.overview
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -42,11 +44,13 @@ import com.example.compose.rally.ui.components.RallyDivider
 import com.example.compose.rally.ui.components.formatAmount
 import java.util.Locale
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun OverviewScreen(
     onClickSeeAllAccounts: () -> Unit = {},
     onClickSeeAllBills: () -> Unit = {},
     onAccountClick: (String) -> Unit = {},
+    onBillClick: (String) -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -62,7 +66,8 @@ fun OverviewScreen(
         )
         Spacer(Modifier.height(RallyDefaultPadding))
         BillsCard(
-            onClickSeeAll = onClickSeeAllBills
+            onClickSeeAll = onClickSeeAllBills,
+            onBillClick = onBillClick
         )
     }
 }
@@ -223,6 +228,7 @@ private fun AccountsCard(onClickSeeAll: () -> Unit, onAccountClick: (String) -> 
             modifier = Modifier.clickable { onAccountClick(account.name) },
             name = account.name,
             number = account.cardNumber,
+            category = account.category,
             amount = account.balance,
             color = account.color
         )
@@ -231,8 +237,9 @@ private fun AccountsCard(onClickSeeAll: () -> Unit, onAccountClick: (String) -> 
 /**
  * The Bills card within the Rally Overview screen.
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-private fun BillsCard(onClickSeeAll: () -> Unit) {
+private fun BillsCard(onClickSeeAll: () -> Unit, onBillClick: (String) -> Unit) {
     val amount = UserRepository.bills.map { bill -> bill.amount }.sum()
     OverviewScreenCard(
         title = stringResource(R.string.bills),
@@ -243,8 +250,10 @@ private fun BillsCard(onClickSeeAll: () -> Unit) {
         values = { it.amount }
     ) { bill ->
         BillRow(
+            modifier = Modifier.clickable { onBillClick(bill.name) },
             name = bill.name,
-            due = bill.due,
+            date = bill.date,
+            category = bill.category,
             amount = bill.amount,
             color = bill.color
         )

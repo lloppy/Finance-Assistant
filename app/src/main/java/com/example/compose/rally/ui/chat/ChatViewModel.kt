@@ -12,8 +12,8 @@ class ChatViewModel : ViewModel() {
         messages.add(Message(text, "user"))
         if (isUser) {
             viewModelScope.launch {
-//                val response = ApiService.openAIApi.generateResponse(OpenAIRequestBody(messages = messages))
-//                messages.add(response.choices.first().message)
+                val response = ApiService.openAIApi.generateResponse(OpenAIRequestBody(messages = messages))
+                messages.add(response.choices.first().message)
             }
         }
     }
