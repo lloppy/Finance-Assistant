@@ -69,7 +69,7 @@ fun BillRow(
         modifier = modifier,
         color = color,
         title = name,
-        subtitle = "Date $date",
+        subtitle = "Дата $date",
         category = category,
         amount = amount,
         negative = true
@@ -86,14 +86,14 @@ private fun BaseRow(
     amount: Float,
     negative: Boolean
 ) {
-    val dollarSign = if (negative) "–$ " else "$ "
+    val dollarSign = if (negative) "–₽ " else "₽ "
     val formattedAmount = formatAmount(amount)
     Row(
         modifier = modifier
             .height(68.dp)
             .clearAndSetSemantics {
                 contentDescription =
-                    "$title account ending in ${subtitle.takeLast(4)}, current balance $dollarSign$formattedAmount"
+                    "$title счёт заканчивающийся на ${subtitle.takeLast(4)}, текущий баланс $dollarSign$formattedAmount"
             },
         verticalAlignment = Alignment.CenterVertically
     ) {

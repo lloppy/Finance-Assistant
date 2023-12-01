@@ -64,7 +64,7 @@ fun RallyAuthenticationWrapper() {
                 onAuthenticationFailed = {
                     Toast.makeText(
                         context as FragmentActivity,
-                        "Authentication Failed",
+                        "Аутентификация не удалась",
                         Toast.LENGTH_SHORT
                     ).show()
                     isAuthenticated = false
@@ -151,7 +151,7 @@ fun PasswordAuthentication(
                 showError = false
             },
 
-            label = { Text(text = "Enter your password", color = Color.White) },
+            label = { Text(text = "Введите свой пароль", color = Color.White) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedTextColor = Color.White,
                 unfocusedTextColor = Color.White,

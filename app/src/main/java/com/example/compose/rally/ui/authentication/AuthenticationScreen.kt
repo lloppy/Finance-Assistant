@@ -46,9 +46,9 @@ fun FingerprintAuthentication(
     val context = LocalContext.current
     val executor = ContextCompat.getMainExecutor(context)
     val biometricPromptInfo = BiometricPrompt.PromptInfo.Builder()
-        .setTitle("Fingerprint Authentication")
-        .setSubtitle("Place your finger on the sensor")
-        .setNegativeButtonText("Cancel")
+        .setTitle("Аутентификация по отпечатку пальца")
+        .setSubtitle("Поместите палец на датчик")
+        .setNegativeButtonText("Отмена")
         .build()
 
     DisposableEffect(context) {

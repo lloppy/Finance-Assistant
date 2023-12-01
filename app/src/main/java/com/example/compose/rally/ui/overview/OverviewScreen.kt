@@ -56,7 +56,7 @@ fun OverviewScreen(
         modifier = Modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
-            .semantics { contentDescription = "Overview Screen" }
+            .semantics { contentDescription = "Обзор" }
     ) {
         AlertCard()
         Spacer(Modifier.height(RallyDefaultPadding))
@@ -78,7 +78,7 @@ fun OverviewScreen(
 @Composable
 private fun AlertCard() {
     var showDialog by remember { mutableStateOf(false) }
-    val alertMessage = "Heads up, you've used up 90% of your Shopping budget for this month."
+    val alertMessage = "Предупреждение: вы израсходовали 90% вашего бюджета на покупки в этом месяце."
 
     if (showDialog) {
         RallyAlertDialog(
@@ -86,7 +86,7 @@ private fun AlertCard() {
                 showDialog = false
             },
             bodyText = alertMessage,
-            buttonText = "Dismiss".uppercase(Locale.getDefault())
+            buttonText = "Закрыть".uppercase(Locale.getDefault())
         )
     }
     Card {
@@ -111,7 +111,7 @@ private fun AlertHeader(onClickSeeAll: () -> Unit) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Alerts",
+            text = "Оповещения",
             style = MaterialTheme.typography.subtitle2,
             modifier = Modifier.align(Alignment.CenterVertically)
         )
@@ -121,7 +121,7 @@ private fun AlertHeader(onClickSeeAll: () -> Unit) {
             modifier = Modifier.align(Alignment.CenterVertically)
         ) {
             Text(
-                text = "SEE ALL",
+                text = "ПОКАЗАТЬ ВСЕ",
                 style = MaterialTheme.typography.button,
             )
         }
@@ -173,7 +173,7 @@ private fun <T> OverviewScreenCard(
         Column {
             Column(Modifier.padding(RallyDefaultPadding)) {
                 Text(text = title, style = MaterialTheme.typography.subtitle2)
-                val amountText = "$" + formatAmount(
+                val amountText = "₽" + formatAmount(
                     amount
                 )
                 Text(text = amountText, style = MaterialTheme.typography.h2)
@@ -183,7 +183,7 @@ private fun <T> OverviewScreenCard(
                 data.take(SHOWN_ITEMS).forEach { row(it) }
                 SeeAllButton(
                     modifier = Modifier.clearAndSetSemantics {
-                        contentDescription = "All $title"
+                        contentDescription = "Все $title"
                     },
                     onClick = onClickSeeAll,
                 )

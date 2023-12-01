@@ -32,7 +32,7 @@ fun AccountsScreen(
 ) {
     val amountsTotal = remember { UserRepository.accounts.map { account -> account.balance }.sum() }
     StatementBody(
-        modifier = Modifier.semantics { contentDescription = "Accounts Screen" },
+        modifier = Modifier.semantics { contentDescription = "Счета" },
         items = UserRepository.accounts,
         amounts = { account -> account.balance },
         colors = { account -> account.color },
@@ -57,11 +57,11 @@ fun AccountsScreen(
             onClick = { onAddAccountClick("add_account") },
             modifier = Modifier
                 .padding(16.dp)
-                .semantics { contentDescription = "Add Account" }
+                .semantics { contentDescription = "Добавить счет" }
                 .align(alignment = Alignment.BottomEnd)
 
         ) {
-            Icon(imageVector = Icons.Default.Add, contentDescription = "Add Account")
+            Icon(imageVector = Icons.Default.Add, contentDescription = "Добавить счет")
         }
     }
 }

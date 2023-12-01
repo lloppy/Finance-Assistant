@@ -29,17 +29,17 @@ interface RallyDestination {
  */
 object Overview : RallyDestination {
     override val icon = Icons.Filled.PieChart
-    override val route = "overview"
+    override val route = "обзор"
 }
 
 object Accounts : RallyDestination {
     override val icon = Icons.Filled.AttachMoney
-    override val route = "accounts"
+    override val route = "счета"
 }
 
 object Bills : RallyDestination {
     override val icon = Icons.Filled.MoneyOff
-    override val route = "bills"
+    override val route = "расходы"
 }
 
 object ChatGPT : RallyDestination {
@@ -49,7 +49,7 @@ object ChatGPT : RallyDestination {
 
 object Settings : RallyDestination {
     override val icon = Icons.Filled.Settings
-    override val route = "settings"
+    override val route = "настройки"
 }
 
 object AddAccount : RallyDestination {

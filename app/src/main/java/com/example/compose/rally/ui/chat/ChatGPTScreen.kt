@@ -74,7 +74,7 @@ fun ChatGPTScreen(viewModel: ChatViewModel) {
                 value = inputText,
                 onValueChange = { inputText = it },
                 modifier = Modifier.weight(1f),
-                label = { Text("Type a message") },
+                label = { Text("Введите запрос") },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(onSend = {
@@ -95,7 +95,7 @@ fun ChatGPTScreen(viewModel: ChatViewModel) {
             ) {
                 Icon(
                     imageVector = Icons.Default.Send,
-                    contentDescription = "Send message",
+                    contentDescription = "Отправить запрос",
                     modifier = Modifier
                         .size(30.dp),
                     tint = Color.White
