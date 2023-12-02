@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -101,6 +102,7 @@ fun OverviewScreen(
                 tint = Color.White,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
+                    .size(64.dp)
                     .clickable {
                         val intent = Intent(context, QRCodeScannerActivity::class.java)
                         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity)

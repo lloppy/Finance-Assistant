@@ -22,6 +22,7 @@ val billCategoryColors: Map<String, Color> = mapOf(
     "Здоровье" to Color(0xFFFFAC12),
     "Интернет и телефон" to Color(0xFF673AB7),
     "Здоровье" to Color(0xFF1AD56D),
+    "QR" to Color(0xFF2196F3),
     "Другое" to Color(0xFFFFD7D0),
     "Default" to Color(0xFF4D4D4D)
     )

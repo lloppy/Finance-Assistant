@@ -1,5 +1,6 @@
 package com.example.compose.rally.scan
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,7 +19,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -27,9 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import com.example.compose.rally.data.UserRepository
 import com.example.compose.rally.ui.theme.RallyTheme
 
 class QRCodeScannerActivity : ComponentActivity() {
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -71,8 +78,13 @@ class QRCodeScannerActivity : ComponentActivity() {
                                 .setBackpressureStrategy(STRATEGY_KEEP_ONLY_LATEST).build()
                             imageAnalysis.setAnalyzer(
                                 ContextCompat.getMainExecutor(context),
-                                QrCodeAnalyser { result ->
+                                QrCodeAnalyser(
+                                    activity = this@QRCodeScannerActivity,
+                                    context = context
+                                ) { result ->
                                     code = result
+                                    UserRepository.createBillFromQR(code)
+
                                 })
                             try {
                                 cameraProviderFuture.get().bindToLifecycle(
