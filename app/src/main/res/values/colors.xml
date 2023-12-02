@@ -1,4 +1,7 @@
 <resources>
     <color name="statusBarColor">#EFEFEF</color>
     <color name="backgroundColor">#26282F</color>
+    <color name="boxBackground">#25282F</color>
+    <color name="boxColor">#30333A</color>
+
 </resources>
