@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -71,6 +72,7 @@ import com.example.compose.rally.ui.components.formatAmount
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Locale
+import kotlin.math.roundToInt
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -148,14 +150,20 @@ private fun AlertCard() {
     val totalSpend = UserRepository.bills
         .filter { it.date.month == LocalDate.now().month }
         .sumOf { it.amount.toDouble() }.toFloat()
-    val spendingPercentage: Float = (totalSpend / totalBalance) * 100f
+    val present = ((totalSpend / totalBalance) * 100).roundToInt()
 
     if (totalBalance < totalSpend) {
         alertMessage =
-            "Предупреждение: вы израсходовали $spendingPercentage вашего бюджета на покупки в этом месяце."
+            "Предупреждение!\nВы израсходовали более $present% вашего бюджета."
+    } else if (totalBalance / 2 < totalSpend) {
+        alertMessage =
+            "Вы израсходовали $present% вашего бюджета на покупки в этом месяце."
     } else {
         alertMessage = "Ваши траты под контролем!"
     }
+    Log.e("spend", "totalSpend / totalBalance ${totalSpend / totalBalance}" )
+    Log.e("spend", "totalSpend / totalBalance $present" )
+    Log.e("spend", "totalBalance / totalSpend  ${(totalBalance / totalSpend ).roundToInt()}" )
 
     if (showDialog) {
         RallyAlertDialog(
@@ -188,7 +196,7 @@ private fun AlertHeader(onClickSeeAll: () -> Unit) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Оповещения",
+            text = stringResource(R.string.alert_title),
             style = MaterialTheme.typography.subtitle2,
             modifier = Modifier.align(Alignment.CenterVertically)
         )
@@ -198,7 +206,7 @@ private fun AlertHeader(onClickSeeAll: () -> Unit) {
             modifier = Modifier.align(Alignment.CenterVertically)
         ) {
             Text(
-                text = "ПОКАЗАТЬ ВСЕ",
+                text = stringResource(id = R.string.see_all),
                 style = MaterialTheme.typography.button,
             )
         }
