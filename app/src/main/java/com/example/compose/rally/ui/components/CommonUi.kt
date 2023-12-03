@@ -68,7 +68,7 @@ fun BillRow(
         modifier = modifier,
         color = color,
         title = name,   
-        subtitle = "Date $stringDate",
+        subtitle = "Дата $stringDate",
         category = category,
         amount = amount,
         negative = true
