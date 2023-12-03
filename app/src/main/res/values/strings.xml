@@ -22,4 +22,7 @@
     <string name="category">category</string>
     <string name="add_bill">add_bill</string>
     <string name="bill_name">bill_name</string>
+    <string name="fingerprint_title">Вход с отпечатком</string>
+    <string name="fingerprint_subtitle">Прикоснитесь к сенсору для входа по отпечатку пальца</string>
+    <string name="fingerprint_cancel">Отмена</string>
 </resources>
