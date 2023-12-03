@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Log
 import android.widget.CalendarView
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -35,7 +37,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.example.compose.rally.R
 import com.example.compose.rally.data.Bill
 import com.example.compose.rally.data.UserRepository
-import com.example.compose.rally.data.util.localDateTimeToString
 import java.time.LocalDateTime
 
 
@@ -118,7 +119,7 @@ fun AddBillScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         CategoryDropdown(
             categories = UserRepository.billCategories,
@@ -180,6 +181,9 @@ fun CategoryDropdown(
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .background(color = colorResource(R.color.boxColor))
+            .padding(14.dp)
+
     ) {
         Text(
             text = "Категория: $selectedCategory",
