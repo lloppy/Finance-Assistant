@@ -1,17 +1,10 @@
 package com.example.compose.rally.ui.overview
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,13 +26,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Camera
-import androidx.compose.material.icons.filled.MoneyOff
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Sort
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,20 +37,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.ContextCompat.startActivity
-import androidx.fragment.app.FragmentActivity
 import com.example.compose.rally.R
-import com.example.compose.rally.RallyApp
-import com.example.compose.rally.data.Account
 import com.example.compose.rally.data.UserRepository
 import com.example.compose.rally.scan.QRCodeScannerActivity
 import com.example.compose.rally.ui.components.AccountRow
@@ -70,7 +53,6 @@ import com.example.compose.rally.ui.components.RallyAlertDialog
 import com.example.compose.rally.ui.components.RallyDivider
 import com.example.compose.rally.ui.components.formatAmount
 import java.time.LocalDate
-import java.time.LocalTime
 import java.util.Locale
 import kotlin.math.roundToInt
 
@@ -150,20 +132,21 @@ private fun AlertCard() {
     val totalSpend = UserRepository.bills
         .filter { it.date.month == LocalDate.now().month }
         .sumOf { it.amount.toDouble() }.toFloat()
-    val present = ((totalSpend / totalBalance) * 100).roundToInt()
+    val percent = ((totalSpend / totalBalance) * 100).roundToInt()
 
-    if (totalBalance < totalSpend) {
-        alertMessage =
-            "Предупреждение!\nВы израсходовали более $present% вашего бюджета."
-    } else if (totalBalance / 2 < totalSpend) {
-        alertMessage =
-            "Вы израсходовали $present% вашего бюджета на покупки в этом месяце."
+    if (percent > 150) {
+        alertMessage = "Осторожно!\nВы многократно превысили бюджет!";
+    } else if (percent <= 150 && totalBalance / 2 < totalSpend) {
+        alertMessage = "Предупреждение!\nВы израсходовали более $percent% вашего бюджета.";
+    } else if (percent <= 150) {
+        alertMessage = "Ваши траты под контролем!";
     } else {
-        alertMessage = "Ваши траты под контролем!"
+        alertMessage = "Вы израсходовали $percent% вашего бюджета на покупки в этом месяце.";
     }
-    Log.e("spend", "totalSpend / totalBalance ${totalSpend / totalBalance}" )
-    Log.e("spend", "totalSpend / totalBalance $present" )
-    Log.e("spend", "totalBalance / totalSpend  ${(totalBalance / totalSpend ).roundToInt()}" )
+
+    Log.e("spend", "totalSpend / totalBalance ${totalSpend / totalBalance}")
+    Log.e("spend", "totalSpend / totalBalance $percent")
+    Log.e("spend", "totalBalance / totalSpend  ${(totalBalance / totalSpend).roundToInt()}")
 
     if (showDialog) {
         RallyAlertDialog(
