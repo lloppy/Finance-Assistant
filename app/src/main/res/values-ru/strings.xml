@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Rally</string>
+    <string name="total">Остаток</string>
+    <string name="due">Расходы</string> // Пример: Платёж 29 января
+    <string name="account_redacted">• • • • • </string>
+    <string name="accounts">Общий остаток</string>
+    <string name="bills">Текущие расходы</string>
+    <string name="sort">Сортировать</string>
+    <string name="see_all">ПОКАЗАТЬ ВСЕ</string>
+    <string name="add_account">Добавить счёт</string>
+    <string name="account_name">Имя счета</string>
+    <string name="save_account">Создать счёт</string>
+    <string name="save_bill">Сохранить запись</string>
+    <string name="card_number">Номер карты</string>
+    <string name="balance">Баланс</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="email">Электронная почта</string>
+    <string name="password">Пароль</string>
+    <string name="content_desc_toggle_password_visibility">Переключить видимость пароля</string>
+    <string name="pin">Пин-код</string>
+    <string name="new_category">Новая категория</string>
+    <string name="category">Категория</string>
+    <string name="add_bill">Добавить запись</string>
+    <string name="bill_name">Комментарий</string>
+</resources>

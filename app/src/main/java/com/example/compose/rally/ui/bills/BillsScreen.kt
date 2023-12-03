@@ -36,7 +36,7 @@ fun BillsScreen(
     bills: List<Bill> = remember { UserRepository.bills }
 ) {
     StatementBody(
-        modifier = Modifier.clearAndSetSemantics { contentDescription = "Bills" },
+        modifier = Modifier.clearAndSetSemantics { contentDescription = "Расходы" },
         items = bills,
         amounts = { bill -> bill.amount },
         colors = { bill -> bill.color },
@@ -61,11 +61,11 @@ fun BillsScreen(
             onClick = { onAddBillClick("add_bill") },
             modifier = Modifier
                 .padding(16.dp)
-                .semantics { contentDescription = "Add bill" }
+                .semantics { contentDescription = "Добавить запись" }
                 .align(alignment = Alignment.BottomEnd)
 
         ) {
-            Icon(imageVector = Icons.Default.Add, contentDescription = "Add bill")
+            Icon(imageVector = Icons.Default.Add, contentDescription = "Добавить запись")
         }
     }
 }

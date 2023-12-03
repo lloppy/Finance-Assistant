@@ -67,7 +67,7 @@ fun BillRow(
     BaseRow(
         modifier = modifier,
         color = color,
-        title = name,
+        title = name,   
         subtitle = "Date $stringDate",
         category = category,
         amount = amount,
@@ -87,6 +87,7 @@ private fun BaseRow(
 ) {
     // поступления - траты
     val rubleSign = if (negative) "–₽ " else "+₽ "
+
     val formattedAmount = formatAmount(amount)
     Row(
         modifier = modifier
@@ -94,6 +95,7 @@ private fun BaseRow(
             .clearAndSetSemantics {
                 contentDescription =
                     "$title account ending in ${subtitle.takeLast(4)}, current balance $rubleSign$formattedAmount"
+
             },
         verticalAlignment = Alignment.CenterVertically
     ) {

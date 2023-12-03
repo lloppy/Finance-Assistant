@@ -51,6 +51,7 @@ fun FingerprintAuthentication(
         .setTitle(stringResource(R.string.fingerprint_title))
         .setSubtitle(stringResource(R.string.fingerprint_subtitle))
         .setNegativeButtonText(stringResource(R.string.fingerprint_cancel))
+        
         .build()
 
     DisposableEffect(context) {
