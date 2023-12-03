@@ -28,7 +28,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.R
 import java.text.DecimalFormat
-import java.time.LocalDateTime
 
 /**
  * A row representing the basic information of an Account.
@@ -60,7 +59,7 @@ fun AccountRow(
 fun BillRow(
     modifier: Modifier = Modifier,
     name: String,
-    date: LocalDateTime,
+    stringDate: String,
     category: String,
     amount: Float,
     color: Color
@@ -68,8 +67,8 @@ fun BillRow(
     BaseRow(
         modifier = modifier,
         color = color,
-        title = name,
-        subtitle = "Дата $date",
+        title = name,   
+        subtitle = "Date $stringDate",
         category = category,
         amount = amount,
         negative = true
@@ -86,14 +85,17 @@ private fun BaseRow(
     amount: Float,
     negative: Boolean
 ) {
-    val dollarSign = if (negative) "–₽ " else "₽ "
+    // поступления - траты
+    val rubleSign = if (negative) "–₽ " else "+₽ "
+
     val formattedAmount = formatAmount(amount)
     Row(
         modifier = modifier
             .height(68.dp)
             .clearAndSetSemantics {
                 contentDescription =
-                    "$title счёт заканчивающийся на ${subtitle.takeLast(4)}, текущий баланс $dollarSign$formattedAmount"
+                    "$title account ending in ${subtitle.takeLast(4)}, current balance $rubleSign$formattedAmount"
+
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -114,7 +116,7 @@ private fun BaseRow(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = dollarSign,
+                text = rubleSign,
                 style = typography.h6,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )

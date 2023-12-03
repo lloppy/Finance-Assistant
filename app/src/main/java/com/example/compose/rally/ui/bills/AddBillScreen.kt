@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Log
 import android.widget.CalendarView
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -117,7 +119,7 @@ fun AddBillScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         CategoryDropdown(
             categories = UserRepository.billCategories,
@@ -127,7 +129,7 @@ fun AddBillScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        showDatePicker()
+        showDatePicker { selectedDate = it }
 
         Button(
             onClick = {
@@ -150,12 +152,18 @@ fun AddBillScreen(
 
 
 @Composable
-fun showDatePicker() {
+fun showDatePicker(onDateSelected: (LocalDateTime) -> Unit) {
+    var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
+
     AndroidView(
         { CalendarView(it) },
         modifier = Modifier.wrapContentWidth(),
         update = { views ->
             views.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
+                val selectedDateTime = LocalDateTime.of(year, month + 1, dayOfMonth, 0, 0)
+                selectedDate = selectedDateTime
+                onDateSelected(selectedDateTime)
+
                 Log.e("datePick", "$calendarView, $year, $month, $dayOfMonth")
             }
         }
@@ -173,6 +181,9 @@ fun CategoryDropdown(
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .background(color = colorResource(R.color.boxColor))
+            .padding(14.dp)
+
     ) {
         Text(
             text = "Категория: $selectedCategory",

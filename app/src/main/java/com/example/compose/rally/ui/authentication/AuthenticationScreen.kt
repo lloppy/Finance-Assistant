@@ -10,9 +10,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.example.compose.rally.R
 
 @Composable
 fun AuthenticationScreen(
@@ -46,9 +48,10 @@ fun FingerprintAuthentication(
     val context = LocalContext.current
     val executor = ContextCompat.getMainExecutor(context)
     val biometricPromptInfo = BiometricPrompt.PromptInfo.Builder()
-        .setTitle("Аутентификация по отпечатку пальца")
-        .setSubtitle("Поместите палец на датчик")
-        .setNegativeButtonText("Отмена")
+        .setTitle(stringResource(R.string.fingerprint_title))
+        .setSubtitle(stringResource(R.string.fingerprint_subtitle))
+        .setNegativeButtonText(stringResource(R.string.fingerprint_cancel))
+        
         .build()
 
     DisposableEffect(context) {

@@ -1,8 +1,10 @@
 package com.example.compose.rally.data
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
 import java.io.File
@@ -10,6 +12,8 @@ import java.io.IOException
 import java.io.PrintWriter
 import java.nio.file.Files
 import java.time.LocalDateTime
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 object UserRepository {
     var accounts: List<Account> = listOf(
@@ -27,7 +31,7 @@ object UserRepository {
             "add_bill",
             LocalDateTime.now(),
             "Default",
-            45.36f,
+            9f,
         )
     )
 
@@ -54,8 +58,14 @@ object UserRepository {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun addBill(bill: Bill) {
-        bills += bill
+    fun addBill(bill: Bill, context: Context) {
+        if((bill.name != bills.last().name && bill.amount != bills.last().amount)
+                || (bill.category != "QR")){
+            bills += bill
+            Toast.makeText(context, "Покупка добавлена!", Toast.LENGTH_SHORT).show()
+
+        }
+
         //   saveFile(context)
     }
 
@@ -96,5 +106,27 @@ object UserRepository {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+    }
+
+    @SuppressLint("NewApi")
+    public fun createBillFromQR(result: String): Bill {
+        val pattern = "t=(\\d{4})(\\d{2})(\\d{2})T(\\d{2})(\\d{2})&s=(.*)\\.(.*)&fn"
+        val matcher: Matcher = Pattern.compile(pattern).matcher(result)
+
+        if (matcher.find()) {
+            return Bill(
+                name = "Покупка " + matcher.group(3) + "." + matcher.group(2),
+                date = LocalDateTime.of(
+                    matcher.group(1)!!.toInt(),
+                    matcher.group(2)!!.toInt(),
+                    matcher.group(3)!!.toInt(),
+                    matcher.group(4)!!.toInt(),
+                    matcher.group(5)!!.toInt()
+                ),
+                category = "QR",
+                amount = (matcher.group(6)!!.toFloat()) + (matcher.group(7)!!.toFloat() / 100)
+            )
+        }
+        throw IllegalArgumentException("Invalid QR code format")
     }
 }

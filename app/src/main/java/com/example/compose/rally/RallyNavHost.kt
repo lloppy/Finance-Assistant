@@ -125,12 +125,12 @@ fun RallyNavHost(
         ) { navBackStackEntry ->
             val billType =
                 navBackStackEntry.arguments?.getString(AddBill.billTypeArg)
-
+            val context = LocalContext.current
             AddBillScreen(
                 billType,
 
                 onSaveClick = { bill ->
-                    UserRepository.addBill(bill)
+                    UserRepository.addBill(bill, context)
                     navController.navigateSingleTopTo(Bills.route)
                 }
             )

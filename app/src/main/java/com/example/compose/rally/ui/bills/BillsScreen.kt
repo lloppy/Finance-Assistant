@@ -47,11 +47,11 @@ fun BillsScreen(
                 modifier = Modifier.clickable {
                     onBillClick(bill.name)
                 },
-               name =  bill.name,
-                date=  bill.date,
+                name = bill.name,
+                stringDate = bill.stringDate,
                 category = bill.category,
-               amount =  bill.amount,
-               color =  bill.color
+                amount = bill.amount,
+                color = bill.color
             )
         }
     )
@@ -89,7 +89,7 @@ fun SingleBillScreen(
     ) { row ->
         BillRow(
             name = row.name,
-            date = row.date,
+            stringDate = row.stringDate,
             category = row.category,
             amount = row.amount,
             color = row.color
