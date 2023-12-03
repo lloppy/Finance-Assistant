@@ -89,7 +89,15 @@ fun RallyNavHost(
         ) { navBackStackEntry ->
             val accountType =
                 navBackStackEntry.arguments?.getString(SingleAccount.accountTypeArg)
-            SingleAccountScreen(accountType)
+            SingleAccountScreen(
+                accountType = accountType,
+                onDeleteAccountClick = {
+                    Log.e("delete", "Было: " + UserRepository.accounts.size.toString())
+                    UserRepository.removeAccount(it)
+                    Log.e("delete", "Стало: " + UserRepository.accounts.size.toString())
+                    navController.navigateSingleTopTo(Accounts.route)
+                }
+            )
         }
         composable(
             route = AddAccount.routeWithArgs,
@@ -116,7 +124,14 @@ fun RallyNavHost(
         ) { navBackStackEntry ->
             val billType =
                 navBackStackEntry.arguments?.getString(SingleBill.billTypeArg)
-            SingleBillScreen(billType)
+            SingleBillScreen(
+                billType = billType,
+                onDeleteBillClick = {
+                    Log.e("delete", "Было: " + UserRepository.bills.size.toString())
+                    UserRepository.removeBill(it)
+                    Log.e("delete", "Стало: " + UserRepository.bills.size.toString())
+                    navController.navigateSingleTopTo(Bills.route)
+                })
         }
         composable(
             route = AddBill.routeWithArgs,

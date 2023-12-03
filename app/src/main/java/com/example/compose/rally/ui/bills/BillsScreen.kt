@@ -10,6 +10,7 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -77,7 +78,8 @@ fun BillsScreen(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SingleBillScreen(
-    billType: String? = UserRepository.bills.first().name
+    billType: String? = UserRepository.bills.first().name,
+    onDeleteBillClick: (Bill) -> Unit = {}
 ) {
     val bill: Bill = remember(billType) { UserRepository.getBill(billType) }
     StatementBody(
@@ -94,5 +96,17 @@ fun SingleBillScreen(
             amount = row.amount,
             color = row.color
         )
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        FloatingActionButton(
+            onClick = { onDeleteBillClick(bill) },
+            modifier = Modifier
+                .padding(16.dp)
+                .semantics { contentDescription = "Удалить account" }
+                .align(alignment = Alignment.BottomEnd)
+        ) {
+            Icon(imageVector = Icons.Default.DeleteOutline, contentDescription = "Удалить account")
+        }
     }
 }

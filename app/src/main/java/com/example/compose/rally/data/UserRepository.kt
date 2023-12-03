@@ -6,7 +6,6 @@ import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.compose.ui.graphics.Color
 import java.io.File
 import java.io.IOException
 import java.io.PrintWriter
@@ -36,7 +35,8 @@ object UserRepository {
         )
     )
 
-    val accountCategories: List<String> = listOf("Зарплата", "Стипендия", "Инвестиции", "Подработка")
+    val accountCategories: List<String> =
+        listOf("Зарплата", "Стипендия", "Инвестиции", "Подработка")
 
     val billCategories: List<String> = listOf(
         "Квартира", "ЖКХ", "Продукты", "Одежда и обувь",
@@ -47,11 +47,11 @@ object UserRepository {
         return accounts.first { it.name == accountName }
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun getBill(billName: String?): Bill {
         return bills.first { it.name == billName }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun addAccount(account: Account) {
         accounts += account
@@ -60,19 +60,33 @@ object UserRepository {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun addBill(bill: Bill, context: Context) {
-        if((bill.name != bills.last().name && bill.amount != bills.last().amount)
-                || (bill.category != "QR")){
+        if ((bill.name != bills.last().name && bill.amount != bills.last().amount)
+            || (bill.category != "QR")
+        ) {
             bills += bill
             Toast.makeText(context, "Покупка добавлена!", Toast.LENGTH_SHORT).show()
-
         }
-
         //   saveFile(context)
     }
 
+    fun removeAccount(account: Account) {
+        accounts = accounts.filterNot {
+            it.name == account.name
+                    && it.stringDate == account.stringDate
+                    && it.balance == account.balance
+                    && it.category == account.category
+                    && it.cardNumber == account.cardNumber
+        }
+    }
 
-    fun removeAccount(accountName: String) {
-        accounts = accounts.filterNot { it.name == accountName }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun removeBill(bill: Bill) {
+        bills = bills.filterNot {
+            it.name == bill.name
+                    && it.stringDate == bill.stringDate
+                    && it.amount == bill.amount
+                    && it.category == bill.category
+        }
     }
 
     fun saveFile(context: Context) {
@@ -102,7 +116,15 @@ object UserRepository {
                 .map { it.split(":") }
                 .filter { it.size == 4 }
                 // нужно проверить эту строчку  - LocalDateTime.parse(it[1]) может крашнуться
-                .map { Account(it[0], LocalDateTime.parse(it[1]), it[2].toInt(), it[3].toFloat(), it[4]) }
+                .map {
+                    Account(
+                        it[0],
+                        LocalDateTime.parse(it[1]),
+                        it[2].toInt(),
+                        it[3].toFloat(),
+                        it[4]
+                    )
+                }
             accounts = newAccounts
 
         } catch (e: IOException) {

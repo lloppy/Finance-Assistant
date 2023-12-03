@@ -8,6 +8,7 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -16,8 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import androidx.navigation.Navigation
 import com.example.compose.rally.R
+import com.example.compose.rally.data.Account
 import com.example.compose.rally.data.UserRepository
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
@@ -72,7 +73,8 @@ fun AccountsScreen(
  */
 @Composable
 fun SingleAccountScreen(
-    accountType: String? = UserRepository.accounts.first().name
+    accountType: String? = UserRepository.accounts.first().name,
+    onDeleteAccountClick: (Account) -> Unit = {}
 ) {
     val account = remember(accountType) { UserRepository.getAccount(accountType) }
     StatementBody(
@@ -90,5 +92,17 @@ fun SingleAccountScreen(
             amount = row.balance,
             color = row.color
         )
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        FloatingActionButton(
+            onClick = { onDeleteAccountClick(account) },
+            modifier = Modifier
+                .padding(16.dp)
+                .semantics { contentDescription = "Удалить account" }
+                .align(alignment = Alignment.BottomEnd)
+        ) {
+            Icon(imageVector = Icons.Default.DeleteOutline, contentDescription = "Удалить account")
+        }
     }
 }
