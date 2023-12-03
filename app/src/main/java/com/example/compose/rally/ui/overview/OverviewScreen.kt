@@ -309,7 +309,7 @@ private fun BillsCard(onClickSeeAll: () -> Unit, onBillClick: (String) -> Unit) 
         BillRow(
             modifier = Modifier.clickable { onBillClick(bill.name) },
             name = bill.name,
-            date = bill.date,
+            stringDate = bill.stringDate,
             category = bill.category,
             amount = bill.amount,
             color = bill.color
