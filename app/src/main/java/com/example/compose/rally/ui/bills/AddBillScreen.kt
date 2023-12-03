@@ -128,7 +128,7 @@ fun AddBillScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        showDatePicker()
+        showDatePicker { selectedDate = it }
 
         Button(
             onClick = {
@@ -151,12 +151,18 @@ fun AddBillScreen(
 
 
 @Composable
-fun showDatePicker() {
+fun showDatePicker(onDateSelected: (LocalDateTime) -> Unit) {
+    var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
+
     AndroidView(
         { CalendarView(it) },
         modifier = Modifier.wrapContentWidth(),
         update = { views ->
             views.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
+                val selectedDateTime = LocalDateTime.of(year, month + 1, dayOfMonth, 0, 0)
+                selectedDate = selectedDateTime
+                onDateSelected(selectedDateTime)
+
                 Log.e("datePick", "$calendarView, $year, $month, $dayOfMonth")
             }
         }
