@@ -36,7 +36,8 @@ import java.text.DecimalFormat
 fun AccountRow(
     modifier: Modifier = Modifier,
     name: String,
-    number: Int,
+    stringDate: String,
+    // number: Int,
     amount: Float,
     category: String,
     color: Color
@@ -45,7 +46,8 @@ fun AccountRow(
         modifier = modifier,
         color = color,
         title = name,
-        subtitle = stringResource(R.string.account_redacted) + AccountDecimalFormat.format(number),
+        //subtitle = stringResource(R.string.account_redacted) + AccountDecimalFormat.format(number),
+        subtitle = "Дата $stringDate",
         category = category,
         amount = amount,
         negative = false

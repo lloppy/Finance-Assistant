@@ -23,3 +23,13 @@ fun localDateTimeToString(localDateTime: LocalDateTime): String {
 
     return formattedDate
 }
+
+fun localDateToString(localDateTime: LocalDateTime): String {
+    val pattern: String = "dd.MM.yyyy"
+    val formatter = DateTimeFormatter.ofPattern(pattern)
+
+    val formattedDate = localDateTime.format(formatter)
+    Log.e("AccountDate", formattedDate)
+
+    return formattedDate
+}

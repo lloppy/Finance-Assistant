@@ -44,7 +44,8 @@ fun AccountsScreen(
                     onAccountClick(account.name)
                 },
                 name = account.name,
-                number = account.cardNumber,
+                stringDate = account.stringDate,
+                //number = account.cardNumber,
                 category = account.category,
                 amount = account.balance,
                 color = account.color
@@ -83,7 +84,8 @@ fun SingleAccountScreen(
     ) { row ->
         AccountRow(
             name = row.name,
-            number = row.cardNumber,
+            stringDate = account.stringDate,
+            // number = row.cardNumber,
             category = row.category,
             amount = row.balance,
             color = row.color

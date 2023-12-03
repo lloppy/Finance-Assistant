@@ -38,6 +38,7 @@ import com.example.compose.rally.R
 import com.example.compose.rally.data.Account
 import com.example.compose.rally.data.UserRepository
 import com.example.compose.rally.ui.theme.RallyTheme
+import java.time.LocalDateTime
 
 /**
  * Composable for the screen where a user can manually add a new account.
@@ -62,7 +63,7 @@ fun AddAccountScreen(
     Log.e("route", "account name is ${account.name}")
 
     var selectedCategory by remember { mutableStateOf(UserRepository.accountCategories.first()) }
-
+    var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
     var accountName by remember { mutableStateOf(TextFieldValue()) }
     var cardNumber by remember { mutableStateOf(TextFieldValue()) }
     var balance by remember { mutableStateOf(TextFieldValue()) }
@@ -138,13 +139,14 @@ fun AddAccountScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        showDatePicker()
+        showDatePicker { selectedDate = it }
 
         Button(
             onClick = {
                 onSaveClick(
                     Account(
                         name = accountName.text,
+                        date = selectedDate,
                         cardNumber = cardNumber.text.toInt(),
                         balance = balance.text.toFloat(),
                         category = selectedCategory
@@ -201,12 +203,17 @@ fun CategoryDropdown(
 }
 
 @Composable
-fun showDatePicker() {
+fun showDatePicker(onDateSelected: (LocalDateTime) -> Unit) {
+    var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
     AndroidView(
         { CalendarView(it) },
         modifier = Modifier.wrapContentWidth(),
         update = { views ->
             views.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
+                val selectedDateTime = LocalDateTime.of(year, month + 1, dayOfMonth, 0, 0)
+                selectedDate = selectedDateTime
+                onDateSelected(selectedDateTime)
+
                 Log.e("datePick", "$calendarView, $year, $month, $dayOfMonth")
             }
         }

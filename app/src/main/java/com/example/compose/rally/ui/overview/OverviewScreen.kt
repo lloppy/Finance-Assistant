@@ -60,6 +60,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import com.example.compose.rally.R
 import com.example.compose.rally.RallyApp
+import com.example.compose.rally.data.Account
 import com.example.compose.rally.data.UserRepository
 import com.example.compose.rally.scan.QRCodeScannerActivity
 import com.example.compose.rally.ui.components.AccountRow
@@ -67,6 +68,8 @@ import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.RallyAlertDialog
 import com.example.compose.rally.ui.components.RallyDivider
 import com.example.compose.rally.ui.components.formatAmount
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -89,13 +92,13 @@ fun OverviewScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(colorResource(id = R.color.boxColor)),
-        horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Spacer(
                 modifier = Modifier
                     .width(RallyDefaultPadding)
                     .background(colorResource(id = R.color.boxBackground)),
-                )
+            )
             Icon(
                 imageVector = Icons.Default.QrCode,
                 contentDescription = "Camera",
@@ -105,7 +108,8 @@ fun OverviewScreen(
                     .size(64.dp)
                     .clickable {
                         val intent = Intent(context, QRCodeScannerActivity::class.java)
-                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity)
+                        val options =
+                            ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity)
                         context.startActivity(intent, options.toBundle())
                     }
             )
@@ -132,10 +136,26 @@ fun OverviewScreen(
 /**
  * The Alerts card within the Rally Overview screen.
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun AlertCard() {
     var showDialog by remember { mutableStateOf(false) }
-    val alertMessage = "Предупреждение: вы израсходовали 90% вашего бюджета на покупки в этом месяце."
+    val alertMessage: String
+
+    val totalBalance = UserRepository.accounts
+        .filter { it.date.month == LocalDate.now().month }
+        .sumOf { it.balance.toDouble() }.toFloat()
+    val totalSpend = UserRepository.bills
+        .filter { it.date.month == LocalDate.now().month }
+        .sumOf { it.amount.toDouble() }.toFloat()
+    val spendingPercentage: Float = (totalSpend / totalBalance) * 100f
+
+    if (totalBalance < totalSpend) {
+        alertMessage =
+            "Предупреждение: вы израсходовали $spendingPercentage вашего бюджета на покупки в этом месяце."
+    } else {
+        alertMessage = "Ваши траты под контролем!"
+    }
 
     if (showDialog) {
         RallyAlertDialog(
@@ -284,13 +304,15 @@ private fun AccountsCard(onClickSeeAll: () -> Unit, onAccountClick: (String) -> 
         AccountRow(
             modifier = Modifier.clickable { onAccountClick(account.name) },
             name = account.name,
-            number = account.cardNumber,
+            stringDate = account.stringDate,
+            // number = account.cardNumber,
             category = account.category,
             amount = account.balance,
             color = account.color
         )
     }
 }
+
 /**
  * The Bills card within the Rally Overview screen.
  */
@@ -328,7 +350,6 @@ private fun SeeAllButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
         Text(stringResource(R.string.see_all))
     }
 }
-
 
 
 private val RallyDefaultPadding = 12.dp

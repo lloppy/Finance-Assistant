@@ -19,6 +19,7 @@ object UserRepository {
     var accounts: List<Account> = listOf(
         Account(
             "add_account",
+            LocalDateTime.now(),
             3456,
             253f,
             "Default"
@@ -100,7 +101,8 @@ object UserRepository {
             val newAccounts = Files.readAllLines(filePath.toPath())
                 .map { it.split(":") }
                 .filter { it.size == 4 }
-                .map { Account(it[0], it[1].toInt(), it[2].toFloat(), it[3]) }
+                // нужно проверить эту строчку  - LocalDateTime.parse(it[1]) может крашнуться
+                .map { Account(it[0], LocalDateTime.parse(it[1]), it[2].toInt(), it[3].toFloat(), it[4]) }
             accounts = newAccounts
 
         } catch (e: IOException) {
