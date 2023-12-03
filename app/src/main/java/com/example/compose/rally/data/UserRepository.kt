@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
 import java.io.File
@@ -57,10 +58,12 @@ object UserRepository {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun addBill(bill: Bill) {
+    fun addBill(bill: Bill, context: Context) {
         if((bill.name != bills.last().name && bill.amount != bills.last().amount)
                 || (bill.category != "QR")){
             bills += bill
+            Toast.makeText(context, "Покупка добавлена!", Toast.LENGTH_SHORT).show()
+
         }
 
         //   saveFile(context)

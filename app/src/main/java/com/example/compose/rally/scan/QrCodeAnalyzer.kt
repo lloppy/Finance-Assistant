@@ -51,8 +51,7 @@ class QrCodeAnalyser(
                 var newBill = UserRepository.createBillFromQR(result.text)
 
                 try {
-                  //  Toast.makeText(context, "Чек успешно добавлен!", Toast.LENGTH_SHORT).show()
-                    UserRepository.addBill(newBill)
+                    UserRepository.addBill(newBill, context)
                     image.close()
                     activity.finish()
                 } catch (e: IllegalArgumentException) {
