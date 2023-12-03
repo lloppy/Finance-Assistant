@@ -2,6 +2,7 @@ package com.example.compose.rally.ui.accounts
 
 import android.util.Log
 import android.widget.CalendarView
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -34,6 +35,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.glance.LocalContext
 import com.example.compose.rally.R
 import com.example.compose.rally.data.Account
 import com.example.compose.rally.data.UserRepository
@@ -143,15 +145,17 @@ fun AddAccountScreen(
 
         Button(
             onClick = {
-                onSaveClick(
-                    Account(
-                        name = accountName.text,
-                        date = selectedDate,
-                        cardNumber = cardNumber.text.toInt(),
-                        balance = balance.text.toFloat(),
-                        category = selectedCategory
+                if (accountName.text.isNotEmpty() && balance.text.isNotEmpty() && cardNumber.text.isNotEmpty()) {
+                    onSaveClick(
+                        Account(
+                            name = accountName.text,
+                            date = selectedDate,
+                            cardNumber = cardNumber.text.toInt(),
+                            balance = balance.text.toFloat(),
+                            category = selectedCategory
+                        )
                     )
-                )
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()

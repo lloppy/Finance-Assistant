@@ -133,14 +133,16 @@ fun AddBillScreen(
 
         Button(
             onClick = {
-                onSaveClick(
-                    Bill(
-                        name = billName.text,
-                        date = selectedDate,
-                        category = selectedCategory,
-                        amount = balance.text.toFloat()
+                if (billName.text.isNotEmpty() && balance.text.isNotEmpty()) {
+                    onSaveClick(
+                        Bill(
+                            name = billName.text,
+                            date = selectedDate,
+                            category = selectedCategory,
+                            amount = balance.text.toFloat()
+                        )
                     )
-                )
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
