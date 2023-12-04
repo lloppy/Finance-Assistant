@@ -46,7 +46,6 @@ fun ChatGPTScreenPrev(){
 /**
  * The ChatGPT screen.
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatGPTScreen(viewModel: ChatViewModel) {
     Column(modifier = Modifier.fillMaxSize()) {

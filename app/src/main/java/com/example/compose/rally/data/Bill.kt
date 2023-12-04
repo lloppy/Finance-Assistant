@@ -9,6 +9,8 @@ import java.time.LocalDateTime
 data class Bill constructor(
     val name: String,
     val date: LocalDateTime,
+    val dateRepeat: LocalDateTime,
+    val timesRepeat: Int,
     val category: String,
     val amount: Float,
     val color: Color = (billCategoryColors[category] ?: billCategoryColors["Default"])!!,

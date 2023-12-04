@@ -133,15 +133,18 @@ private fun AlertCard() {
         .filter { it.date.month == LocalDate.now().month }
         .sumOf { it.amount.toDouble() }.toFloat()
     val percent = ((totalSpend / totalBalance) * 100).roundToInt()
+    val remains = (totalBalance - totalSpend).roundToInt()
 
     if (percent > 150) {
         alertMessage = "Осторожно!\nВы многократно превысили бюджет!";
     } else if (percent <= 150 && totalBalance / 2 < totalSpend) {
-        alertMessage = "Предупреждение!\nВы израсходовали более $percent% вашего бюджета.";
+        alertMessage = "Предупреждение!\nВы израсходовали более $percent% вашего бюджета.\nОстаток: $remains руб";
     } else if (percent <= 150) {
-        alertMessage = "Ваши траты под контролем!";
+        alertMessage = "Ваши траты под контролем!\n" +
+                "Остаток: $remains руб";
     } else {
-        alertMessage = "Вы израсходовали $percent% вашего бюджета на покупки в этом месяце.";
+        alertMessage = "Вы израсходовали $percent% вашего бюджета на покупки в этом месяце.\n" +
+                "Остаток: $remains руб";
     }
 
     Log.e("spend", "totalSpend / totalBalance ${totalSpend / totalBalance}")

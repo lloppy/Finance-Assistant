@@ -2,11 +2,11 @@ package com.example.compose.rally.ui.accounts
 
 import android.util.Log
 import android.widget.CalendarView
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,16 +17,22 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.Checkbox
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -35,7 +41,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.glance.LocalContext
 import com.example.compose.rally.R
 import com.example.compose.rally.data.Account
 import com.example.compose.rally.data.UserRepository
@@ -69,6 +74,10 @@ fun AddAccountScreen(
     var accountName by remember { mutableStateOf(TextFieldValue()) }
     var cardNumber by remember { mutableStateOf(TextFieldValue()) }
     var balance by remember { mutableStateOf(TextFieldValue()) }
+
+    var repeatRuleOptions =
+        listOf("Только один день", "Каждый день", "Каждую неделю", "Каждый месяц")
+    var selectedRepeatRule by remember { mutableStateOf(repeatRuleOptions[0]) }
 
     Column(
         modifier = Modifier
@@ -140,8 +149,14 @@ fun AddAccountScreen(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-
         showDatePicker { selectedDate = it }
+
+        RepeatDataDropdown(
+            repeatRuleOptions = repeatRuleOptions,
+            selectedRepeatRule = selectedRepeatRule,
+            onRepeatRuleSelected = { selectedRepeatRule = it }
+        )
+        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = {
@@ -150,6 +165,8 @@ fun AddAccountScreen(
                         Account(
                             name = accountName.text,
                             date = selectedDate,
+                            dateRepeat = selectedDate, //here
+                            timesRepeat = repeatRuleOptions.indexOf(selectedRepeatRule),
                             cardNumber = cardNumber.text.toInt(),
                             balance = balance.text.toFloat(),
                             category = selectedCategory
@@ -222,4 +239,54 @@ fun showDatePicker(onDateSelected: (LocalDateTime) -> Unit) {
             }
         }
     )
+}
+
+@Composable
+fun RepeatDataDropdown(
+    repeatRuleOptions: List<String>,
+    selectedRepeatRule: String,
+    onRepeatRuleSelected: (String) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = colorResource(R.color.boxBackground))
+            .padding(8.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { expanded = true },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(imageVector = Icons.Default.Edit, contentDescription = null)
+
+            Text(
+                text = "Повторение: $selectedRepeatRule",
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 12.dp)
+            )
+        }
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            repeatRuleOptions.forEach { option ->
+                DropdownMenuItem(
+                    onClick = {
+                        onRepeatRuleSelected(option)
+                        expanded = false
+                    }
+                ) {
+                    Text(text = option)
+                }
+            }
+        }
+    }
 }
