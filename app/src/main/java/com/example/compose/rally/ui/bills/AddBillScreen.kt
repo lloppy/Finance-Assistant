@@ -1,14 +1,18 @@
 package com.example.compose.rally.ui.bills
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.CalendarView
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,24 +25,29 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.glance.LocalContext
+import coil.ImageLoader
+import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import com.example.compose.rally.R
 import com.example.compose.rally.data.Bill
 import com.example.compose.rally.data.UserRepository
@@ -53,6 +62,7 @@ fun AddBillScreen(
     onSaveClick: (Bill) -> Unit = {},
 //    onBackClick: () -> Unit = {},
 ) {
+
     val bill = remember(billType) { UserRepository.getBill(billType) }
     Log.e("route", "bill name is ${bill.name}")
 
@@ -65,6 +75,22 @@ fun AddBillScreen(
     var repeatRuleOptions =
         listOf("Только один день", "Каждый день", "Каждую неделю", "Каждый месяц")
     var selectedRepeatRule by remember { mutableStateOf(repeatRuleOptions[0]) }
+
+    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+    val intent = Intent(Intent.ACTION_GET_CONTENT)
+    intent.type = "*/*";
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+    val pickPictureLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { imageUri ->
+        if (imageUri != null) {
+            // Update the state with the Uri
+            selectedImageUri = imageUri
+            Log.e("picImg", "imageUri change to: $imageUri")
+        }
+    }
+
 
     Column(
         modifier = Modifier
@@ -91,9 +117,7 @@ fun AddBillScreen(
 //                }
 //            }
 //        )
-//
 //        Spacer(modifier = Modifier.height(16.dp))
-
 
         TextField(
             value = billName,
@@ -106,7 +130,6 @@ fun AddBillScreen(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-
         TextField(
             value = cardNumber,
             onValueChange = { cardNumber = it },
@@ -118,7 +141,6 @@ fun AddBillScreen(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-
         TextField(
             value = balance,
             onValueChange = { balance = it },
@@ -130,7 +152,6 @@ fun AddBillScreen(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-
         CategoryDropdown(
             categories = UserRepository.billCategories,
             selectedCategory = selectedCategory,
@@ -138,15 +159,33 @@ fun AddBillScreen(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-        com.example.compose.rally.ui.accounts.showDatePicker { selectedDate = it }
+        showDatePicker { selectedDate = it }
 
         RepeatDataDropdown(
             repeatRuleOptions = repeatRuleOptions,
             selectedRepeatRule = selectedRepeatRule,
             onRepeatRuleSelected = { selectedRepeatRule = it }
         )
+
         Spacer(modifier = Modifier.height(16.dp))
 
+        Button(
+            onClick = {
+                pickPictureLauncher.launch("image/*")
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(text = stringResource(id = R.string.attach_photo))
+        }
+
+        AsyncImage(
+            model = selectedImageUri,
+            placeholder = painterResource(R.drawable.ic_launcher_foreground),
+            contentDescription = null,
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
                 if (billName.text.isNotEmpty() && balance.text.isNotEmpty()) {
@@ -156,6 +195,7 @@ fun AddBillScreen(
                             date = selectedDate,
                             dateRepeat = selectedDate, //here
                             timesRepeat = repeatRuleOptions.indexOf(selectedRepeatRule),
+                            billPhoto = selectedImageUri,
                             category = selectedCategory,
                             amount = balance.text.toFloat()
                         )
@@ -226,57 +266,6 @@ fun CategoryDropdown(
                     }
                 ) {
                     Text(text = category)
-                }
-            }
-        }
-    }
-}
-
-
-@Composable
-fun RepeatDataDropdown(
-    repeatRuleOptions: List<String>,
-    selectedRepeatRule: String,
-    onRepeatRuleSelected: (String) -> Unit
-) {
-    var expanded by remember { mutableStateOf(false) }
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = colorResource(R.color.boxBackground))
-            .padding(8.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { expanded = true },
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(imageVector = Icons.Default.Edit, contentDescription = null)
-
-            Text(
-                text = "Повторение: $selectedRepeatRule",
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 12.dp)
-            )
-        }
-
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            repeatRuleOptions.forEach { option ->
-                DropdownMenuItem(
-                    onClick = {
-                        onRepeatRuleSelected(option)
-                        expanded = false
-                    }
-                ) {
-                    Text(text = option)
                 }
             }
         }

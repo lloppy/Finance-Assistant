@@ -34,6 +34,7 @@ object UserRepository {
             LocalDateTime.now(),
             LocalDateTime.now(),
             0,
+            null,
             "Default",
             9f,
         )
@@ -155,6 +156,7 @@ object UserRepository {
                 ),
                 dateRepeat = LocalDateTime.now(),
                 timesRepeat = 0,
+                billPhoto = null,
                 category = "QR",
                 amount = (matcher.group(6)!!.toFloat()) + (matcher.group(7)!!.toFloat() / 100)
             )
