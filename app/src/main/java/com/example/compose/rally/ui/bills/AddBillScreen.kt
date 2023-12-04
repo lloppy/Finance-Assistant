@@ -193,7 +193,6 @@ fun AddBillScreen(
                         Bill(
                             name = billName.text,
                             date = selectedDate,
-                            dateRepeat = selectedDate, //here
                             timesRepeat = repeatRuleOptions.indexOf(selectedRepeatRule),
                             billPhoto = selectedImageUri,
                             category = selectedCategory,

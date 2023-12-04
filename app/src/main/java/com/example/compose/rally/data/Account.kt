@@ -15,7 +15,6 @@ import java.time.LocalDateTime
 data class Account(
     var name: String,
     val date: LocalDateTime,
-    val dateRepeat: LocalDateTime,
     val timesRepeat: Int,
     val cardNumber: Int,
     val balance: Float,

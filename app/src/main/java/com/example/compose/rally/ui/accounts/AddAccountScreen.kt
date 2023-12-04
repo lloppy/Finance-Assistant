@@ -165,7 +165,6 @@ fun AddAccountScreen(
                         Account(
                             name = accountName.text,
                             date = selectedDate,
-                            dateRepeat = selectedDate, //here
                             timesRepeat = repeatRuleOptions.indexOf(selectedRepeatRule),
                             cardNumber = cardNumber.text.toInt(),
                             balance = balance.text.toFloat(),

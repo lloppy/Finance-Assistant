@@ -48,9 +48,6 @@ fun SettingsScreen() {
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
 
-    var incomeCategoryName by remember { mutableStateOf("") }
-    var expenseCategoryName by remember { mutableStateOf("") }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,17 +65,34 @@ fun SettingsScreen() {
         PasswordSetting(password, showPassword, onPasswordChanged = { password = it },
             onTogglePasswordVisibility = { showPassword = it })
 
-        // Income Category
-        AddCategorySetting(
-            incomeCategoryName, onCategoryAdded = { incomeCategoryName = it },
-            icon = Icons.Default.Money
-        )
 
-        // Expense Category
-        AddCategorySetting(
-            expenseCategoryName, onCategoryAdded = { expenseCategoryName = it },
-            icon = Icons.Default.Category
-        )
+        AddCategorySetting(stringResource(R.string.add_account_categoty))
+
+        AddCategorySetting(stringResource(R.string.add_bill_categoty))
+
+    }
+}
+
+
+@Composable
+fun AddCategorySetting(
+    categoryName: String
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(text = categoryName)
+        }
+
     }
 }
 
@@ -236,49 +250,6 @@ fun PasswordSetting(
     }
 }
 
-@Composable
-fun AddCategorySetting(
-    categoryName: String,
-    onCategoryAdded: (String) -> Unit,
-    icon: ImageVector,
-) {
-    val context = LocalContext.current
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
-        Text(stringResource(R.string.add_category), style = MaterialTheme.typography.h6)
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        TextField(
-            value = categoryName,
-            onValueChange = { /* Do not update categoryName directly */ },
-            label = { Text(stringResource(R.string.enter_category_name)) },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Done
-            ),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    hideKeyboard(context)
-                }
-            ),
-            trailingIcon = {
-                IconButton(onClick = {
-                    onCategoryAdded(categoryName)
-                }) {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = stringResource(id = R.string.add_category)
-                    )
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
-}
 
 fun hideKeyboard(context: Context) {
     val view = (context as? Activity)?.currentFocus

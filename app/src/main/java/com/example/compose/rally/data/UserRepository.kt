@@ -19,7 +19,6 @@ object UserRepository {
         Account(
             "add_account",
             LocalDateTime.now(),
-            LocalDateTime.now(),
             0,
             3456,
             253f,
@@ -31,7 +30,6 @@ object UserRepository {
     var bills: List<Bill> = listOf(
         Bill(
             "add_bill",
-            LocalDateTime.now(),
             LocalDateTime.now(),
             0,
             null,
@@ -119,17 +117,16 @@ object UserRepository {
         try {
             val newAccounts = Files.readAllLines(filePath.toPath())
                 .map { it.split(":") }
-                .filter { it.size == 7 }
+                .filter { it.size == 6 }
                 // нужно проверить эту строчку  - LocalDateTime.parse(it[1]) может крашнуться
                 .map {
                     Account(
                         it[0],
                         LocalDateTime.parse(it[1]),
-                        LocalDateTime.parse(it[2]),
+                        it[2].toInt(),
                         it[3].toInt(),
-                        it[4].toInt(),
-                        it[5].toFloat(),
-                        it[6]
+                        it[4].toFloat(),
+                        it[5]
                     )
                 }
             accounts = newAccounts
@@ -154,7 +151,6 @@ object UserRepository {
                     matcher.group(4)!!.toInt(),
                     matcher.group(5)!!.toInt()
                 ),
-                dateRepeat = LocalDateTime.now(),
                 timesRepeat = 0,
                 billPhoto = null,
                 category = "QR",

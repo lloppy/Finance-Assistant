@@ -37,4 +37,6 @@
     <string name="api_key_for_chat">API Key for Chat</string>
     <string name="attach_photo">attach_photo</string>
     <string name="take_photo">take_photo</string>
+    <string name="add_account_categoty">Добавить категорию доходов</string>
+    <string name="add_bill_categoty">Добавить категорию трат</string>
 </resources>

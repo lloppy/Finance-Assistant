@@ -10,7 +10,6 @@ import java.time.LocalDateTime
 data class Bill constructor(
     val name: String,
     val date: LocalDateTime,
-    val dateRepeat: LocalDateTime,
     val timesRepeat: Int,
     val billPhoto : Uri?,
     val category: String,
