@@ -4,9 +4,6 @@ import android.util.Log
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class DateUtil {
-}
-
 fun localDateTimeToString(localDateTime: LocalDateTime): String {
     val pattern: String = if (localDateTime.hour == 0 && localDateTime.minute == 0) {
         "dd.MM.yyyy"

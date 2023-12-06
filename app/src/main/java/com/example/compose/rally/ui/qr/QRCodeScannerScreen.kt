@@ -1,4 +1,4 @@
-package com.example.compose.rally.scan
+package com.example.compose.rally.ui.qr
 
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
@@ -32,10 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
-import com.example.compose.rally.data.util.QRCodeParser
+import com.example.compose.rally.data.util.qr.QrCodeAnalyser
+import com.example.compose.rally.data.util.qr.createBillFromQR
 import com.example.compose.rally.ui.theme.RallyTheme
 
-class QRCodeScannerActivity : ComponentActivity() {
+class QRCodeScannerScreen : ComponentActivity() {
     @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,11 +80,11 @@ class QRCodeScannerActivity : ComponentActivity() {
                             imageAnalysis.setAnalyzer(
                                 ContextCompat.getMainExecutor(context),
                                 QrCodeAnalyser(
-                                    activity = this@QRCodeScannerActivity,
+                                    activity = this@QRCodeScannerScreen,
                                     context = context
                                 ) { result ->
                                     code = result
-                                    QRCodeParser.createBillFromQR(code)
+                                    createBillFromQR(code)
 
                                 })
                             try {
