@@ -11,12 +11,12 @@ data class Bill constructor(
     val name: String,
     val date: LocalDateTime,
     val timesRepeat: Int,
-    val billPhoto : Uri?,
+    val billPhoto: Uri?,
     val category: String,
     val amount: Float,
     val color: Color = (billCategoryColors[category] ?: billCategoryColors["Default"])!!,
     val stringDate: String = localDateTimeToString(date)
-    )
+)
 
 
 val billCategoryColors: Map<String, Color> = mapOf(
