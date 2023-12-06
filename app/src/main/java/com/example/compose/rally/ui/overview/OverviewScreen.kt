@@ -3,7 +3,6 @@ package com.example.compose.rally.ui.overview
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -46,17 +45,15 @@ import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityOptionsCompat
 import com.example.compose.rally.R
 import com.example.compose.rally.data.account.AccountRepository
+import com.example.compose.rally.data.analyze.analyzeAlert
 import com.example.compose.rally.data.bill.BillRepository
-import com.example.compose.rally.data.util.AlertAnalyze
-import com.example.compose.rally.scan.QRCodeScannerActivity
+import com.example.compose.rally.ui.qr.QRCodeScannerScreen
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.RallyAlertDialog
 import com.example.compose.rally.ui.components.RallyDivider
 import com.example.compose.rally.ui.components.formatAmount
-import java.time.LocalDate
 import java.util.Locale
-import kotlin.math.roundToInt
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -93,7 +90,7 @@ fun OverviewScreen(
                     .align(Alignment.CenterVertically)
                     .size(64.dp)
                     .clickable {
-                        val intent = Intent(context, QRCodeScannerActivity::class.java)
+                        val intent = Intent(context, QRCodeScannerScreen::class.java)
                         val options =
                             ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity)
                         context.startActivity(intent, options.toBundle())
@@ -126,7 +123,7 @@ fun OverviewScreen(
 @Composable
 private fun AlertCard() {
     var showDialog by remember { mutableStateOf(false) }
-    val alertMessage = AlertAnalyze().analyzeAlert()
+    val alertMessage = analyzeAlert()
 
     if (showDialog) {
         RallyAlertDialog(

@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".scan.QRCodeScannerActivity"
+            android:name=".ui.qr.QRCodeScannerScreen"
             android:exported="true"
             android:label="QR Code Scanner">
         </activity>

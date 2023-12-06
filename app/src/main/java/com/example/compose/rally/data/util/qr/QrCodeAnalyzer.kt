@@ -1,4 +1,4 @@
-package com.example.compose.rally.scan
+package com.example.compose.rally.data.util.qr
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.example.compose.rally.data.bill.BillRepository
-import com.example.compose.rally.data.util.QRCodeParser
 import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
 import java.nio.ByteBuffer
@@ -44,7 +43,7 @@ class QrCodeAnalyser(
                 }.decode(binaryBmp)
                 onQrCodeScanner(result.text)
                 Log.e("qr", "result in camera is ${result.text}")
-                var newBill = QRCodeParser.createBillFromQR(result.text)
+                var newBill = createBillFromQR(result.text)
 
                 try {
                     BillRepository.addBill(newBill, context)

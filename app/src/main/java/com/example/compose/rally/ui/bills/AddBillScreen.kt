@@ -43,7 +43,7 @@ import coil.compose.AsyncImage
 import com.example.compose.rally.R
 import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
-import com.example.compose.rally.data.category.Categories
+import com.example.compose.rally.data.category.billCategories
 import com.example.compose.rally.ui.accounts.RepeatDataDropdown
 import java.time.LocalDateTime
 
@@ -59,7 +59,7 @@ fun AddBillScreen(
     val bill = remember(billType) { BillRepository.getBill(billType) }
     Log.e("route", "bill name is ${bill.name}")
 
-    var selectedCategory by remember { mutableStateOf(Categories.billCategories.first()) }
+    var selectedCategory by remember { mutableStateOf(billCategories.first()) }
     var billName by remember { mutableStateOf(TextFieldValue()) }
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
     var cardNumber by remember { mutableStateOf(TextFieldValue()) }
@@ -146,7 +146,7 @@ fun AddBillScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
         CategoryDropdown(
-            categories = Categories.billCategories,
+            categories = billCategories,
             selectedCategory = selectedCategory,
             onCategorySelected = { selectedCategory = it }
         )
