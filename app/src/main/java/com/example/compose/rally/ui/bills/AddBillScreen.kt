@@ -1,8 +1,12 @@
 package com.example.compose.rally.ui.bills
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.CalendarView
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -29,32 +33,57 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import coil.compose.AsyncImage
 import com.example.compose.rally.R
-import com.example.compose.rally.data.Bill
-import com.example.compose.rally.data.UserRepository
+import com.example.compose.rally.data.bill.Bill
+import com.example.compose.rally.data.bill.BillRepository
+import com.example.compose.rally.data.category.Categories
+import com.example.compose.rally.ui.accounts.RepeatDataDropdown
 import java.time.LocalDateTime
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AddBillScreen(
-    billType: String? = UserRepository.bills.first().name,
+    billType: String? = BillRepository.bills.first().name,
     onSaveClick: (Bill) -> Unit = {},
 //    onBackClick: () -> Unit = {},
 ) {
-    val bill = remember(billType) { UserRepository.getBill(billType) }
+
+    val bill = remember(billType) { BillRepository.getBill(billType) }
     Log.e("route", "bill name is ${bill.name}")
 
-    var selectedCategory by remember { mutableStateOf(UserRepository.billCategories.first()) }
+    var selectedCategory by remember { mutableStateOf(Categories.billCategories.first()) }
     var billName by remember { mutableStateOf(TextFieldValue()) }
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
     var cardNumber by remember { mutableStateOf(TextFieldValue()) }
     var balance by remember { mutableStateOf(TextFieldValue()) }
+
+    var repeatRuleOptions =
+        listOf("Только один день", "Каждый день", "Каждую неделю", "Каждый месяц")
+    var selectedRepeatRule by remember { mutableStateOf(repeatRuleOptions[0]) }
+
+    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+    val intent = Intent(Intent.ACTION_GET_CONTENT)
+    intent.type = "*/*";
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+    val pickPictureLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { imageUri ->
+        if (imageUri != null) {
+            // Update the state with the Uri
+            selectedImageUri = imageUri
+            Log.e("picImg", "imageUri change to: $imageUri")
+        }
+    }
+
 
     Column(
         modifier = Modifier
@@ -81,9 +110,7 @@ fun AddBillScreen(
 //                }
 //            }
 //        )
-//
 //        Spacer(modifier = Modifier.height(16.dp))
-
 
         TextField(
             value = billName,
@@ -96,7 +123,6 @@ fun AddBillScreen(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-
         TextField(
             value = cardNumber,
             onValueChange = { cardNumber = it },
@@ -108,7 +134,6 @@ fun AddBillScreen(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-
         TextField(
             value = balance,
             onValueChange = { balance = it },
@@ -120,17 +145,40 @@ fun AddBillScreen(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-
         CategoryDropdown(
-            categories = UserRepository.billCategories,
+            categories = Categories.billCategories,
             selectedCategory = selectedCategory,
             onCategorySelected = { selectedCategory = it }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-
         showDatePicker { selectedDate = it }
 
+        RepeatDataDropdown(
+            repeatRuleOptions = repeatRuleOptions,
+            selectedRepeatRule = selectedRepeatRule,
+            onRepeatRuleSelected = { selectedRepeatRule = it }
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = {
+                pickPictureLauncher.launch("image/*")
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(text = stringResource(id = R.string.attach_photo))
+        }
+
+        AsyncImage(
+            model = selectedImageUri,
+            placeholder = painterResource(R.drawable.ic_launcher_foreground),
+            contentDescription = null,
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
                 if (billName.text.isNotEmpty() && balance.text.isNotEmpty()) {
@@ -138,6 +186,8 @@ fun AddBillScreen(
                         Bill(
                             name = billName.text,
                             date = selectedDate,
+                            timesRepeat = repeatRuleOptions.indexOf(selectedRepeatRule),
+                            billPhoto = selectedImageUri,
                             category = selectedCategory,
                             amount = balance.text.toFloat()
                         )

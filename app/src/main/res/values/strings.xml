@@ -26,4 +26,17 @@
     <string name="fingerprint_subtitle">Прикоснитесь к сенсору для входа по отпечатку пальца</string>
     <string name="fingerprint_cancel">Отмена</string>
     <string name="alert_title">Оповещения</string>
+    <string name="toggle_password_visibility">toggle_password_visibility</string>
+    <string name="add_category">add_category</string>
+    <string name="current_category">Текущая цель по расходам:\n%1$s</string>
+    <string name="select_category">Выберите цель</string>
+    <string name="close">Закрыть</string>
+    <string name="password_setting">Password Setting</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_category_name">Enter Category Name</string>
+    <string name="api_key_for_chat">API Key for Chat</string>
+    <string name="attach_photo">attach_photo</string>
+    <string name="take_photo">take_photo</string>
+    <string name="add_account_categoty">Добавить категорию доходов</string>
+    <string name="add_bill_categoty">Добавить категорию трат</string>
 </resources>

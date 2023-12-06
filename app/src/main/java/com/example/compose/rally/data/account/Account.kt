@@ -1,15 +1,20 @@
-package com.example.compose.rally.data
+package com.example.compose.rally.data.account
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
-import com.example.compose.rally.data.util.localDateTimeToString
 import com.example.compose.rally.data.util.localDateToString
 import java.time.LocalDateTime
 
+/**
+ *  listOf("Только один день", "Каждый день", "Каждую неделю", "Каждый месяц")
+ *  timesRepeat - это индекс массива
+ *  так, если timesRepeat == 0, то значние - Только один день
+ * */
 @Immutable
 data class Account(
     var name: String,
     val date: LocalDateTime,
+    val timesRepeat: Int,
     val cardNumber: Int,
     val balance: Float,
     var category: String,

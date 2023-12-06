@@ -45,7 +45,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityOptionsCompat
 import com.example.compose.rally.R
-import com.example.compose.rally.data.UserRepository
+import com.example.compose.rally.data.account.AccountRepository
+import com.example.compose.rally.data.bill.BillRepository
+import com.example.compose.rally.data.util.AlertAnalyze
 import com.example.compose.rally.scan.QRCodeScannerActivity
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.BillRow
@@ -124,29 +126,7 @@ fun OverviewScreen(
 @Composable
 private fun AlertCard() {
     var showDialog by remember { mutableStateOf(false) }
-    val alertMessage: String
-
-    val totalBalance = UserRepository.accounts
-        .filter { it.date.month == LocalDate.now().month }
-        .sumOf { it.balance.toDouble() }.toFloat()
-    val totalSpend = UserRepository.bills
-        .filter { it.date.month == LocalDate.now().month }
-        .sumOf { it.amount.toDouble() }.toFloat()
-    val percent = ((totalSpend / totalBalance) * 100).roundToInt()
-
-    if (percent > 150) {
-        alertMessage = "Осторожно!\nВы многократно превысили бюджет!";
-    } else if (percent <= 150 && totalBalance / 2 < totalSpend) {
-        alertMessage = "Предупреждение!\nВы израсходовали более $percent% вашего бюджета.";
-    } else if (percent <= 150) {
-        alertMessage = "Ваши траты под контролем!";
-    } else {
-        alertMessage = "Вы израсходовали $percent% вашего бюджета на покупки в этом месяце.";
-    }
-
-    Log.e("spend", "totalSpend / totalBalance ${totalSpend / totalBalance}")
-    Log.e("spend", "totalSpend / totalBalance $percent")
-    Log.e("spend", "totalBalance / totalSpend  ${(totalBalance / totalSpend).roundToInt()}")
+    val alertMessage = AlertAnalyze().analyzeAlert()
 
     if (showDialog) {
         RallyAlertDialog(
@@ -283,12 +263,12 @@ private fun <T> OverViewDivider(
  */
 @Composable
 private fun AccountsCard(onClickSeeAll: () -> Unit, onAccountClick: (String) -> Unit) {
-    val amount = UserRepository.accounts.map { account -> account.balance }.sum()
+    val amount = AccountRepository.accounts.map { account -> account.balance }.sum()
     OverviewScreenCard(
         title = stringResource(R.string.accounts),
         amount = amount,
         onClickSeeAll = onClickSeeAll,
-        data = UserRepository.accounts,
+        data = AccountRepository.accounts,
         colors = { it.color },
         values = { it.balance }
     ) { account ->
@@ -310,12 +290,12 @@ private fun AccountsCard(onClickSeeAll: () -> Unit, onAccountClick: (String) -> 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun BillsCard(onClickSeeAll: () -> Unit, onBillClick: (String) -> Unit) {
-    val amount = UserRepository.bills.map { bill -> bill.amount }.sum()
+    val amount = BillRepository.bills.map { bill -> bill.amount }.sum()
     OverviewScreenCard(
         title = stringResource(R.string.bills),
         amount = amount,
         onClickSeeAll = onClickSeeAll,
-        data = UserRepository.bills,
+        data = BillRepository.bills,
         colors = { it.color },
         values = { it.amount }
     ) { bill ->

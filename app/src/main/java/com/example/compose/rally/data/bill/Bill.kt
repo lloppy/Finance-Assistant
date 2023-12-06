@@ -1,5 +1,6 @@
-package com.example.compose.rally.data
+package com.example.compose.rally.data.bill
 
+import android.net.Uri
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import com.example.compose.rally.data.util.localDateTimeToString
@@ -9,6 +10,8 @@ import java.time.LocalDateTime
 data class Bill constructor(
     val name: String,
     val date: LocalDateTime,
+    val timesRepeat: Int,
+    val billPhoto : Uri?,
     val category: String,
     val amount: Float,
     val color: Color = (billCategoryColors[category] ?: billCategoryColors["Default"])!!,

@@ -11,7 +11,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.compose.rally.data.UserRepository
+import com.example.compose.rally.data.account.AccountRepository
+import com.example.compose.rally.data.bill.BillRepository
 import com.example.compose.rally.ui.accounts.AccountsScreen
 import com.example.compose.rally.ui.accounts.AddAccountScreen
 import com.example.compose.rally.ui.accounts.SingleAccountScreen
@@ -92,9 +93,9 @@ fun RallyNavHost(
             SingleAccountScreen(
                 accountType = accountType,
                 onDeleteAccountClick = {
-                    Log.e("delete", "Было: " + UserRepository.accounts.size.toString())
-                    UserRepository.removeAccount(it)
-                    Log.e("delete", "Стало: " + UserRepository.accounts.size.toString())
+                    Log.e("delete", "Было: " + AccountRepository.accounts.size.toString())
+                    AccountRepository.removeAccount(it)
+                    Log.e("delete", "Стало: " + AccountRepository.accounts.size.toString())
                     navController.navigateSingleTopTo(Accounts.route)
                 }
             )
@@ -111,7 +112,7 @@ fun RallyNavHost(
                 accountType,
 
                 onSaveClick = { account ->
-                    UserRepository.addAccount(account)
+                    AccountRepository.addAccount(account)
                     navController.navigateSingleTopTo(Accounts.route)
                 }
             )
@@ -127,9 +128,9 @@ fun RallyNavHost(
             SingleBillScreen(
                 billType = billType,
                 onDeleteBillClick = {
-                    Log.e("delete", "Было: " + UserRepository.bills.size.toString())
-                    UserRepository.removeBill(it)
-                    Log.e("delete", "Стало: " + UserRepository.bills.size.toString())
+                    Log.e("delete", "Было: " + BillRepository.bills.size.toString())
+                    BillRepository.removeBill(it)
+                    Log.e("delete", "Стало: " + BillRepository.bills.size.toString())
                     navController.navigateSingleTopTo(Bills.route)
                 })
         }
@@ -145,7 +146,7 @@ fun RallyNavHost(
                 billType,
 
                 onSaveClick = { bill ->
-                    UserRepository.addBill(bill, context)
+                    BillRepository.addBill(bill, context)
                     navController.navigateSingleTopTo(Bills.route)
                 }
             )

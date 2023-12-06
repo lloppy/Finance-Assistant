@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.compose.rally.data.UserRepository
 import com.example.compose.rally.ui.authentication.AuthenticationScreen
 import com.example.compose.rally.ui.components.RallyTabRow
 import com.example.compose.rally.ui.theme.RallyTheme
@@ -89,7 +88,7 @@ fun RallyApp() {
         val currentScreen =
             rallyTabRowScreens.find { it.route == currentDestination?.route } ?: Overview
 
-       // UserRepository.readFile(context)
+        // UserRepository.readFile(context)
 
         Scaffold(
             topBar = {

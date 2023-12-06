@@ -126,6 +126,8 @@ dependencies {
     // coreLibraryDesugaringEnabled
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
+    // for bitmap to image
+    implementation "io.coil-kt:coil-compose:2.5.0"
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {

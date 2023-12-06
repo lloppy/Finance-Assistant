@@ -4,7 +4,11 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -15,16 +19,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.compose.rally.R
-import com.example.compose.rally.data.Bill
-import com.example.compose.rally.data.UserRepository
+import com.example.compose.rally.data.bill.Bill
+import com.example.compose.rally.data.bill.BillRepository
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.StatementBody
+import com.example.compose.rally.ui.components.StatementBodyWithSmallCircle
 
 /**
  * The Bills screen.
@@ -34,7 +41,7 @@ import com.example.compose.rally.ui.components.StatementBody
 fun BillsScreen(
     onBillClick: (String) -> Unit = {},
     onAddBillClick: (String) -> Unit = {},
-    bills: List<Bill> = remember { UserRepository.bills }
+    bills: List<Bill> = remember { BillRepository.bills }
 ) {
     StatementBody(
         modifier = Modifier.clearAndSetSemantics { contentDescription = "Расходы" },
@@ -78,23 +85,36 @@ fun BillsScreen(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SingleBillScreen(
-    billType: String? = UserRepository.bills.first().name,
+    billType: String? = BillRepository.bills.first().name,
     onDeleteBillClick: (Bill) -> Unit = {}
 ) {
-    val bill: Bill = remember(billType) { UserRepository.getBill(billType) }
-    StatementBody(
-        items = listOf(bill),
-        colors = { bill.color },
-        amounts = { bill.amount },
-        amountsTotal = bill.amount,     //?????????
-        circleLabel = bill.name,
-    ) { row ->
-        BillRow(
-            name = row.name,
-            stringDate = row.stringDate,
-            category = row.category,
-            amount = row.amount,
-            color = row.color
+    val bill: Bill = remember(billType) { BillRepository.getBill(billType) }
+    Column {
+        StatementBodyWithSmallCircle(
+            items = listOf(bill),
+            colors = { bill.color },
+            amounts = { bill.amount },
+            amountsTotal = bill.amount,     //?????????
+            circleLabel = bill.name,
+        ) { row ->
+            BillRow(
+                name = row.name,
+                stringDate = row.stringDate,
+                category = row.category,
+                amount = row.amount,
+                color = row.color
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+        AsyncImage(
+            model = bill.billPhoto,
+            placeholder = painterResource(R.drawable.ic_launcher_foreground),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 40.dp),
+            alignment = Alignment.Center
         )
     }
 

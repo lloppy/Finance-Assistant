@@ -1,5 +1,7 @@
 package com.example.compose.rally.ui.accounts
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,8 +20,8 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.R
-import com.example.compose.rally.data.Account
-import com.example.compose.rally.data.UserRepository
+import com.example.compose.rally.data.account.Account
+import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
 
@@ -31,10 +33,10 @@ fun AccountsScreen(
     onAccountClick: (String) -> Unit = {},
     onAddAccountClick: (String) -> Unit = {}
 ) {
-    val amountsTotal = remember { UserRepository.accounts.map { account -> account.balance }.sum() }
+    val amountsTotal = remember { AccountRepository.accounts.map { account -> account.balance }.sum() }
     StatementBody(
         modifier = Modifier.semantics { contentDescription = "Счета" },
-        items = UserRepository.accounts,
+        items = AccountRepository.accounts,
         amounts = { account -> account.balance },
         colors = { account -> account.color },
         amountsTotal = amountsTotal,
@@ -73,10 +75,10 @@ fun AccountsScreen(
  */
 @Composable
 fun SingleAccountScreen(
-    accountType: String? = UserRepository.accounts.first().name,
+    accountType: String? = AccountRepository.accounts.first().name,
     onDeleteAccountClick: (Account) -> Unit = {}
 ) {
-    val account = remember(accountType) { UserRepository.getAccount(accountType) }
+    val account = remember(accountType) { AccountRepository.getAccount(accountType) }
     StatementBody(
         items = listOf(account),
         colors = { account.color },
