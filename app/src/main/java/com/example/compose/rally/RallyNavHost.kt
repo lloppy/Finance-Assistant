@@ -43,7 +43,13 @@ fun RallyNavHost(
                 },
                 onClickAnalyze = {
                     navController.navigateSingleTopTo(ChatGPT.route)
-                }
+                },
+                onClickSeeAllAccounts = {
+                    navController.navigateSingleTopTo(Accounts.route)
+                },
+                onClickSeeAllBills = {
+                    navController.navigateSingleTopTo(Bills.route)
+                },
             )
         }
         composable(route = Overview.route) {
