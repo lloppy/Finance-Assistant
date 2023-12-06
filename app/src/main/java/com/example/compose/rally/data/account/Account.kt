@@ -1,8 +1,7 @@
-package com.example.compose.rally.data
+package com.example.compose.rally.data.account
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
-import com.example.compose.rally.data.util.localDateTimeToString
 import com.example.compose.rally.data.util.localDateToString
 import java.time.LocalDateTime
 

@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
-import com.example.compose.rally.data.UserRepository
+import com.example.compose.rally.data.util.QRCodeParser
 import com.example.compose.rally.ui.theme.RallyTheme
 
 class QRCodeScannerActivity : ComponentActivity() {
@@ -83,7 +83,7 @@ class QRCodeScannerActivity : ComponentActivity() {
                                     context = context
                                 ) { result ->
                                     code = result
-                                    UserRepository.createBillFromQR(code)
+                                    QRCodeParser.createBillFromQR(code)
 
                                 })
                             try {

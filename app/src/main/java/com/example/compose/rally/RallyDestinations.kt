@@ -1,8 +1,6 @@
 package com.example.compose.rally
 
-import android.util.Log
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AttachMoney
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Money
@@ -13,7 +11,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import com.example.compose.rally.data.UserRepository
 
 /**
  * Contract for information needed on every Rally navigation destination

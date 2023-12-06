@@ -8,12 +8,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
-import androidx.glance.LocalContext
-import com.example.compose.rally.Bills
-import com.example.compose.rally.data.Bill
-import com.example.compose.rally.data.UserRepository
-import com.example.compose.rally.data.UserRepository.bills
-import com.example.compose.rally.navigateSingleTopTo
+import com.example.compose.rally.data.bill.BillRepository
+import com.example.compose.rally.data.util.QRCodeParser
 import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
 import java.nio.ByteBuffer
@@ -48,10 +44,10 @@ class QrCodeAnalyser(
                 }.decode(binaryBmp)
                 onQrCodeScanner(result.text)
                 Log.e("qr", "result in camera is ${result.text}")
-                var newBill = UserRepository.createBillFromQR(result.text)
+                var newBill = QRCodeParser.createBillFromQR(result.text)
 
                 try {
-                    UserRepository.addBill(newBill, context)
+                    BillRepository.addBill(newBill, context)
                     image.close()
                     activity.finish()
                 } catch (e: IllegalArgumentException) {

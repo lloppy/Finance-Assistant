@@ -17,11 +17,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
-import androidx.compose.material.Checkbox
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -42,8 +40,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.compose.rally.R
-import com.example.compose.rally.data.Account
-import com.example.compose.rally.data.UserRepository
+import com.example.compose.rally.data.account.Account
+import com.example.compose.rally.data.account.AccountRepository
+import com.example.compose.rally.data.category.Categories
 import com.example.compose.rally.ui.theme.RallyTheme
 import java.time.LocalDateTime
 
@@ -62,14 +61,14 @@ fun AddAccountScreenPreview() {
 
 @Composable
 fun AddAccountScreen(
-    accountType: String? = UserRepository.accounts.first().name,
+    accountType: String? = AccountRepository.accounts.first().name,
     onSaveClick: (Account) -> Unit = {},
     //   onBackClick: () -> Unit = {},
 ) {
-    val account = remember(accountType) { UserRepository.getAccount(accountType) }
+    val account = remember(accountType) { AccountRepository.getAccount(accountType) }
     Log.e("route", "account name is ${account.name}")
 
-    var selectedCategory by remember { mutableStateOf(UserRepository.accountCategories.first()) }
+    var selectedCategory by remember { mutableStateOf(Categories.accountCategories.first()) }
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
     var accountName by remember { mutableStateOf(TextFieldValue()) }
     var cardNumber by remember { mutableStateOf(TextFieldValue()) }
@@ -143,7 +142,7 @@ fun AddAccountScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         CategoryDropdown(
-            categories = UserRepository.accountCategories,
+            categories = Categories.accountCategories,
             selectedCategory = selectedCategory,
             onCategorySelected = { selectedCategory = it }
         )

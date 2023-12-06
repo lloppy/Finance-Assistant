@@ -8,7 +8,6 @@ import android.widget.CalendarView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -28,13 +27,11 @@ import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -42,15 +39,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.glance.LocalContext
-import coil.ImageLoader
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.example.compose.rally.R
-import com.example.compose.rally.data.Bill
-import com.example.compose.rally.data.UserRepository
+import com.example.compose.rally.data.bill.Bill
+import com.example.compose.rally.data.bill.BillRepository
+import com.example.compose.rally.data.category.Categories
 import com.example.compose.rally.ui.accounts.RepeatDataDropdown
 import java.time.LocalDateTime
 
@@ -58,15 +51,15 @@ import java.time.LocalDateTime
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AddBillScreen(
-    billType: String? = UserRepository.bills.first().name,
+    billType: String? = BillRepository.bills.first().name,
     onSaveClick: (Bill) -> Unit = {},
 //    onBackClick: () -> Unit = {},
 ) {
 
-    val bill = remember(billType) { UserRepository.getBill(billType) }
+    val bill = remember(billType) { BillRepository.getBill(billType) }
     Log.e("route", "bill name is ${bill.name}")
 
-    var selectedCategory by remember { mutableStateOf(UserRepository.billCategories.first()) }
+    var selectedCategory by remember { mutableStateOf(Categories.billCategories.first()) }
     var billName by remember { mutableStateOf(TextFieldValue()) }
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
     var cardNumber by remember { mutableStateOf(TextFieldValue()) }
@@ -153,7 +146,7 @@ fun AddBillScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
         CategoryDropdown(
-            categories = UserRepository.billCategories,
+            categories = Categories.billCategories,
             selectedCategory = selectedCategory,
             onCategorySelected = { selectedCategory = it }
         )

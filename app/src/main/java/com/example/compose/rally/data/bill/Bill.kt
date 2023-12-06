@@ -1,4 +1,4 @@
-package com.example.compose.rally.data
+package com.example.compose.rally.data.bill
 
 import android.net.Uri
 import androidx.compose.runtime.Immutable

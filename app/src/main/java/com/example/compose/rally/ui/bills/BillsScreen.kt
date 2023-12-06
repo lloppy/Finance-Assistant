@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
@@ -29,8 +27,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.compose.rally.R
-import com.example.compose.rally.data.Bill
-import com.example.compose.rally.data.UserRepository
+import com.example.compose.rally.data.bill.Bill
+import com.example.compose.rally.data.bill.BillRepository
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.StatementBody
 import com.example.compose.rally.ui.components.StatementBodyWithSmallCircle
@@ -43,7 +41,7 @@ import com.example.compose.rally.ui.components.StatementBodyWithSmallCircle
 fun BillsScreen(
     onBillClick: (String) -> Unit = {},
     onAddBillClick: (String) -> Unit = {},
-    bills: List<Bill> = remember { UserRepository.bills }
+    bills: List<Bill> = remember { BillRepository.bills }
 ) {
     StatementBody(
         modifier = Modifier.clearAndSetSemantics { contentDescription = "Расходы" },
@@ -87,10 +85,10 @@ fun BillsScreen(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SingleBillScreen(
-    billType: String? = UserRepository.bills.first().name,
+    billType: String? = BillRepository.bills.first().name,
     onDeleteBillClick: (Bill) -> Unit = {}
 ) {
-    val bill: Bill = remember(billType) { UserRepository.getBill(billType) }
+    val bill: Bill = remember(billType) { BillRepository.getBill(billType) }
     Column {
         StatementBodyWithSmallCircle(
             items = listOf(bill),
