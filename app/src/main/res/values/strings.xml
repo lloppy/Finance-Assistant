@@ -39,4 +39,5 @@
     <string name="take_photo">take_photo</string>
     <string name="add_account_categoty">Добавить категорию доходов</string>
     <string name="add_bill_categoty">Добавить категорию трат</string>
+    <string name="balance_title">Баланс</string>
 </resources>

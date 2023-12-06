@@ -3,8 +3,8 @@
     <string name="total">Остаток</string>
     <string name="due">Расходы</string> // Пример: Платёж 29 января
     <string name="account_redacted">• • • • • </string>
-    <string name="accounts">Общий остаток</string>
-    <string name="bills">Текущие расходы</string>
+    <string name="accounts">Доходы</string>
+    <string name="bills">Расходы</string>
     <string name="sort">Сортировать</string>
     <string name="see_all">ПОКАЗАТЬ ВСЕ</string>
     <string name="add_account">Добавить счёт</string>
@@ -27,4 +27,5 @@
     <string name="fingerprint_subtitle">Прикоснитесь к сенсору для входа по отпечатку пальца</string>
     <string name="fingerprint_cancel">Отмена</string>
     <string name="close">Закрыть</string>
+    <string name="balance_title">Баланс</string>
 </resources>

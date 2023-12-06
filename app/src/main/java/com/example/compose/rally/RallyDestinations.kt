@@ -1,11 +1,16 @@
 package com.example.compose.rally
 
+import android.util.Log
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AttachMoney
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Money
 import androidx.compose.material.icons.filled.MoneyOff
 import androidx.compose.material.icons.filled.PieChart
+import androidx.compose.material.icons.filled.PieChartOutline
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
@@ -26,17 +31,17 @@ interface RallyDestination {
  */
 object Overview : RallyDestination {
     override val icon = Icons.Filled.PieChart
-    override val route = "обзор"
+    override val route = "overview"
 }
 
 object Accounts : RallyDestination {
     override val icon = Icons.Filled.AttachMoney
-    override val route = "счета"
+    override val route = "accounts"
 }
 
 object Bills : RallyDestination {
     override val icon = Icons.Filled.MoneyOff
-    override val route = "расходы"
+    override val route = "bills"
 }
 
 object ChatGPT : RallyDestination {
@@ -46,7 +51,12 @@ object ChatGPT : RallyDestination {
 
 object Settings : RallyDestination {
     override val icon = Icons.Filled.Settings
-    override val route = "настройки"
+    override val route = "settings"
+}
+
+object Home : RallyDestination {
+    override val icon = Icons.Filled.Home
+    override val route = "home"
 }
 
 object AddAccount : RallyDestination {
@@ -101,4 +111,4 @@ object SingleBill : RallyDestination {
 }
 
 // Screens to be displayed in the top RallyTabRow
-val rallyTabRowScreens = listOf(Overview, Accounts, Bills, ChatGPT, Settings)
+val rallyTabRowScreens = listOf(Home, Overview, ChatGPT, Settings)

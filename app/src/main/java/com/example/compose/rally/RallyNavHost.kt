@@ -21,6 +21,7 @@ import com.example.compose.rally.ui.bills.BillsScreen
 import com.example.compose.rally.ui.bills.SingleBillScreen
 import com.example.compose.rally.ui.chat.ChatGPTScreen
 import com.example.compose.rally.ui.chat.ChatViewModel
+import com.example.compose.rally.ui.home.HomeScreen
 import com.example.compose.rally.ui.overview.OverviewScreen
 import com.example.compose.rally.ui.settings.SettingsScreen
 
@@ -32,9 +33,19 @@ fun RallyNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Overview.route,
+        startDestination = Home.route,
         modifier = modifier
     ) {
+        composable(route = Home.route) {
+            HomeScreen(
+                onAddBillClick = {
+                    navController.navigateToAddBill(AddBill.route)
+                },
+                onClickAnalyze = {
+                    navController.navigateSingleTopTo(ChatGPT.route)
+                }
+            )
+        }
         composable(route = Overview.route) {
             OverviewScreen(
                 onClickSeeAllAccounts = {

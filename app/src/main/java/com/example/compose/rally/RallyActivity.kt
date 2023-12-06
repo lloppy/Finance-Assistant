@@ -86,7 +86,7 @@ fun RallyApp() {
         val currentBackStack by navController.currentBackStackEntryAsState()
         val currentDestination = currentBackStack?.destination
         val currentScreen =
-            rallyTabRowScreens.find { it.route == currentDestination?.route } ?: Overview
+            rallyTabRowScreens.find { it.route == currentDestination?.route } ?: Home
 
         // UserRepository.readFile(context)
 
@@ -150,7 +150,7 @@ fun PasswordAuthentication(
                 showError = false
             },
 
-            label = { Text(text = "Введите свой пароль", color = Color.White) },
+            label = { Text(text = "Введите пароль", color = Color.White) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedTextColor = Color.White,
                 unfocusedTextColor = Color.White,

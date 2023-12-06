@@ -63,7 +63,10 @@ fun <T> OverviewScreenCard(
  * The Accounts card within the Rally Overview screen.
  */
 @Composable
-fun AccountsCard(onClickSeeAll: () -> Unit, onAccountClick: (String) -> Unit) {
+fun AccountsCard(
+    onClickSeeAll: () -> Unit,
+    onAccountClick: (String) -> Unit,
+) {
     val amount = AccountRepository.accounts.map { account -> account.balance }.sum()
     OverviewScreenCard(
         title = stringResource(R.string.accounts),
@@ -90,7 +93,10 @@ fun AccountsCard(onClickSeeAll: () -> Unit, onAccountClick: (String) -> Unit) {
  */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun BillsCard(onClickSeeAll: () -> Unit, onBillClick: (String) -> Unit) {
+fun BillsCard(
+    onClickSeeAll: () -> Unit,
+    onBillClick: (String) -> Unit,
+) {
     val amount = BillRepository.bills.map { bill -> bill.amount }.sum()
     OverviewScreenCard(
         title = stringResource(R.string.bills),
