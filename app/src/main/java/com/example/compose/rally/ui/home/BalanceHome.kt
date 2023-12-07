@@ -26,7 +26,7 @@ import com.example.compose.rally.ui.overview.RallyDefaultPadding
 fun Balance(
     modifier: Modifier,
     context: Context,
-    onAddBillClick: () -> Unit = {}
+    onAddBillClick: () -> Unit = {},
 ) {
     var balance = calculateBalance()
 
@@ -62,7 +62,7 @@ fun Balance(
         ) {
             addSpend(
                 context = context,
-                onAddBillClick = onAddBillClick
+                onAddBillClick = onAddBillClick,
             )
         }
     }

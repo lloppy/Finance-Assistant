@@ -3,8 +3,8 @@
     <string name="total">Остаток</string>
     <string name="due">Расходы</string> // Пример: Платёж 29 января
     <string name="account_redacted">• • • • • </string>
-    <string name="accounts">Доходы</string>
-    <string name="bills">Расходы</string>
+    <string name="accounts">Поступления</string>
+    <string name="bills">Траты</string>
     <string name="sort">Сортировать</string>
     <string name="see_all">ПОКАЗАТЬ ВСЕ</string>
     <string name="add_account">Добавить счёт</string>

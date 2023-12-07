@@ -1,0 +1,78 @@
+
+// регулярка для расходов
+// ^"(\d{2}).(\d{2}).(\d{4}) (\d{2}):(\d{2}):\d{2}";"((\d{2}).(\d{2}).(\d{4}))?";"(\*(\d{4}))?";"(\w+)";"-(\d+),(\d{1,2})";"\w+";"-(\d+),(\d{1,2})";"\w+";"((\d)+)?";"(\W+)";"(\d+)";"(\W+)";.*"$
+
+// для поступлений
+// ^"(\d{2}).(\d{2}).(\d{4}) (\d{2}):(\d{2}):\d{2}";"(\d{2}).(\d{2}).(\d{4})";"(\*(\d{4}))?";"(\w+)";"(\d+),(\d{2})";"\w+";"(\d+),(\d{1,2})";"\w+";"()?";"([\D+]+)";"([\D+]+)?";"([\D+ ]+).?";".*$
+
+// проверено на кэшбеке и переводах
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun takeExpenseRegex(line: String): Boolean {
+    val expenseRegex =
+        """^"(\d{2}.\d{2}.\d{4}) (\d{2}):(\d{2}):\d{2}";"((\d{2}).(\d{2}).(\d{4}))?";"(\*(\d{4}))?";"(\w+)";"-(\d+),(\d{1,2})";"\w+";"-\d+,\d{1,2}";"\w+";"((\d)+)?";"(\W+)";"(\d+)";"(\W+)";.*"$""".toRegex()
+
+    val matchResult = expenseRegex.find(line)
+
+    if (matchResult != null) {
+        val group = matchResult.groupValues
+
+        val data = group[1]
+        val hour = group[2]
+        val minute = group[3]
+        val cardNumber = group[9]
+        val status = group[10]
+        val amountRub = group[11]
+        val amountPostRub = group[12]
+        val category = group[15]
+        val mcc = group[16]
+        val name = group[17]
+        val (day, month, year) = data.replace("\"", "").split(".")
+
+        Log.e("csv", "Day: $day, Month: $month, Year: $year, Hour: $hour, Minute: $minute")
+        Log.e("csv", "cardNumber: $cardNumber, status: $status")
+        Log.e("csv", "rub: $amountRub, kopeiki: $amountPostRub")
+        Log.e("csv", "category: $category, mcc: $mcc, name: $name ")
+
+        AccountRepository.addAccount(
+            Account(
+                name = name,
+                date = LocalDateTime.of(
+                    year.toInt(),
+                    month.toInt(),
+                    day.toInt(),
+                    hour.toInt(),
+                    minute.toInt()
+                ),
+                timesRepeat = 0,
+                cardNumber = cardNumber.toInt(),
+                balance = amountRub.toFloat() + amountPostRub.toFloat() / 100,
+                category = category
+            )
+        )
+        return true
+    } else {
+        Log.e("csv", "Invalid line takeExpenseRegex: $line")
+        return false
+    }
+}
+
+fun takeIncomeRegex(line: String): Boolean {
+    val incomeRegex =
+        """^"(\d{2}).(\d{2}).(\d{4}) (\d{2}):(\d{2}):\d{2}";"(\d{2}).(\d{2}).(\d{4})";"(\*(\d{4}))?";"(\w+)";"(\d+),(\d{2})";"\w+";"(\d+),(\d{1,2})";"\w+";"()?";"([а-яА-Я]+)";"([а-яА-Я]+)?";"([а-яА-Я ]+).?";".*$""".toRegex()
+
+    val matchResult = incomeRegex.find(line)
+
+    if (matchResult != null) {
+        val (day, month, year, hour, minute, cardNumber, status, amountRub) = matchResult.destructured
+        Log.e("csv", "Day: $day, Month: $month, Year: $year, Hour: $hour, Minute: $minute, Second: $day")
+        Log.e("csv", "Amount 1: $cardNumber, Decimal 1: $day")
+        Log.e("csv", "Amount 2: $status, Decimal 2: $amountRub")
+        return true
+    } else {
+        Log.e("csv", "Invalid line takeIncomeRegex: $line")
+        return false
+    }
+}
+
+//            if (!takeExpenseRegex(line!!) takeIncomeRegex(line!!)

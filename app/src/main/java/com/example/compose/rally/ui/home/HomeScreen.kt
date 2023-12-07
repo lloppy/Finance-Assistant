@@ -46,17 +46,17 @@ fun HomeScreen(
                 .padding(bottom = RallyDefaultPadding)
                 .fillMaxHeight(0.4f),
             context = context,
-            onAddBillClick = onAddBillClick
+            onAddBillClick = onAddBillClick,
         )
 
         OverviewHome(
             onClickSeeAllAccounts = onClickSeeAllAccounts,
             onClickSeeAllBills = onClickSeeAllBills,
-            )
+        )
 
 
         AlertHome(onClickAnalyze = onClickAnalyze)
-        Spacer(Modifier.height(RallyDefaultPadding ))
+        Spacer(Modifier.height(RallyDefaultPadding))
 
     }
 }
