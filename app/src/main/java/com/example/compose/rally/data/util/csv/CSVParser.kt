@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.example.compose.rally.R
 import com.example.compose.rally.data.account.Account
 import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.data.bill.Bill
@@ -36,8 +37,6 @@ fun handleCSVFile(context: Context, uri: Uri) {
         val inputStream = context.contentResolver.openInputStream(uri)
         val reader = BufferedReader(InputStreamReader(inputStream))
 
-
-
         var line: String?
         while (reader.readLine().also { line = it } != null) {
             var cleanLine = line!!.replace("\"", "")
@@ -52,14 +51,13 @@ fun handleCSVFile(context: Context, uri: Uri) {
         }
         reader.close()
         inputStream?.close()
-        Toast.makeText(context, "???? ??????? ?????????", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.read_sucsess), Toast.LENGTH_SHORT).show()
     } catch (e: Exception) {
         e.printStackTrace()
-        Toast.makeText(context, "?????? ??? ????????? ?????", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.error_occured), Toast.LENGTH_SHORT).show()
     }
 }
 
-// ?????
 @RequiresApi(Build.VERSION_CODES.O)
 fun takeIncomeSplit(group: List<String>) {
     val regex = "^(\\d{2}).(\\d{2}).(\\d{4}) (\\d{2}):(\\d{2}):\\d{2}".toRegex()
@@ -84,10 +82,8 @@ fun takeIncomeSplit(group: List<String>) {
             category = group[9]
         )
     )
-
 }
 
-// ??????
 @RequiresApi(Build.VERSION_CODES.O)
 fun takeExpenseSplit(group: List<String>, context: Context) {
     val regex = "^(\\d{2}).(\\d{2}).(\\d{4}) (\\d{2}):(\\d{2}):\\d{2}".toRegex()
@@ -113,5 +109,4 @@ fun takeExpenseSplit(group: List<String>, context: Context) {
         ),
         context = context
     )
-
 }

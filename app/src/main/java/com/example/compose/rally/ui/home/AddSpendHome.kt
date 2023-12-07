@@ -95,7 +95,6 @@ fun addSpend(
                 TextButton(
                     onClick = {
                         launcher.launch(createChooseFileIntent())
-                        calculateBalance()
                     },
                     modifier = Modifier
                         .fillMaxWidth()

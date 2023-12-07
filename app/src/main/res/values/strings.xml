@@ -41,4 +41,6 @@
     <string name="add_bill_categoty">Добавить категорию трат</string>
     <string name="balance_title">Баланс</string>
     <string name="ruble">₽</string>
+    <string name="error_occured">Произошла ошибка</string>
+    <string name="read_sucsess">Данные успешно прочитаны</string>
 </resources>

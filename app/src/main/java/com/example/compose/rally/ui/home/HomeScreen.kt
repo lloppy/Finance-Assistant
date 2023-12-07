@@ -54,9 +54,7 @@ fun HomeScreen(
             onClickSeeAllBills = onClickSeeAllBills,
         )
 
-
         AlertHome(onClickAnalyze = onClickAnalyze)
         Spacer(Modifier.height(RallyDefaultPadding))
-
     }
 }

@@ -35,7 +35,6 @@ fun Balance(
     onAddBillClick: () -> Unit = {},
 ) {
     Column(
-
         modifier = modifier
             .fillMaxWidth()
             .background(colorResource(id = R.color.boxColor))
