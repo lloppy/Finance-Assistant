@@ -10,32 +10,35 @@ import com.example.compose.rally.data.account.Account
 import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
+import org.mozilla.universalchardet.UniversalDetector
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.nio.charset.Charset
 import java.nio.charset.Charset.*
 import java.time.LocalDateTime
 
-//* 1. "Дата операции";
-//  2. "Дата платежа";
-//  3. "Номер карты";
-//  4. "Статус";
-//  5. "Сумма операции";
-//  6. "Валюта операции";
-//  7. "Сумма платежа";
-//  8. "Валюта платежа";
-//  9. "Кэшбэк";
-//  10. "Категория";
+//* 1. "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+//  2. "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+//  3. "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ";
+//  4. "пїЅпїЅпїЅпїЅпїЅпїЅ";
+//  5. "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+//  6. "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+//  7. "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+//  8. "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+//  9. "пїЅпїЅпїЅпїЅпїЅпїЅ";
+//  10. "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 //  11. "MCC";
-//  12. "Описание";
-//  13. "Бонусы (включая кэшбэк)";
-//  14. "Округление на инвесткопилку";
-//  15. "Сумма операции с округлением"/
+//  12. "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+//  13. "пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)";
+//  14. "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+//  15. "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"/
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun handleCSVFile(context: Context, uri: Uri) {
     try {
         val inputStream = context.contentResolver.openInputStream(uri)
-        val reader = BufferedReader(InputStreamReader(inputStream))
+
+        val reader = BufferedReader(InputStreamReader(inputStream, forName("Windows-1251")))
 
         var line: String?
         while (reader.readLine().also { line = it } != null) {

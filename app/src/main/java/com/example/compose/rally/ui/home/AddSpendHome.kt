@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.app.ComponentActivity
 import com.example.compose.rally.R
-import com.example.compose.rally.data.analyze.calculateBalance
 import com.example.compose.rally.data.util.csv.handleCSVFile
 import com.example.compose.rally.ui.overview.RallyDefaultPadding
 import com.example.compose.rally.ui.qr.QRCodeScannerScreen
