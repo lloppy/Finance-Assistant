@@ -14,27 +14,30 @@ import java.io.InputStreamReader
 import java.nio.charset.Charset.*
 import java.time.LocalDateTime
 
-//* 1. "Р”Р°С‚Р° РѕРїРµСЂР°С†РёРё";
-//  2. "Р”Р°С‚Р° РїР»Р°С‚РµР¶Р°";
-//  3. "РќРѕРјРµСЂ РєР°СЂС‚С‹";
-//  4. "РЎС‚Р°С‚СѓСЃ";
-//  5. "РЎСѓРјРјР° РѕРїРµСЂР°С†РёРё";            //////////////
-//  6. "Р’Р°Р»СЋС‚Р° РѕРїРµСЂР°С†РёРё";           -----
-//  7. "РЎСѓРјРјР° РїР»Р°С‚РµР¶Р°";             //////////////
-//  8. "Р’Р°Р»СЋС‚Р° РїР»Р°С‚РµР¶Р°";            -----
-//  9. "РљСЌС€Р±СЌРє";
-//  10. "РљР°С‚РµРіРѕСЂРёСЏ";
+//* 1. "Дата операции";
+//  2. "Дата платежа";
+//  3. "Номер карты";
+//  4. "Статус";
+//  5. "Сумма операции";
+//  6. "Валюта операции";
+//  7. "Сумма платежа";
+//  8. "Валюта платежа";
+//  9. "Кэшбэк";
+//  10. "Категория";
 //  11. "MCC";
-//  12. "РћРїРёСЃР°РЅРёРµ";
-//  13. "Р‘РѕРЅСѓСЃС‹ (РІРєР»СЋС‡Р°СЏ РєСЌС€Р±СЌРє)";
-//  14. "РћРєСЂСѓРіР»РµРЅРёРµ РЅР° РёРЅРІРµСЃС‚РєРѕРїРёР»РєСѓ";
-//  15. "РЎСѓРјРјР° РѕРїРµСЂР°С†РёРё СЃ РѕРєСЂСѓРіР»РµРЅРёРµРј"/
+//  12. "Описание";
+//  13. "Бонусы (включая кэшбэк)";
+//  14. "Округление на инвесткопилку";
+//  15. "Сумма операции с округлением"/
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun handleCSVFile(context: Context, uri: Uri) {
     try {
         val inputStream = context.contentResolver.openInputStream(uri)
         val reader = BufferedReader(InputStreamReader(inputStream))
+
+
+
         var line: String?
         while (reader.readLine().also { line = it } != null) {
             var cleanLine = line!!.replace("\"", "")
@@ -49,14 +52,14 @@ fun handleCSVFile(context: Context, uri: Uri) {
         }
         reader.close()
         inputStream?.close()
-        Toast.makeText(context, "Р¤Р°Р№Р» СѓСЃРїРµС€РЅРѕ РѕР±СЂР°Р±РѕС‚Р°РЅ", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "???? ??????? ?????????", Toast.LENGTH_SHORT).show()
     } catch (e: Exception) {
         e.printStackTrace()
-        Toast.makeText(context, "РћС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ С„Р°Р№Р»Р°", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "?????? ??? ????????? ?????", Toast.LENGTH_SHORT).show()
     }
 }
 
-// РґРѕС…РѕРґ
+// ?????
 @RequiresApi(Build.VERSION_CODES.O)
 fun takeIncomeSplit(group: List<String>) {
     val regex = "^(\\d{2}).(\\d{2}).(\\d{4}) (\\d{2}):(\\d{2}):\\d{2}".toRegex()
@@ -84,7 +87,7 @@ fun takeIncomeSplit(group: List<String>) {
 
 }
 
-// СЂР°СЃС…РѕРґ
+// ??????
 @RequiresApi(Build.VERSION_CODES.O)
 fun takeExpenseSplit(group: List<String>, context: Context) {
     val regex = "^(\\d{2}).(\\d{2}).(\\d{4}) (\\d{2}):(\\d{2}):\\d{2}".toRegex()

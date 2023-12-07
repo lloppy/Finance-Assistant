@@ -40,7 +40,7 @@ fun <T> OverviewScreenCard(
         Column {
             Column(Modifier.padding(RallyDefaultPadding)) {
                 Text(text = title, style = MaterialTheme.typography.subtitle2)
-                val amountText = "₽" + formatAmount(
+                val amountText = stringResource(R.string.ruble) + formatAmount(
                     amount
                 )
                 Text(text = amountText, style = MaterialTheme.typography.h2)
@@ -50,7 +50,7 @@ fun <T> OverviewScreenCard(
                 data.take(SHOWN_ITEMS).forEach { row(it) }
                 SeeAllButton(
                     modifier = Modifier.clearAndSetSemantics {
-                        contentDescription = "Все $title"
+                        contentDescription = "$title"
                     },
                     onClick = onClickSeeAll,
                 )

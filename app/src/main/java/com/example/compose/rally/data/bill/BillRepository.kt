@@ -31,7 +31,7 @@ class BillRepository {
                 || (bill.category != "QR")
             ) {
                 bills += bill
-                Toast.makeText(context, "РџРѕРєСѓРїРєР° РґРѕР±Р°РІР»РµРЅР°!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Покупка добавлена!", Toast.LENGTH_SHORT).show()
             }
             //   saveFile(context)
         }

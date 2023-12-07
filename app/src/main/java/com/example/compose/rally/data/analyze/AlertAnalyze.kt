@@ -20,8 +20,6 @@ fun calculateBalance(): Float {
     return totalBalance - totalSpend
 }
 
-
-
 @RequiresApi(Build.VERSION_CODES.O)
 fun analyzeAlert(): String {
     val totalBalance = AccountRepository.accounts
