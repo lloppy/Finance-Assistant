@@ -110,7 +110,7 @@ private fun AlertItem(message: String) {
             Spacer(Modifier.height(RallyDefaultPadding))
             Text(
                 style = MaterialTheme.typography.body2,
-                text = "Текущая цель по расходам:\nНе откладывать" // прочитать из памяти
+                text = "Текущая цель:\nНе откладывать" // прочитать из памяти
             )
             Spacer(Modifier.height(RallyDefaultPadding))
         }

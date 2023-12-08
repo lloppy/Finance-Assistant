@@ -66,7 +66,7 @@ fun AddBillScreen(
     var balance by remember { mutableStateOf(TextFieldValue()) }
 
     var repeatRuleOptions =
-        listOf("Только один день", "Каждый день", "Каждую неделю", "Каждый месяц")
+        listOf("Без повторений", "Ежедневно", "Еженедельно", "Ежемесячно")
     var selectedRepeatRule by remember { mutableStateOf(repeatRuleOptions[0]) }
 
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }

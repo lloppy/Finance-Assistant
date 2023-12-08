@@ -36,7 +36,7 @@ fun ApiKeySetting(apiKey: String, onApiKeyChanged: (String) -> Unit) {
         TextField(
             value = apiKey,
             onValueChange = { onApiKeyChanged(it) },
-            label = { Text(text = "Enter API Key") },
+            label = { Text(text = "Введите API Key") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done

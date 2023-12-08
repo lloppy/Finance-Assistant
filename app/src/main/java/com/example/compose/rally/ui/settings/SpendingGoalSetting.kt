@@ -67,7 +67,7 @@ fun SpendingGoalSetting(
                         "Откладывать 50%",
                         "Откладывать 20%",
                         "Откладывать 10%",
-                        "Не откладывать"
+                        "Не определена"
                     )
 
                     options.forEachIndexed { index, option ->

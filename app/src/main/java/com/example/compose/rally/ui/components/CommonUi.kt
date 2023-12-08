@@ -48,7 +48,7 @@ fun AccountRow(
         color = color,
         title = name,
         //subtitle = stringResource(R.string.account_redacted) + AccountDecimalFormat.format(number),
-        subtitle = "Дата $stringDate",
+        subtitle = "$stringDate",
         category = category,
         amount = amount,
         negative = false
@@ -71,7 +71,7 @@ fun BillRow(
         modifier = modifier,
         color = color,
         title = name,   
-        subtitle = "Дата $stringDate",
+        subtitle = "$stringDate",
         category = category,
         amount = amount,
         negative = true

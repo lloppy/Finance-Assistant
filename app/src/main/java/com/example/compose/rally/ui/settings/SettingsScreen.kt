@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.example.compose.rally.R
 
 class SettingsViewModel {
-    var spendingGoal by mutableStateOf("Не откладывать")
+    var spendingGoal by mutableStateOf("Не определена")
     var apiChatKey by mutableStateOf("")
     var password by mutableStateOf("")
     var showPassword by mutableStateOf(false)

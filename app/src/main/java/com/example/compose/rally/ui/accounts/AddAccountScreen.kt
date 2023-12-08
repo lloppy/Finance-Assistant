@@ -262,7 +262,7 @@ fun RepeatDataDropdown(
             Icon(imageVector = Icons.Default.Edit, contentDescription = null)
 
             Text(
-                text = "Повторение: $selectedRepeatRule",
+                text = "Операция повторяется: $selectedRepeatRule",
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 12.dp)
