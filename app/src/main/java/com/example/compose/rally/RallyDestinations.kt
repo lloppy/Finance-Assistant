@@ -31,7 +31,7 @@ interface RallyDestination {
  */
 object Overview : RallyDestination {
     override val icon = Icons.Filled.PieChart
-    override val route = "Статистика"
+    override val route = "Обзор"
 }
 
 object Accounts : RallyDestination {

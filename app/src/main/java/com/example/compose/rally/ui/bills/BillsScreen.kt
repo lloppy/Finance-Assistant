@@ -16,7 +16,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -29,6 +32,7 @@ import coil.compose.AsyncImage
 import com.example.compose.rally.R
 import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
+import com.example.compose.rally.data.category.defaultBillCategories
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.StatementBody
 import com.example.compose.rally.ui.components.StatementBodyWithSmallCircle
@@ -43,12 +47,28 @@ fun BillsScreen(
     onAddBillClick: (String) -> Unit = {},
     bills: List<Bill> = remember { BillRepository.bills }
 ) {
+    var billCategoriesState by remember { mutableStateOf(defaultBillCategories) }
+    var selectedCategory by remember { mutableStateOf(billCategoriesState.first()) }
+    var isFiltering by remember { mutableStateOf(false) }
+
+    val billsTotal = remember(selectedCategory) {
+        // Calculate the total for the selected category
+        bills
+            .filter { it.category == selectedCategory }
+            .sumOf { it.amount.toDouble() }
+            .toFloat()
+    }
+
     StatementBody(
         modifier = Modifier.clearAndSetSemantics { contentDescription = "Расходы" },
-        items = bills,
+        items = if (isFiltering) {
+            bills.filter { it.category == selectedCategory }
+        } else {
+            bills
+        },
         amounts = { bill -> bill.amount },
         colors = { bill -> bill.color },
-        amountsTotal = bills.map { bill -> bill.amount }.sum(),
+        amountsTotal = if (isFiltering) billsTotal else bills.map { it.amount }.sum(),
         circleLabel = stringResource(R.string.due),
         rows = { bill ->
             BillRow(
@@ -63,15 +83,24 @@ fun BillsScreen(
             )
         }
     )
-    Box(modifier = Modifier.fillMaxSize()) {
 
+    Spacer(modifier = Modifier.height(16.dp))
+    CategoryDropdown(
+        categories = billCategoriesState,
+        selectedCategory = selectedCategory,
+        onCategorySelected = {
+            selectedCategory = it
+            isFiltering = true
+        }
+    )
+
+    Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
             onClick = { onAddBillClick("add_bill") },
             modifier = Modifier
                 .padding(16.dp)
                 .semantics { contentDescription = "Добавить запись" }
                 .align(alignment = Alignment.BottomEnd)
-
         ) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Добавить запись")
         }

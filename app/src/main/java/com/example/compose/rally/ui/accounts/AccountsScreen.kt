@@ -12,7 +12,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,7 +27,7 @@ import com.example.compose.rally.data.account.Account
 import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
-
+import com.example.compose.rally.data.category.defaultAccountCategories
 /**
  * The Accounts screen.
  */
@@ -33,14 +36,31 @@ fun AccountsScreen(
     onAccountClick: (String) -> Unit = {},
     onAddAccountClick: (String) -> Unit = {}
 ) {
-    val amountsTotal = remember { AccountRepository.accounts.map { account -> account.balance }.sum() }
+    val amountsTotal = remember {
+        AccountRepository.accounts.map { account -> account.balance }.sum()
+    }
+    val accountCategoriesState by remember { mutableStateOf(defaultAccountCategories) }
+    var selectedCategory by remember { mutableStateOf(accountCategoriesState.first()) }
+    var isFiltering by remember { mutableStateOf(false) }
+    val selectedCategoryTotal = remember(selectedCategory) {
+        // Calculate the total for the selected category
+        AccountRepository.accounts
+            .filter { it.category == selectedCategory }
+            .sumOf { it.balance.toDouble() }
+            .toFloat()
+    }
+
     StatementBody(
         modifier = Modifier.semantics { contentDescription = "Счета" },
-        items = AccountRepository.accounts,
+        items = if (isFiltering) {
+            AccountRepository.accounts.filter { it.category == selectedCategory }
+        } else {
+            AccountRepository.accounts
+        },
         amounts = { account -> account.balance },
         colors = { account -> account.color },
-        amountsTotal = amountsTotal,
-        circleLabel = stringResource(R.string.total),
+        amountsTotal = if (isFiltering) selectedCategoryTotal else amountsTotal,
+        circleLabel = if (isFiltering) selectedCategory else stringResource(R.string.total),
         rows = { account ->
             AccountRow(
                 modifier = Modifier.clickable {
@@ -48,27 +68,35 @@ fun AccountsScreen(
                 },
                 name = account.name,
                 stringDate = account.stringDate,
-                //number = account.cardNumber,
                 category = account.category,
                 amount = account.balance,
                 color = account.color
             )
         }
     )
-    Box(modifier = Modifier.fillMaxSize()) {
 
+    CategoryDropdown(
+        categories = accountCategoriesState,
+        selectedCategory = selectedCategory,
+        onCategorySelected = {
+            selectedCategory = it
+            isFiltering = true
+        }
+    )
+
+    Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
             onClick = { onAddAccountClick("add_account") },
             modifier = Modifier
                 .padding(16.dp)
                 .semantics { contentDescription = "Добавить счет" }
                 .align(alignment = Alignment.BottomEnd)
-
         ) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Добавить счет")
         }
     }
 }
+
 
 /**
  * Detail screen for a single account.
