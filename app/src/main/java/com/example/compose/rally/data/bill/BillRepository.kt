@@ -2,6 +2,7 @@ package com.example.compose.rally.data.bill
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
@@ -31,7 +32,8 @@ class BillRepository {
                 || (bill.category != "QR")
             ) {
                 bills += bill
-                Toast.makeText(context, "Покупка добавлена!", Toast.LENGTH_SHORT).show()
+            //    Toast.makeText(context, "Покупка добавлена!", Toast.LENGTH_SHORT).show()
+                Log.e("context", "$context")
             }
             //   saveFile(context)
         }

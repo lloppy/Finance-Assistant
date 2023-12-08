@@ -118,6 +118,5 @@ fun <T> StatementBodyWithSmallCircle(
 
         Log.e("circle", "$colors, $amounts, $amountsTotal, $circleLabel")
         Spacer(Modifier.height(16.dp))
-
     }
 }

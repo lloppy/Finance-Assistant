@@ -30,7 +30,6 @@ fun AuthenticationScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Depending on your needs, you can use either a password field or a fingerprint icon here.
         if (fingerprintEnabled) {
             FingerprintAuthentication(
                 onAuthenticationSuccess = onAuthenticationSuccess,
@@ -74,7 +73,6 @@ fun FingerprintAuthentication(
 
             biometricPrompt.authenticate(biometricPromptInfo)
         } else {
-            // Fingerprint authentication not available or not enrolled
             onAuthenticationFailed()
         }
 

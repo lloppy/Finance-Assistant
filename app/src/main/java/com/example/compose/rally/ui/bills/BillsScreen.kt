@@ -94,7 +94,7 @@ fun SingleBillScreen(
             items = listOf(bill),
             colors = { bill.color },
             amounts = { bill.amount },
-            amountsTotal = bill.amount,     //?????????
+            amountsTotal = bill.amount,
             circleLabel = bill.name,
         ) { row ->
             BillRow(

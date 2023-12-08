@@ -20,7 +20,7 @@ fun localDateTimeToString(localDateTime: LocalDateTime): String {
 }
 
 fun localDateToString(localDateTime: LocalDateTime): String {
-    val pattern: String = "dd.MM.yyyy"
+    val pattern = "dd.MM.yyyy"
     val formatter = DateTimeFormatter.ofPattern(pattern)
 
     val formattedDate = localDateTime.format(formatter)

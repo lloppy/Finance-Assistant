@@ -40,7 +40,7 @@ fun <T> OverviewScreenCard(
         Column {
             Column(Modifier.padding(RallyDefaultPadding)) {
                 Text(text = title, style = MaterialTheme.typography.subtitle2)
-                val amountText = "₽" + formatAmount(
+                val amountText = stringResource(R.string.ruble) + formatAmount(
                     amount
                 )
                 Text(text = amountText, style = MaterialTheme.typography.h2)
@@ -50,7 +50,7 @@ fun <T> OverviewScreenCard(
                 data.take(SHOWN_ITEMS).forEach { row(it) }
                 SeeAllButton(
                     modifier = Modifier.clearAndSetSemantics {
-                        contentDescription = "Все $title"
+                        contentDescription = "$title"
                     },
                     onClick = onClickSeeAll,
                 )
@@ -63,7 +63,10 @@ fun <T> OverviewScreenCard(
  * The Accounts card within the Rally Overview screen.
  */
 @Composable
-fun AccountsCard(onClickSeeAll: () -> Unit, onAccountClick: (String) -> Unit) {
+fun AccountsCard(
+    onClickSeeAll: () -> Unit,
+    onAccountClick: (String) -> Unit,
+) {
     val amount = AccountRepository.accounts.map { account -> account.balance }.sum()
     OverviewScreenCard(
         title = stringResource(R.string.accounts),
@@ -90,7 +93,10 @@ fun AccountsCard(onClickSeeAll: () -> Unit, onAccountClick: (String) -> Unit) {
  */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun BillsCard(onClickSeeAll: () -> Unit, onBillClick: (String) -> Unit) {
+fun BillsCard(
+    onClickSeeAll: () -> Unit,
+    onBillClick: (String) -> Unit,
+) {
     val amount = BillRepository.bills.map { bill -> bill.amount }.sum()
     OverviewScreenCard(
         title = stringResource(R.string.bills),

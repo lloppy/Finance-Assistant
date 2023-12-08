@@ -29,7 +29,6 @@ fun AddCategorySetting(
         ) {
             Text(text = categoryName)
         }
-
     }
 }
 

@@ -74,7 +74,8 @@ private fun RallyTab(
     }
     val tabTintColor by animateColorAsState(
         targetValue = if (selected) color else color.copy(alpha = InactiveTabOpacity),
-        animationSpec = animSpec
+        animationSpec = animSpec,
+        label = ""
     )
     Row(
         modifier = Modifier

@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -38,24 +40,16 @@ import java.util.Locale
  */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun AlertCard() {
-    var showDialog by remember { mutableStateOf(false) }
+fun AlertCard(
+    onClickAnalyze: () -> Unit = {},
+) {
     val alertMessage = analyzeAlert()
 
-    if (showDialog) {
-        RallyAlertDialog(
-            onDismiss = {
-                showDialog = false
-            },
-            bodyText = alertMessage,
-            buttonText = "Закрыть".uppercase(Locale.getDefault())
-        )
-    }
     Card {
         Column {
-            AlertHeader {
-                showDialog = true
-            }
+            AlertHeader(
+                onClickAnalyze = onClickAnalyze
+            )
             RallyDivider(
                 modifier = Modifier.padding(
                     start = RallyDefaultPadding,
@@ -68,7 +62,9 @@ fun AlertCard() {
 }
 
 @Composable
-private fun AlertHeader(onClickSeeAll: () -> Unit) {
+private fun AlertHeader(
+    onClickAnalyze: () -> Unit,
+) {
     Row(
         modifier = Modifier
             .padding(RallyDefaultPadding)
@@ -81,12 +77,12 @@ private fun AlertHeader(onClickSeeAll: () -> Unit) {
             modifier = Modifier.align(Alignment.CenterVertically)
         )
         TextButton(
-            onClick = onClickSeeAll,
+            onClick = onClickAnalyze,
             contentPadding = PaddingValues(0.dp),
             modifier = Modifier.align(Alignment.CenterVertically)
         ) {
             Text(
-                text = stringResource(id = R.string.see_all),
+                text = "Анализ моих финансов",
                 style = MaterialTheme.typography.button,
             )
         }
@@ -105,18 +101,18 @@ private fun AlertItem(message: String) {
             .semantics(mergeDescendants = true) {},
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            style = MaterialTheme.typography.body2,
-            modifier = Modifier.weight(1f),
-            text = message
-        )
-        IconButton(
-            onClick = {},
-            modifier = Modifier
-                .align(Alignment.Top)
-                .clearAndSetSemantics {}
-        ) {
-            Icon(Icons.Filled.Sort, contentDescription = null)
+        Column {
+            Spacer(Modifier.height(RallyDefaultPadding))
+            Text(
+                style = MaterialTheme.typography.body2,
+                text = message
+            )
+            Spacer(Modifier.height(RallyDefaultPadding))
+            Text(
+                style = MaterialTheme.typography.body2,
+                text = "Текущая цель по расходам:\nНе откладывать" // прочитать из памяти
+            )
+            Spacer(Modifier.height(RallyDefaultPadding))
         }
     }
 }

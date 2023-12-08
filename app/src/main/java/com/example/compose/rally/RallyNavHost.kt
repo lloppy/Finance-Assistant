@@ -2,6 +2,8 @@ package com.example.compose.rally
 
 import android.os.Build
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,6 +23,7 @@ import com.example.compose.rally.ui.bills.BillsScreen
 import com.example.compose.rally.ui.bills.SingleBillScreen
 import com.example.compose.rally.ui.chat.ChatGPTScreen
 import com.example.compose.rally.ui.chat.ChatViewModel
+import com.example.compose.rally.ui.home.HomeScreen
 import com.example.compose.rally.ui.overview.OverviewScreen
 import com.example.compose.rally.ui.settings.SettingsScreen
 
@@ -32,9 +35,25 @@ fun RallyNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Overview.route,
+        startDestination = Home.route,
         modifier = modifier
     ) {
+        composable(route = Home.route) {
+            HomeScreen(
+                onAddBillClick = {
+                    navController.navigateToAddBill(AddBill.route)
+                },
+                onClickAnalyze = {
+                    navController.navigateSingleTopTo(ChatGPT.route)
+                },
+                onClickSeeAllAccounts = {
+                    navController.navigateSingleTopTo(Accounts.route)
+                },
+                onClickSeeAllBills = {
+                    navController.navigateSingleTopTo(Bills.route)
+                }
+            )
+        }
         composable(route = Overview.route) {
             OverviewScreen(
                 onClickSeeAllAccounts = {
@@ -62,7 +81,6 @@ fun RallyNavHost(
                     Log.e("route", "AddAccount route is ${AddAccount.route}")
                 }
             )
-
         }
         composable(route = Bills.route) {
             BillsScreen(
@@ -117,7 +135,6 @@ fun RallyNavHost(
                 }
             )
         }
-
         composable(
             route = SingleBill.routeWithArgs,
             arguments = SingleBill.arguments,
@@ -132,7 +149,8 @@ fun RallyNavHost(
                     BillRepository.removeBill(it)
                     Log.e("delete", "Стало: " + BillRepository.bills.size.toString())
                     navController.navigateSingleTopTo(Bills.route)
-                })
+                }
+            )
         }
         composable(
             route = AddBill.routeWithArgs,

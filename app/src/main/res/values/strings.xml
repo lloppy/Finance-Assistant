@@ -39,4 +39,10 @@
     <string name="take_photo">take_photo</string>
     <string name="add_account_categoty">Добавить категорию доходов</string>
     <string name="add_bill_categoty">Добавить категорию трат</string>
+    <string name="balance_title">Баланс</string>
+    <string name="ruble">₽</string>
+    <string name="error_occured">Произошла ошибка</string>
+    <string name="read_sucsess">Данные успешно прочитаны</string>
+    <string name="load_bank_data">Загрузить выписку из банка</string>
+    <string name="add_spend">Добавить покупку</string>
 </resources>

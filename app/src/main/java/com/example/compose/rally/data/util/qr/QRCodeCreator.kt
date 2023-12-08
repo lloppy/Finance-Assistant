@@ -29,4 +29,3 @@ fun createBillFromQR(result: String): Bill {
     }
     throw IllegalArgumentException("Invalid QR code format")
 }
-

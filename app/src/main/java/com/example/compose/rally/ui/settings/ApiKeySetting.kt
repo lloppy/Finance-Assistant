@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.example.compose.rally.R
 import com.example.compose.rally.data.util.hideKeyboard
 
-
 @Composable
 fun ApiKeySetting(apiKey: String, onApiKeyChanged: (String) -> Unit) {
     val context = LocalContext.current

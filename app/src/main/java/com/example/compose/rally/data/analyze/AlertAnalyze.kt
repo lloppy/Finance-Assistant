@@ -9,6 +9,11 @@ import kotlin.math.roundToInt
 
 
 @RequiresApi(Build.VERSION_CODES.O)
+fun calculateBalance(amountsTotal: Float, billTotal: Float): Float {
+    return amountsTotal - billTotal
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
 fun analyzeAlert(): String {
     val totalBalance = AccountRepository.accounts
         .filter { it.date.month == LocalDate.now().month }
@@ -17,13 +22,12 @@ fun analyzeAlert(): String {
         .filter { it.date.month == LocalDate.now().month }
         .sumOf { it.amount.toDouble() }.toFloat()
     val percent = ((totalSpend / totalBalance) * 100).roundToInt()
-    val remains = (totalBalance - totalSpend).roundToInt()
 
     return when {
         percent > 150 -> "Осторожно!\nВы многократно превысили бюджет!"
-        percent <= 150 && totalBalance / 2 < totalSpend -> "Предупреждение!\nВы израсходовали более $percent% вашего бюджета.\nОстаток: $remains руб"
-        percent <= 150 -> "Ваши траты под контролем!\nОстаток: $remains руб"
-        else -> "Вы израсходовали $percent% вашего бюджета на покупки в этом месяце.\nОстаток: $remains руб"
+        percent <= 150 && totalBalance / 2 < totalSpend -> "Предупреждение!\nВы израсходовали более $percent% вашего бюджета"
+        percent <= 150 -> "Ваши траты под контролем!"
+        else -> "Вы израсходовали $percent% вашего бюджета на покупки в этом месяце"
     }
 }
 
