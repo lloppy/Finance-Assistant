@@ -1,5 +1,7 @@
 package com.example.compose.rally.ui.chat
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,17 +37,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-
-@Composable
-@Preview
-fun ChatGPTScreenPrev(){
-    val chatViewModel = viewModel<ChatViewModel>()
-    ChatGPTScreen(chatViewModel)
-}
+import com.example.compose.rally.data.account.AccountRepository
+import com.example.compose.rally.data.bill.BillRepository
 
 /**
  * The ChatGPT screen.
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChatGPTScreen(viewModel: ChatViewModel) {
     Column(modifier = Modifier.fillMaxSize()) {
@@ -77,14 +75,22 @@ fun ChatGPTScreen(viewModel: ChatViewModel) {
                 singleLine = true,
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(onSend = {
-                    viewModel.sendMessage(inputText)
+                    viewModel.sendMessage(
+                        "Напиши финансовые советы на основе моих трат и доходов: " +
+                                "мои доходы: ${AccountRepository.accounts.map { account -> account.balance }.sum()} руб" +
+                                "Мои расходы: ${BillRepository.bills.map { bill -> bill.amount }.sum()}" +
+                        inputText
+                    )
                     inputText = ""
                 })
             )
 
             IconButton(
                 onClick = {
-                    viewModel.sendMessage(inputText)
+                    viewModel.sendMessage("Напиши финансовые советы на основе моих трат и доходов: " +
+                            "мои доходы: ${AccountRepository.accounts.map { account -> account.balance }.sum()} руб" +
+                            "Мои расходы: ${BillRepository.bills.map { bill -> bill.amount }.sum()}" +
+                            inputText)
                     inputText = ""
                 },
                 modifier = Modifier.padding(

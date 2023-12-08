@@ -18,16 +18,18 @@ data class Account(
     val cardNumber: Int,
     val balance: Float,
     var category: String,
-    val color: Color = (accountCategoryColors[category] ?: accountCategoryColors["Default"])!!,
+    val color: Color = (accountCategoryColors[name] ?: accountCategoryColors[category]?: accountCategoryColors["Default"])!!,
     val stringDate: String = localDateToString(date)
 )
 
 val accountCategoryColors: Map<String, Color> = mapOf(
-    "Зарплата" to Color(0xFFF44336),
-    "Стипендия" to Color(0xFFFF5722),
-    "Инвестиции" to Color(0xFF4CAF50),
-    "Переводы" to Color(0xFF001CB8),
-    "Бонусы" to Color(0xFFFFEB3B),
+    "Зарплата" to Color(0xFF005853),
+    "Перевод средств от организации" to Color(0xFF4CAF6D),
+    "Стипендия" to Color(0xFF4CAF6D),
+    "Инвестиции" to Color(0xFF00413D),
+    "Перевод между счетами" to Color(0xFF27FDC0),
+    "Переводы" to Color(0xFF00BCD4),
+    "Бонусы" to Color(0xFFFFFFFF),
 
     "Default" to Color(0xFF4D4D4D)
 )
