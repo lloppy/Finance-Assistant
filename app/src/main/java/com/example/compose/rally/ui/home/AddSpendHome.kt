@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.app.ComponentActivity
@@ -88,7 +89,7 @@ fun addSpend(
                         )
                     //    .border(BorderStroke(2.dp, color = colorResource(id = R.color.boxColor)), shape = RoundedCornerShape(4.dp)),
                 ) {
-                    Text(text = "Добавить покупку")
+                    Text(text = stringResource(R.string.add_spend))
                 }
 
                 TextButton(
@@ -104,7 +105,7 @@ fun addSpend(
                         )
                     //    .border(BorderStroke(2.dp, color = colorResource(id = R.color.boxColor)), shape = RoundedCornerShape(4.dp)),
                 ) {
-                    Text(text = "Загрузить выписку из банка")
+                    Text(text = stringResource(R.string.load_bank_data))
                 }
             }
         }
@@ -139,8 +140,6 @@ fun QRPictureButton(context: Context) {
 private fun createChooseFileIntent(): Intent {
     val intent = Intent(Intent.ACTION_GET_CONTENT)
     intent.type = "text/csv"
-    val data = intent.data
-    Log.e("csv", "data in intent is $data")
 
     return intent
 }

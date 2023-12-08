@@ -17,34 +17,32 @@ import java.nio.charset.Charset
 import java.nio.charset.Charset.*
 import java.time.LocalDateTime
 
-//* 1. "���� ��������";
-//  2. "���� �������";
-//  3. "����� �����";
-//  4. "������";
-//  5. "����� ��������";
-//  6. "������ ��������";
-//  7. "����� �������";
-//  8. "������ �������";
-//  9. "������";
-//  10. "���������";
+//* 1. "Дата операции";
+//  2. "Дата платежа";
+//  3. "Номер карты";
+//  4. "Статус";
+//  5. "Сумма операции";
+//  6. "Валюта операции";
+//  7. "Сумма платежа";
+//  8. "Валюта платежа";
+//  9. "Кэшбэк";
+//  10. "Категория";
 //  11. "MCC";
-//  12. "��������";
-//  13. "������ (������� ������)";
-//  14. "���������� �� �������������";
-//  15. "����� �������� � �����������"/
+//  12. "Описание";
+//  13. "Бонусы (включая кэшбэк)";
+//  14. "Округление на инвесткопилку";
+//  15. "Сумма операции с округлением"/
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun handleCSVFile(context: Context, uri: Uri) {
     try {
         val inputStream = context.contentResolver.openInputStream(uri)
-
         val reader = BufferedReader(InputStreamReader(inputStream, forName("Windows-1251")))
 
         var line: String?
         while (reader.readLine().also { line = it } != null) {
             var cleanLine = line!!.replace("\"", "")
             var groups = cleanLine.split(";")
-
 
             if (groups[4].first() == '-') {
                 takeExpenseSplit(groups, context)

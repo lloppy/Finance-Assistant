@@ -36,11 +36,8 @@ fun SettingsScreenContent(viewModel: SettingsViewModel) {
         SpendingGoalSetting(viewModel.spendingGoal, onSpendingGoalSelected = { selectedGoal ->
             viewModel.spendingGoal = selectedGoal
         })
-
-        // API Key for Chat
         ApiKeySetting(viewModel.apiChatKey, onApiKeyChanged = { viewModel.apiChatKey = it })
 
-        // Password Setting
         PasswordSetting(
             viewModel.password,
             viewModel.showPassword,
@@ -49,9 +46,7 @@ fun SettingsScreenContent(viewModel: SettingsViewModel) {
         )
 
         AddCategorySetting(stringResource(R.string.add_account_categoty))
-
         AddCategorySetting(stringResource(R.string.add_bill_categoty))
-
     }
 }
 

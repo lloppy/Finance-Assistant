@@ -78,7 +78,6 @@ fun AddBillScreen(
         ActivityResultContracts.GetContent()
     ) { imageUri ->
         if (imageUri != null) {
-            // Update the state with the Uri
             selectedImageUri = imageUri
             Log.e("picImg", "imageUri change to: $imageUri")
         }

@@ -114,7 +114,6 @@ private fun AlertItem(message: String) {
             )
             Spacer(Modifier.height(RallyDefaultPadding))
         }
-
     }
 }
 

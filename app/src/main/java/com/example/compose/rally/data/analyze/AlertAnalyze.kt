@@ -9,15 +9,8 @@ import kotlin.math.roundToInt
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun calculateBalance(): Float {
-    val totalBalance = AccountRepository.accounts
-        .filter { it.date.month == LocalDate.now().month }
-        .sumOf { it.balance.toDouble() }.toFloat()
-    val totalSpend = BillRepository.bills
-        .filter { it.date.month == LocalDate.now().month }
-        .sumOf { it.amount.toDouble() }.toFloat()
-
-    return totalBalance - totalSpend
+fun calculateBalance(amountsTotal: Float, billTotal: Float): Float {
+    return amountsTotal - billTotal
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

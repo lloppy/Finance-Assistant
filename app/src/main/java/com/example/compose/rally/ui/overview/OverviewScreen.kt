@@ -41,14 +41,12 @@ fun OverviewScreen(
     onAccountClick: (String) -> Unit = {},
     onBillClick: (String) -> Unit = {},
 ) {
-
     Column(
         modifier = Modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
             .semantics { contentDescription = "Обзор" }
     ) {
-
         Spacer(Modifier.height(RallyDefaultPadding))
         AccountsCard(
             onClickSeeAll = onClickSeeAllAccounts,

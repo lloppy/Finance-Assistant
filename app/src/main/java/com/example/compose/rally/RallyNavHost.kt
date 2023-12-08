@@ -51,7 +51,7 @@ fun RallyNavHost(
                 },
                 onClickSeeAllBills = {
                     navController.navigateSingleTopTo(Bills.route)
-                },
+                }
             )
         }
         composable(route = Overview.route) {
@@ -81,7 +81,6 @@ fun RallyNavHost(
                     Log.e("route", "AddAccount route is ${AddAccount.route}")
                 }
             )
-
         }
         composable(route = Bills.route) {
             BillsScreen(
@@ -136,7 +135,6 @@ fun RallyNavHost(
                 }
             )
         }
-
         composable(
             route = SingleBill.routeWithArgs,
             arguments = SingleBill.arguments,
@@ -151,7 +149,8 @@ fun RallyNavHost(
                     BillRepository.removeBill(it)
                     Log.e("delete", "Стало: " + BillRepository.bills.size.toString())
                     navController.navigateSingleTopTo(Bills.route)
-                })
+                }
+            )
         }
         composable(
             route = AddBill.routeWithArgs,

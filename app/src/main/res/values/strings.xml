@@ -43,4 +43,6 @@
     <string name="ruble">₽</string>
     <string name="error_occured">Произошла ошибка</string>
     <string name="read_sucsess">Данные успешно прочитаны</string>
+    <string name="load_bank_data">Загрузить выписку из банка</string>
+    <string name="add_spend">Добавить покупку</string>
 </resources>

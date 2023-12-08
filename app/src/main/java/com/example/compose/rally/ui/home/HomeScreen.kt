@@ -11,11 +11,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.example.compose.rally.data.account.AccountRepository
+import com.example.compose.rally.data.bill.BillRepository
 import com.example.compose.rally.ui.overview.RallyDefaultPadding
 
 /**
@@ -30,6 +33,8 @@ fun HomeScreen(
     onClickAnalyze: () -> Unit = {}
 ) {
     val context = LocalContext.current
+    val amountsTotal = remember { AccountRepository.accounts.map { account -> account.balance }.sum() }
+    val billTotal = remember { BillRepository.bills.map { bill -> bill.amount }.sum() }
 
     Column(
         modifier = Modifier
@@ -47,6 +52,8 @@ fun HomeScreen(
                 .fillMaxHeight(0.4f),
             context = context,
             onAddBillClick = onAddBillClick,
+            amountsTotal = amountsTotal,
+            billTotal = billTotal,
         )
 
         OverviewHome(

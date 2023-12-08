@@ -29,4 +29,5 @@
     <string name="close">Закрыть</string>
     <string name="balance_title">Баланс</string>
     <string name="ruble">₽</string>
+    <string name="load_bank_data">Загрузить выписку из банка</string>
 </resources>

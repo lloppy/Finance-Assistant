@@ -13,12 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -33,6 +27,8 @@ fun Balance(
     modifier: Modifier,
     context: Context,
     onAddBillClick: () -> Unit = {},
+    amountsTotal: Float,
+    billTotal: Float,
 ) {
     Column(
         modifier = modifier
@@ -48,7 +44,7 @@ fun Balance(
                 .weight(0.8f)
 
         ) {
-            val amountText = stringResource(R.string.ruble) + formatAmount(calculateBalance())
+            val amountText = stringResource(R.string.ruble) + formatAmount(calculateBalance(amountsTotal, billTotal))
             Text(text = amountText, style = MaterialTheme.typography.h2)
 
             Text(

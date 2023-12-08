@@ -45,7 +45,5 @@ fun AlertHome(onClickAnalyze: () -> Unit = {}) {
         )
 
         AlertCard(onClickAnalyze)
-
     }
-
 }

@@ -44,7 +44,6 @@ fun OverviewScreenCard(
     }
 }
 
-
 @Composable
 fun AccountsCard(
     onClickSeeAll: () -> Unit
