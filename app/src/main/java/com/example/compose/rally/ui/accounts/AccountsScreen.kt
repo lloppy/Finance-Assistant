@@ -39,17 +39,31 @@ fun AccountsScreen(
     onAccountClick: (String) -> Unit = {},
     onAddAccountClick: (String) -> Unit = {}
 ) {
-    val amountsTotal = remember { AccountRepository.accounts.map { account -> account.balance }.sum() }
+    val amountsTotal = remember {
+        AccountRepository.accounts.map { account -> account.balance }.sum()
+    }
     var accountCategoriesState by remember { mutableStateOf(defaultAccountCategories) }
     var selectedCategory by remember { mutableStateOf(accountCategoriesState.first()) }
+    var isFiltering by remember { mutableStateOf(false) }
+    val selectedCategoryTotal = remember(selectedCategory) {
+        // Calculate the total for the selected category
+        AccountRepository.accounts
+            .filter { it.category == selectedCategory }
+            .sumOf { it.balance.toDouble() }
+            .toFloat()
+    }
 
     StatementBody(
         modifier = Modifier.semantics { contentDescription = "Счета" },
-        items = AccountRepository.accounts,
+        items = if (isFiltering) {
+            AccountRepository.accounts.filter { it.category == selectedCategory }
+        } else {
+            AccountRepository.accounts
+        },
         amounts = { account -> account.balance },
         colors = { account -> account.color },
-        amountsTotal = amountsTotal,
-        circleLabel = stringResource(R.string.total),
+        amountsTotal = if (isFiltering) selectedCategoryTotal else amountsTotal,
+        circleLabel = if (isFiltering) selectedCategory else stringResource(R.string.total),
         rows = { account ->
             AccountRow(
                 modifier = Modifier.clickable {
@@ -57,7 +71,6 @@ fun AccountsScreen(
                 },
                 name = account.name,
                 stringDate = account.stringDate,
-                //number = account.cardNumber,
                 category = account.category,
                 amount = account.balance,
                 color = account.color
@@ -68,18 +81,19 @@ fun AccountsScreen(
     CategoryDropdown(
         categories = accountCategoriesState,
         selectedCategory = selectedCategory,
-        onCategorySelected = { selectedCategory = it }
+        onCategorySelected = {
+            selectedCategory = it
+            isFiltering = true
+        }
     )
 
     Box(modifier = Modifier.fillMaxSize()) {
-
         FloatingActionButton(
             onClick = { onAddAccountClick("add_account") },
             modifier = Modifier
                 .padding(16.dp)
                 .semantics { contentDescription = "Добавить счет" }
                 .align(alignment = Alignment.BottomEnd)
-
         ) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Добавить счет")
         }
