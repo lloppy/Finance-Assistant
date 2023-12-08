@@ -111,9 +111,7 @@ fun RallyNavHost(
             SingleAccountScreen(
                 accountType = accountType,
                 onDeleteAccountClick = {
-                    Log.e("delete", "Было: " + AccountRepository.accounts.size.toString())
                     AccountRepository.removeAccount(it)
-                    Log.e("delete", "Стало: " + AccountRepository.accounts.size.toString())
                     navController.navigateSingleTopTo(Accounts.route)
                 }
             )

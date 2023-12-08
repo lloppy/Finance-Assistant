@@ -43,7 +43,7 @@ import coil.compose.AsyncImage
 import com.example.compose.rally.R
 import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
-import com.example.compose.rally.data.category.billCategories
+import com.example.compose.rally.data.category.defaultBillCategories
 import com.example.compose.rally.ui.accounts.RepeatDataDropdown
 import java.time.LocalDateTime
 
@@ -59,7 +59,8 @@ fun AddBillScreen(
     val bill = remember(billType) { BillRepository.getBill(billType) }
     Log.e("route", "bill name is ${bill.name}")
 
-    var selectedCategory by remember { mutableStateOf(billCategories.first()) }
+    var billCategoriesState by remember { mutableStateOf(defaultBillCategories) }
+    var selectedCategory by remember { mutableStateOf(billCategoriesState.first()) }
     var billName by remember { mutableStateOf(TextFieldValue()) }
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
     var cardNumber by remember { mutableStateOf(TextFieldValue()) }
@@ -109,7 +110,6 @@ fun AddBillScreen(
 //                }
 //            }
 //        )
-//        Spacer(modifier = Modifier.height(16.dp))
 
         TextField(
             value = billName,
@@ -145,7 +145,7 @@ fun AddBillScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
         CategoryDropdown(
-            categories = billCategories,
+            categories = billCategoriesState,
             selectedCategory = selectedCategory,
             onCategorySelected = { selectedCategory = it }
         )
@@ -211,7 +211,13 @@ fun showDatePicker(onDateSelected: (LocalDateTime) -> Unit) {
         modifier = Modifier.wrapContentWidth(),
         update = { views ->
             views.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
-                val selectedDateTime = LocalDateTime.of(year, month + 1, dayOfMonth, 0, 0)
+                val selectedDateTime = LocalDateTime.of(
+                    year,
+                    month + 1,
+                    dayOfMonth,
+                    LocalDateTime.now().hour,
+                    LocalDateTime.now().minute
+                )
                 selectedDate = selectedDateTime
                 onDateSelected(selectedDateTime)
 

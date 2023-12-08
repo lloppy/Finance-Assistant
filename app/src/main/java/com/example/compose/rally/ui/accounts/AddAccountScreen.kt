@@ -42,7 +42,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.example.compose.rally.R
 import com.example.compose.rally.data.account.Account
 import com.example.compose.rally.data.account.AccountRepository
-import com.example.compose.rally.data.category.accountCategories
+import com.example.compose.rally.data.category.defaultAccountCategories
 import com.example.compose.rally.ui.theme.RallyTheme
 import java.time.LocalDateTime
 
@@ -68,7 +68,8 @@ fun AddAccountScreen(
     val account = remember(accountType) { AccountRepository.getAccount(accountType) }
     Log.e("route", "account name is ${account.name}")
 
-    var selectedCategory by remember { mutableStateOf(accountCategories.first()) }
+    var accountCategoriesState by remember { mutableStateOf(defaultAccountCategories) }
+    var selectedCategory by remember { mutableStateOf(accountCategoriesState.first()) }
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
     var accountName by remember { mutableStateOf(TextFieldValue()) }
     var cardNumber by remember { mutableStateOf(TextFieldValue()) }
@@ -116,7 +117,6 @@ fun AddAccountScreen(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-
         TextField(
             value = cardNumber,
             onValueChange = { cardNumber = it },
@@ -142,7 +142,7 @@ fun AddAccountScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         CategoryDropdown(
-            categories = accountCategories,
+            categories = accountCategoriesState,
             selectedCategory = selectedCategory,
             onCategorySelected = { selectedCategory = it }
         )

@@ -3,6 +3,7 @@ package com.example.compose.rally.data.util.csv
 import android.content.Context
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.compose.rally.R
@@ -10,10 +11,10 @@ import com.example.compose.rally.data.account.Account
 import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
-import org.mozilla.universalchardet.UniversalDetector
+import com.example.compose.rally.data.category.defaultAccountCategories
+import com.example.compose.rally.data.category.defaultBillCategories
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.nio.charset.Charset
 import java.nio.charset.Charset.*
 import java.time.LocalDateTime
 
@@ -44,6 +45,7 @@ fun handleCSVFile(context: Context, uri: Uri) {
             var cleanLine = line!!.replace("\"", "")
             var groups = cleanLine.split(";")
 
+            Log.e("csv", "${groups[4].first()} date is ${groups[0]} ")
             if (groups[4].first() == '-') {
                 takeExpenseSplit(groups, context)
             } else if (groups[4].first().isDigit()) {
@@ -55,7 +57,8 @@ fun handleCSVFile(context: Context, uri: Uri) {
         Toast.makeText(context, context.getString(R.string.read_sucsess), Toast.LENGTH_SHORT).show()
     } catch (e: Exception) {
         e.printStackTrace()
-        Toast.makeText(context, context.getString(R.string.error_occured), Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.error_occured), Toast.LENGTH_SHORT)
+            .show()
     }
 }
 
@@ -66,6 +69,10 @@ fun takeIncomeSplit(group: List<String>) {
 
     val (day, month, year, hour, minute) = matchResult!!.destructured
     val balance = group[14].split(",")
+
+    if (!defaultAccountCategories.contains(group[9])) {
+        defaultAccountCategories += group[9]
+    }
 
     AccountRepository.addAccount(
         Account(
@@ -78,7 +85,7 @@ fun takeIncomeSplit(group: List<String>) {
                 minute.toInt()
             ),
             timesRepeat = 0,
-            cardNumber = group[2].replace("*", "").toInt(),
+            cardNumber = if (group[2].isNullOrEmpty()) 0 else group[2].replace("*", "").toInt(),
             balance = balance[0].toFloat() + (balance[1].toFloat() / 100),
             category = group[9]
         )
@@ -92,6 +99,10 @@ fun takeExpenseSplit(group: List<String>, context: Context) {
 
     val (day, month, year, hour, minute) = matchResult!!.destructured
     val amount = group[14].split(",")
+
+    if (!defaultBillCategories.contains(group[9])) {
+        defaultBillCategories += group[9]
+    }
 
     BillRepository.addBill(
         Bill(

@@ -21,13 +21,16 @@ data class Bill constructor(
 
 val billCategoryColors: Map<String, Color> = mapOf(
     "Квартира" to Color(0xFFFF6951),
-    "ЖКХ" to Color(0xFFFCA496),
-    "Продукты" to Color(0xFFD0FFD8),
+    "Дом и ремонт" to Color(0xFFA3300B),
+    "Проезд" to Color(0xFFFCA496),
+    "Супермаркеты" to Color(0xFFD0FFD8),
     "Одежда и обувь" to Color(0xFFFFDC78),
-    "Интернет и телефон" to Color(0xFF673AB7),
+    "Мобильная связь" to Color(0xFF673AB7),
     "Здоровье" to Color(0xFF1AD56D),
     "QR" to Color(0xFF2196F3),
-    "Другое" to Color(0xFFFFD7D0),
+    "Фастфуд" to Color(0xFFFF9800),
+    "Переводы" to Color(0xFF0824C4),
+
     "Default" to Color(0xFF4D4D4D)
 )
 
