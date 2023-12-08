@@ -87,10 +87,7 @@ fun ChatGPTScreen(viewModel: ChatViewModel) {
 
             IconButton(
                 onClick = {
-                    viewModel.sendMessage("Напиши финансовые советы на основе моих трат и доходов: " +
-                            "мои доходы: ${AccountRepository.accounts.map { account -> account.balance }.sum()} руб" +
-                            "Мои расходы: ${BillRepository.bills.map { bill -> bill.amount }.sum()}" +
-                            inputText)
+                    viewModel.sendMessage(inputText)
                     inputText = ""
                 },
                 modifier = Modifier.padding(
