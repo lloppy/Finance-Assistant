@@ -99,7 +99,7 @@ private fun checkCoeff(context: Context): Float {
     val digitsOnly = extractDigits(result!!)
 
     if (digitsOnly.isNullOrBlank()) {
-        return 1f;
+        return 0f;
     } else {
         Log.e("coeff", "digitsOnly ${digitsOnly}")
         return digitsOnly.toFloat() / 100
