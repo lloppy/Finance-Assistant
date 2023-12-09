@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityOptionsCompat
@@ -115,13 +117,12 @@ fun addSpend(
 
 @Composable
 fun QRPictureButton(context: Context) {
-    Icon(
-        imageVector = Icons.Default.QrCode,
+    Image(
+        painter = painterResource(id = R.drawable.new_scan),
         contentDescription = "Camera",
-        tint = Color.White,
         modifier = Modifier
             .fillMaxSize()
-            .padding(4.dp)
+            .padding(16.dp)
             .clickable {
                 val intent = Intent(context, QRCodeScannerScreen::class.java)
                 val options =
