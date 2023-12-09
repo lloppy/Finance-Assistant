@@ -1,5 +1,6 @@
 package com.example.compose.rally.ui.settings
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -9,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.R
@@ -23,17 +25,20 @@ class SettingsViewModel {
 @Composable
 fun SettingsScreen() {
     val viewModel = remember { SettingsViewModel() }
-    SettingsScreenContent(viewModel)
+    SettingsScreenContent(viewModel, LocalContext.current)
 }
 
 @Composable
-fun SettingsScreenContent(viewModel: SettingsViewModel) {
+fun SettingsScreenContent(
+    viewModel: SettingsViewModel,
+    context: Context
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        SpendingGoalSetting(viewModel.spendingGoal, onSpendingGoalSelected = { selectedGoal ->
+        SpendingGoalSetting(context, viewModel.spendingGoal, onSpendingGoalSelected = { selectedGoal ->
             viewModel.spendingGoal = selectedGoal
         })
         ApiKeySetting(viewModel.apiChatKey, onApiKeyChanged = { viewModel.apiChatKey = it })

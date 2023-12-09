@@ -1,5 +1,9 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.compose.rally.ui.settings
 
+import android.content.Context
+import android.preference.PreferenceManager
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,12 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.glance.LocalContext
 import com.example.compose.rally.R
 
 @Composable
 fun SpendingGoalSetting(
+    context: Context,
     selectedGoal: String,
-    onSpendingGoalSelected: (String) -> Unit
+    onSpendingGoalSelected: (String) -> Unit,
 ) {
     var showDialog by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf(0) }
@@ -82,6 +88,8 @@ fun SpendingGoalSetting(
                                     selectedOption = index
                                     onSpendingGoalSelected(option)
                                     showDialog = false
+
+                                    saveGoalToSharedPreferences(option, context)
                                 },
                             )
                             Text(
@@ -96,4 +104,12 @@ fun SpendingGoalSetting(
             modifier = Modifier.fillMaxWidth()
         )
     }
+}
+
+
+private fun saveGoalToSharedPreferences(goal: String, context: Context) {
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    val editor = sharedPreferences.edit()
+    editor.putString("current_goal", goal)
+    editor.apply()
 }

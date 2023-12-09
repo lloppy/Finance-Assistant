@@ -31,7 +31,10 @@ import com.example.compose.rally.ui.qr.QRCodeScannerScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun AlertHome(onClickAnalyze: () -> Unit = {}) {
+fun AlertHome(
+    onClickAnalyze: () -> Unit = {},
+    context: Context
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,6 +47,6 @@ fun AlertHome(onClickAnalyze: () -> Unit = {}) {
                 .background(colorResource(id = R.color.boxBackground)),
         )
 
-        AlertCard(onClickAnalyze)
+        AlertCard(onClickAnalyze, context)
     }
 }

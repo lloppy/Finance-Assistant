@@ -61,7 +61,7 @@ fun HomeScreen(
             onClickSeeAllBills = onClickSeeAllBills,
         )
 
-        AlertHome(onClickAnalyze = onClickAnalyze)
+        AlertHome(onClickAnalyze = onClickAnalyze, context)
         Spacer(Modifier.height(RallyDefaultPadding))
     }
 }

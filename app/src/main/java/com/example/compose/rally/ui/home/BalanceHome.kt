@@ -1,7 +1,11 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.compose.rally.ui.home
 
 import android.content.Context
 import android.os.Build
+import android.preference.PreferenceManager
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +38,7 @@ fun Balance(
         modifier = modifier
             .fillMaxWidth()
             .background(colorResource(id = R.color.boxColor))
-            .aspectRatio(1.2f)
+            .aspectRatio(1.05f)
     ) {
 
         Column(
@@ -44,13 +48,30 @@ fun Balance(
                 .weight(0.8f)
 
         ) {
-            val amountText = stringResource(R.string.ruble) + formatAmount(calculateBalance(amountsTotal, billTotal))
+            val amountText = stringResource(R.string.ruble) + formatAmount(
+                calculateBalance(amountsTotal, billTotal)
+            )
             Text(text = amountText, style = MaterialTheme.typography.h2)
 
             Text(
                 text = stringResource(R.string.balance_title),
                 style = MaterialTheme.typography.subtitle2
             )
+
+            Text(
+                text = "Баланс с учетом накоплений: " + stringResource(R.string.ruble) + formatAmount(
+                    calculateBalance(
+                        amountsTotal * (1 - checkCoeff(context)),
+                        billTotal
+                    )
+                ),
+                style = MaterialTheme.typography.subtitle2
+            )
+            Log.e("coeff", "calculateBalance ${ calculateBalance(
+                amountsTotal * (1 - checkCoeff(context)),
+                billTotal
+            )}")
+
         }
 
         Column(
@@ -66,4 +87,25 @@ fun Balance(
             )
         }
     }
+}
+
+private fun readGoalFromSharedPreferences(context: Context): String? {
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    return sharedPreferences.getString("current_goal", null)
+}
+
+private fun checkCoeff(context: Context): Float {
+    var result = readGoalFromSharedPreferences(context)
+    val digitsOnly = extractDigits(result!!)
+
+    if (digitsOnly.isNullOrBlank()) {
+        return 1f;
+    } else {
+        Log.e("coeff", "digitsOnly ${digitsOnly}")
+        return digitsOnly.toFloat() / 100
+    }
+}
+
+fun extractDigits(input: String): String {
+    return input.replace(Regex("[^0-9]"), "")
 }
