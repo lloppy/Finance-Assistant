@@ -1,5 +1,7 @@
 package com.example.compose.rally.ui.chat
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,24 +32,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-@Composable
-@Preview
-fun ChatGPTScreenPrev(){
-    val chatViewModel = viewModel<ChatViewModel>()
-    ChatGPTScreen(chatViewModel)
-}
-
 /**
  * The ChatGPT screen.
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChatGPTScreen(viewModel: ChatViewModel) {
+    var context = LocalContext.current
+
     Column(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
@@ -68,7 +67,7 @@ fun ChatGPTScreen(viewModel: ChatViewModel) {
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            var inputText by remember { mutableStateOf("") }
+            var inputText by remember { mutableStateOf("Сделай анализ моих финансов") }
             TextField(
                 value = inputText,
                 onValueChange = { inputText = it },
@@ -77,14 +76,14 @@ fun ChatGPTScreen(viewModel: ChatViewModel) {
                 singleLine = true,
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(onSend = {
-                    viewModel.sendMessage(inputText)
+                    viewModel.sendMessage(inputText, true, context)
                     inputText = ""
                 })
             )
 
             IconButton(
                 onClick = {
-                    viewModel.sendMessage(inputText)
+                    viewModel.sendMessage(inputText,true, context)
                     inputText = ""
                 },
                 modifier = Modifier.padding(

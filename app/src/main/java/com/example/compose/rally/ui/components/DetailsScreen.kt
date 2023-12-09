@@ -33,7 +33,9 @@ fun <T> StatementBody(
     circleLabel: String,
     rows: @Composable (T) -> Unit
 ) {
-    Column(modifier = modifier.verticalScroll(rememberScrollState())) {
+    Column(modifier = modifier
+        .padding(top = 58.dp)
+        .verticalScroll(rememberScrollState())) {
         Box(Modifier.padding(16.dp)) {
             val accountsProportion = items.extractProportions { amounts(it) }
             val circleColors = items.map { colors(it) }
