@@ -118,7 +118,7 @@ fun addSpend(
 @Composable
 fun QRPictureButton(context: Context) {
     Image(
-        painter = painterResource(id = R.drawable.new_scan),
+        painter = painterResource(id = R.drawable.big_scan),
         contentDescription = "Camera",
         modifier = Modifier
             .fillMaxSize()
