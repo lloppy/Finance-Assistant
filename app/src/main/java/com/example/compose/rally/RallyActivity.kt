@@ -1,7 +1,11 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.compose.rally
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -135,6 +139,7 @@ fun PasswordAuthentication(
     var showError by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
+    var context= LocalContext.current
 
     Column(
         modifier = Modifier
@@ -164,7 +169,7 @@ fun PasswordAuthentication(
             ),
             keyboardActions = KeyboardActions(
                 onDone = {
-                    if (password == "1234") {
+                    if (password == readPasswordFromSharedPreferences(context) || password.isNullOrEmpty() || password.isNullOrBlank()) {
                         onAuthenticationSuccess()
                     } else {
                         showError = true
@@ -177,4 +182,9 @@ fun PasswordAuthentication(
             isError = showError
         )
     }
+}
+
+private fun readPasswordFromSharedPreferences(context: Context): String? {
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    return sharedPreferences.getString("password", null)
 }

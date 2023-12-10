@@ -1,5 +1,10 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.compose.rally.ui.settings
 
+import android.content.Context
+import android.preference.PreferenceManager
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,22 +47,28 @@ fun PasswordSetting(
         Spacer(modifier = Modifier.height(8.dp))
 
         TextField(
-            value = password,
+            value = if (showPassword) password else "*".repeat(password.length),
             onValueChange = { onPasswordChanged(it) },
             label = { Text(stringResource(R.string.enter_password)) },
             keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Password,
+                keyboardType = KeyboardType.NumberPassword,
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(
                 onDone = {
                     hideKeyboard(context)
+                    savePasswordToSharedPreferences(password, context)
+                    // password
                 }
             ),
             trailingIcon = {
                 IconButton(onClick = { onTogglePasswordVisibility(!showPassword) }) {
                     Icon(
-                        imageVector = if (showPassword) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                        imageVector = if (showPassword) {
+                            Icons.Filled.Visibility
+                        } else {
+                            Icons.Filled.VisibilityOff
+                        },
                         contentDescription = stringResource(id = R.string.toggle_password_visibility)
                     )
                 }
@@ -67,3 +78,11 @@ fun PasswordSetting(
     }
 }
 
+private fun savePasswordToSharedPreferences(password: String, context: Context) {
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    val editor = sharedPreferences.edit()
+    editor.putString("password", password)
+
+    Toast.makeText(context, "Пароль $password сохранен", Toast.LENGTH_SHORT).show()
+    editor.apply()
+}
