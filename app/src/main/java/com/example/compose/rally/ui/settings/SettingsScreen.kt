@@ -66,14 +66,6 @@ fun SettingsScreenContent(
                 viewModel.spendingGoal = selectedGoal
             })
 
-        Spacer(Modifier.height(RallyDefaultPadding))
-
-
-        AddCategories(
-            onClickAddAccountCategory = onClickAddAccountCategory,
-            onClickAddBillCategory = onClickAddBillCategory,
-        )
-
         ApiKeySetting(viewModel.apiChatKey, onApiKeyChanged = { viewModel.apiChatKey = it })
 
         PasswordSetting(
@@ -81,6 +73,14 @@ fun SettingsScreenContent(
             viewModel.showPassword,
             onPasswordChanged = { viewModel.password = it },
             onTogglePasswordVisibility = { viewModel.showPassword = it }
+        )
+
+        Spacer(Modifier.height(RallyDefaultPadding))
+        Spacer(Modifier.height(RallyDefaultPadding))
+
+        AddCategories(
+            onClickAddAccountCategory = onClickAddAccountCategory,
+            onClickAddBillCategory = onClickAddBillCategory,
         )
     }
 }
