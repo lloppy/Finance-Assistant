@@ -45,4 +45,5 @@
     <string name="read_sucsess">Данные успешно прочитаны</string>
     <string name="load_bank_data">Загрузить выписку из банка</string>
     <string name="add_spend">Добавить покупку</string>
+    <string name="category_name">Название категории</string>
 </resources>

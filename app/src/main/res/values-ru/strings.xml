@@ -45,4 +45,5 @@
     <string name="error_occured">Произошла ошибка</string>
     <string name="read_sucsess">Данные успешно прочитаны</string>
     <string name="add_spend">Добавить запись</string>
+    <string name="category_name">Название категории</string>
 </resources>

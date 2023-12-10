@@ -16,11 +16,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.compose.rally.R
-import com.example.compose.rally.ui.home.OverviewHome
 import com.example.compose.rally.ui.overview.RallyDefaultPadding
+import com.example.compose.rally.ui.settings.categories.AddCategories
 
 class SettingsViewModel {
     var spendingGoal by mutableStateOf("Не определена")

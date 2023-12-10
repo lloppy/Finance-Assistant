@@ -1,4 +1,4 @@
-package com.example.compose.rally.ui.settings
+package com.example.compose.rally.ui.settings.categories
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -16,6 +16,8 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.ui.overview.RallyDefaultPadding
+import com.example.compose.rally.ui.settings.categories.AccountsCategoriesCard
+import com.example.compose.rally.ui.settings.categories.BillsCategoriesCard
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

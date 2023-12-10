@@ -38,5 +38,17 @@
             android:exported="true"
             android:label="QR Code Scanner">
         </activity>
+
+        <activity
+            android:name=".ui.settings.categories.AddAccountCategoryScreen"
+            android:exported="true"
+            android:label="Add Category">
+        </activity>
+
+        <activity
+            android:name=".ui.settings.categories.AddBillCategoryScreen"
+            android:exported="true"
+            android:label="Add Category">
+        </activity>
     </application>
 </manifest>

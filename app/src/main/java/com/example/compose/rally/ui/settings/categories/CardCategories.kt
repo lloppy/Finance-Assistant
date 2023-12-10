@@ -1,7 +1,6 @@
-package com.example.compose.rally.ui.settings
+package com.example.compose.rally.ui.settings.categories
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,22 +8,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.R
-import com.example.compose.rally.data.account.AccountRepository
-import com.example.compose.rally.data.bill.BillRepository
 import com.example.compose.rally.data.category.defaultAccountCategories
 import com.example.compose.rally.data.category.defaultBillCategories
-import com.example.compose.rally.ui.components.formatAmount
 import com.example.compose.rally.ui.overview.RallyDefaultPadding
 
 @Composable

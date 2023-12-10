@@ -1,13 +1,14 @@
 package com.example.compose.rally
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -15,8 +16,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.data.bill.BillRepository
-import com.example.compose.rally.data.category.defaultAccountCategories
-import com.example.compose.rally.data.category.defaultBillCategories
 import com.example.compose.rally.ui.accounts.AccountsScreen
 import com.example.compose.rally.ui.accounts.AddAccountScreen
 import com.example.compose.rally.ui.accounts.SingleAccountScreen
@@ -28,6 +27,8 @@ import com.example.compose.rally.ui.chat.ChatViewModel
 import com.example.compose.rally.ui.home.HomeScreen
 import com.example.compose.rally.ui.overview.OverviewScreen
 import com.example.compose.rally.ui.settings.SettingsScreen
+import com.example.compose.rally.ui.settings.categories.AddAccountCategoryScreen
+import com.example.compose.rally.ui.settings.categories.AddBillCategoryScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -97,10 +98,19 @@ fun RallyNavHost(
             )
         }
         composable(route = Settings.route) {
+            var context = LocalContext.current
             SettingsScreen(
                 onClickAddAccountCategory = {
+                    val intent = Intent(context, AddAccountCategoryScreen::class.java)
+                    val options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity)
+                    context.startActivity(intent, options.toBundle())
                 },
                 onClickAddBillCategory = {
+                    val intent = Intent(context, AddBillCategoryScreen::class.java)
+                    val options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity)
+                    context.startActivity(intent, options.toBundle())
                 }
             )
         }
