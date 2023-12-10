@@ -32,7 +32,7 @@
     <string name="load_bank_data">Загрузить выписку из банка</string>
     <string name="toggle_password_visibility">Переключить видимость пароля</string>
     <string name="add_category">Добавить категорию</string>
-    <string name="current_category">Текущая цель:\n%1$s</string>
+    <string name="current_category">Текущая цель:\n\n%1$s</string>
     <string name="select_category">Выберите цель</string>
     <string name="password_setting">Настройки пароля</string>
     <string name="enter_password">Введите пароль</string>

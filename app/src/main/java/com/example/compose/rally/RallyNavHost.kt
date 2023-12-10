@@ -15,6 +15,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.data.bill.BillRepository
+import com.example.compose.rally.data.category.defaultAccountCategories
+import com.example.compose.rally.data.category.defaultBillCategories
 import com.example.compose.rally.ui.accounts.AccountsScreen
 import com.example.compose.rally.ui.accounts.AddAccountScreen
 import com.example.compose.rally.ui.accounts.SingleAccountScreen
@@ -95,7 +97,12 @@ fun RallyNavHost(
             )
         }
         composable(route = Settings.route) {
-            SettingsScreen()
+            SettingsScreen(
+                onClickAddAccountCategory = {
+                },
+                onClickAddBillCategory = {
+                }
+            )
         }
         composable(route = ChatGPT.route) {
             val chatViewModel = viewModel<ChatViewModel>()

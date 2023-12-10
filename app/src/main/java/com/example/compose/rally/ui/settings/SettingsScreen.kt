@@ -1,8 +1,13 @@
 package com.example.compose.rally.ui.settings
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,6 +19,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.R
+import com.example.compose.rally.ui.home.OverviewHome
+import com.example.compose.rally.ui.overview.RallyDefaultPadding
 
 class SettingsViewModel {
     var spendingGoal by mutableStateOf("Не определена")
@@ -22,25 +29,51 @@ class SettingsViewModel {
     var showPassword by mutableStateOf(false)
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(
+    onClickAddAccountCategory: () -> Unit = {},
+    onClickAddBillCategory: () -> Unit = {},
+) {
     val viewModel = remember { SettingsViewModel() }
-    SettingsScreenContent(viewModel, LocalContext.current)
+    SettingsScreenContent(
+        onClickAddAccountCategory,
+        onClickAddBillCategory,
+        viewModel,
+        LocalContext.current
+    )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SettingsScreenContent(
+    onClickAddAccountCategory: () -> Unit = {},
+    onClickAddBillCategory: () -> Unit = {},
     viewModel: SettingsViewModel,
     context: Context
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(8.dp, bottom = 32.dp),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        SpendingGoalSetting(context, viewModel.spendingGoal, onSpendingGoalSelected = { selectedGoal ->
-            viewModel.spendingGoal = selectedGoal
-        })
+
+        SpendingGoalSetting(
+            context,
+            viewModel.spendingGoal,
+            onSpendingGoalSelected = { selectedGoal ->
+                viewModel.spendingGoal = selectedGoal
+            })
+
+        Spacer(Modifier.height(RallyDefaultPadding))
+
+
+        AddCategories(
+            onClickAddAccountCategory = onClickAddAccountCategory,
+            onClickAddBillCategory = onClickAddBillCategory,
+        )
+
         ApiKeySetting(viewModel.apiChatKey, onApiKeyChanged = { viewModel.apiChatKey = it })
 
         PasswordSetting(
@@ -49,11 +82,5 @@ fun SettingsScreenContent(
             onPasswordChanged = { viewModel.password = it },
             onTogglePasswordVisibility = { viewModel.showPassword = it }
         )
-
-        AddCategorySetting(stringResource(R.string.add_account_categoty))
-        AddCategorySetting(stringResource(R.string.add_bill_categoty))
     }
 }
-
-
-

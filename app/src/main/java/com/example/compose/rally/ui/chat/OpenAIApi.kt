@@ -1,5 +1,6 @@
 package com.example.compose.rally.ui.chat
 
+import androidx.compose.ui.res.stringResource
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
