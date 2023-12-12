@@ -117,6 +117,7 @@ fun takeExpenseSplit(group: List<String>, context: Context) {
             timesRepeat = 0,
             billPhoto = null,
             category = group[9],
+            mcc = if(group[10].isNullOrEmpty()) null else group[10].toInt(),
             amount = amount[0].toFloat() + (amount[1].toFloat() / 100),
         ),
         context = context

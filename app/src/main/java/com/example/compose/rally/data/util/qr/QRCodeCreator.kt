@@ -24,6 +24,7 @@ fun createBillFromQR(result: String): Bill {
             timesRepeat = 0,
             billPhoto = null,
             category = "QR",
+            mcc = null,
             amount = (matcher.group(6)!!.toFloat()) + (matcher.group(7)!!.toFloat() / 100)
         )
     }

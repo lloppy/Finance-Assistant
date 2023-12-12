@@ -188,6 +188,7 @@ fun AddBillScreen(
                             timesRepeat = repeatRuleOptions.indexOf(selectedRepeatRule),
                             billPhoto = selectedImageUri,
                             category = selectedCategory,
+                            mcc = null,
                             amount = balance.text.toFloat()
                         )
                     )

@@ -13,6 +13,7 @@ data class Bill constructor(
     val timesRepeat: Int,
     val billPhoto: Uri?,
     val category: String,
+    val mcc: Int?,
     val amount: Float,
     val color: Color = (billCategoryColors[category] ?: billCategoryColors["Default"])!!,
     val stringDate: String = localDateTimeToString(date)
