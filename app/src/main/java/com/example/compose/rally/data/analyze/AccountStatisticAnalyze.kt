@@ -10,20 +10,18 @@ import java.time.DayOfWeek
 @RequiresApi(Build.VERSION_CODES.O)
 fun getBillMCCReport(): String {
     val mccExpenses = calculateBillMCCExpenses()
-    val mostSpendingMCC = findMostSpendingMCC()
 
     return """
-        Ваш отчет по тратам на основе Merchant Category Code (MCC):
+        Ваш отчет по наибольшими тратами на основе Merchant Category Code (MCC):
         
-${formatMCCExpenses(mccExpenses)}
-MCC с наибольшими тратами: $mostSpendingMCC
+${formatTop5MCCExpenses(mccExpenses)}
 
 Благодарим за использование нашего помощника!.""".trimIndent()
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 private fun calculateBillMCCExpenses(): Map<Int, Double> {
-    return bills.filter { it.mcc!=null }
+    return bills.filter { it.mcc != null }
         .groupBy { it.mcc!! }
         .mapValues { (_, mccBills) ->
             mccBills.sumOf { it.amount.toDouble() }
@@ -31,24 +29,36 @@ private fun calculateBillMCCExpenses(): Map<Int, Double> {
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-private fun findMostSpendingMCC(): Int {
-    val mccExpenses = bills.filter { it.mcc!=null }
+private fun findMostSpendingMCC(): List<Int> {
+    val mccExpenses = bills.filter { it.mcc != null }
         .groupBy { it.mcc!! }
         .mapValues { (_, mccBills) ->
             mccBills.sumOf { it.amount.toDouble() }
         }
-    return mccExpenses.maxByOrNull { it.value }!!.key
+
+    return mccExpenses
+        .toList()
+        .sortedByDescending { it.second }
+        .take(5)
+        .map { it.first }
 }
 
-private fun formatMCCExpenses(mccExpenses: Map<Int, Double>): String {
+private fun formatTop5MCCExpenses(mccExpenses: Map<Int, Double>): String {
+    val top5Expenses = mccExpenses
+        .toList()
+        .sortedByDescending { it.second }
+        .take(5)
+
     val formattedExpenses = StringBuilder()
 
-    for ((mcc, expense) in mccExpenses) {
+    for ((mcc, expense) in top5Expenses) {
         val mccString = mcc.toString()
         formattedExpenses.append("MCC $mccString: всего потречено ${expense.toInt()} руб\n")
     }
+
     return formattedExpenses.toString()
 }
+
 
 
 fun getAccountStatisticReport(): String {
