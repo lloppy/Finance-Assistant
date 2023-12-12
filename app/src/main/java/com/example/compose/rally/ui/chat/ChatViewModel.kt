@@ -10,6 +10,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.compose.rally.data.analyze.getAccountStatisticReport
+import com.example.compose.rally.data.analyze.getBillMCCReport
 import com.example.compose.rally.data.analyze.getBillSpendStatisticReport
 import kotlinx.coroutines.launch
 
@@ -30,6 +31,7 @@ class ChatViewModel : ViewModel() {
 
                     messages.add(Message(getBillSpendStatisticReport(), "user"))
                     messages.add(Message(getAccountStatisticReport(), "user"))
+                    messages.add(Message(getBillMCCReport(), "user"))
                     toastErrorMessage(context, e)
                     //errorMessage(messages, context, e)
                     //errorMessage(messages, context, e)
