@@ -57,7 +57,10 @@ fun RallyAuthenticationWrapper() {
         var isAuthenticated by remember { mutableStateOf(false) }
         val context = LocalContext.current
 
-        if (isAuthenticated) {
+        if (isAuthenticated
+            || readPasswordFromSharedPreferences(context).isNullOrEmpty()
+            || readPasswordFromSharedPreferences(context).isNullOrBlank()
+        ) {
             RallyApp()
         } else {
             AuthenticationScreen(

@@ -25,6 +25,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.R
 import com.example.compose.rally.data.util.hideKeyboard
@@ -47,8 +49,9 @@ fun PasswordSetting(
         Spacer(modifier = Modifier.height(8.dp))
 
         TextField(
-            value = if (showPassword) password else "*".repeat(password.length),
+            value = password,
             onValueChange = { onPasswordChanged(it) },
+            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
             label = { Text(stringResource(R.string.enter_password)) },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.NumberPassword,
