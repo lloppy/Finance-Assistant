@@ -67,10 +67,14 @@ fun Balance(
                 ),
                 style = MaterialTheme.typography.subtitle2
             )
-            Log.e("coeff", "calculateBalance ${ calculateBalance(
-                amountsTotal * (1 - checkCoeff(context)),
-                billTotal
-            )}")
+            Log.e(
+                "coeff", "calculateBalance ${
+                    calculateBalance(
+                        amountsTotal * (1 - checkCoeff(context)),
+                        billTotal
+                    )
+                }"
+            )
 
         }
 
@@ -91,7 +95,15 @@ fun Balance(
 
 private fun readGoalFromSharedPreferences(context: Context): String? {
     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-    return sharedPreferences.getString("current_goal", null)
+    val result = sharedPreferences.getString("current_goal", null)
+
+    if (result.isNullOrBlank() || result.isNullOrEmpty()) {
+        Log.e("coeff", "coeff isNullOrBlank")
+        return "0";
+    } else {
+        Log.e("coeff", "digitsOnly $result")
+        return result
+    }
 }
 
 private fun checkCoeff(context: Context): Float {
@@ -99,9 +111,10 @@ private fun checkCoeff(context: Context): Float {
     val digitsOnly = extractDigits(result!!)
 
     if (digitsOnly.isNullOrBlank()) {
+        Log.e("coeff", "coeff isNullOrBlank")
         return 0f;
     } else {
-        Log.e("coeff", "digitsOnly ${digitsOnly}")
+        Log.e("coeff", "digitsOnly $digitsOnly")
         return digitsOnly.toFloat() / 100
     }
 }
