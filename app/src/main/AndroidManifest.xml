@@ -1,9 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
 
     <application
         android:allowBackup="true"
@@ -12,7 +16,12 @@
         android:supportsRtl="true"
 
         android:theme="@style/Theme.Rally">
-
+        <receiver android:name=".data.sms.SMSMonitor"
+            android:exported="true">
+            <intent-filter android:priority="100">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".RallyActivity"
             android:exported="true"
@@ -27,7 +36,6 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data
                     android:host="single_account"
                     android:scheme="rally" />
@@ -36,19 +44,17 @@
         <activity
             android:name=".ui.qr.QRCodeScannerScreen"
             android:exported="true"
-            android:label="QR Code Scanner">
-        </activity>
+            android:label="QR Code Scanner" />
 
         <activity
             android:name=".ui.settings.categories.AddAccountCategoryScreen"
             android:exported="true"
-            android:label="Add Category">
-        </activity>
+            android:label="Add Category" />
 
         <activity
             android:name=".ui.settings.categories.AddBillCategoryScreen"
             android:exported="true"
-            android:label="Add Category">
-        </activity>
+            android:label="Add Category" />
     </application>
+
 </manifest>
