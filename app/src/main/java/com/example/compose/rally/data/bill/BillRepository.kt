@@ -17,7 +17,7 @@ class BillRepository {
                 null,
                 "Default",
                 null,
-                9f,
+                0f,
             )
         )
 

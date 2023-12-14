@@ -69,6 +69,7 @@ fun BillsScreen(
         amounts = { bill -> bill.amount },
         colors = { bill -> bill.color },
         amountsTotal = if (isFiltering) billsTotal else bills.map { it.amount }.sum(),
+        date = { bill -> bill.date },
         circleLabel = stringResource(R.string.due),
         rows = { bill ->
             BillRow(

@@ -16,9 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import java.time.LocalDateTime
 
 /**
  * Generic component used by the accounts and bills screens to show a chart and a list of items.
@@ -29,16 +28,20 @@ fun <T> StatementBody(
     items: List<T>,
     colors: (T) -> Color,
     amounts: (T) -> Float,
+    date: (T) -> LocalDateTime,
     amountsTotal: Float,
     circleLabel: String,
     rows: @Composable (T) -> Unit
 ) {
-    Column(modifier = modifier
-        .padding(top = 58.dp)
-        .verticalScroll(rememberScrollState())) {
+    Column(
+        modifier = modifier
+            .padding(top = 58.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
         Box(Modifier.padding(16.dp)) {
-            val accountsProportion = items.extractProportions { amounts(it) }
-            val circleColors = items.map { colors(it) }
+            val accountsProportion =
+                items.sortedByDescending { date(it) }.extractProportions { amounts(it) }
+            val circleColors = items.sortedByDescending { date(it) }.map { colors(it) }
             AnimatedCircle(
                 accountsProportion,
                 circleColors,
@@ -63,15 +66,14 @@ fun <T> StatementBody(
         Spacer(Modifier.height(10.dp))
         Card {
             Column(modifier = Modifier.padding(12.dp)) {
-                items.forEach { item ->
+                Log.e("row", "row is $rows")
+                items.drop(1).sortedByDescending { date(it) }.forEach { item ->
                     rows(item)
                 }
             }
         }
     }
 }
-
-
 
 
 @Composable

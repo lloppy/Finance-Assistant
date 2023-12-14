@@ -42,5 +42,5 @@ fun findSuitableCard(mccCategories: List<Int>): CreditCard? {
                 mccCategories.any { it in cashbackCategory.mccCodes }
             }
         }
-        .minByOrNull { it.cashbackCategories.sumByDouble { category -> category.cashbackPercentage } }
+        .minByOrNull { it.cashbackCategories.sumOf { category -> category.cashbackPercentage } }
 }

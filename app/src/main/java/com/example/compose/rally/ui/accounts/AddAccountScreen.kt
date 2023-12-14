@@ -61,13 +61,9 @@ fun AddAccountScreenPreview() {
 
 @Composable
 fun AddAccountScreen(
-    accountType: String? = AccountRepository.accounts.first().name,
     onSaveClick: (Account) -> Unit = {},
     //   onBackClick: () -> Unit = {},
 ) {
-    val account = remember(accountType) { AccountRepository.getAccount(accountType) }
-    Log.e("route", "account name is ${account.name}")
-
     var selectedCategory by remember { mutableStateOf(defaultAccountCategories.first()) }
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
     var accountName by remember { mutableStateOf(TextFieldValue()) }

@@ -21,7 +21,9 @@ fun analyzeAlert(): String {
     val totalSpend = BillRepository.bills
         .filter { it.date.month == LocalDate.now().month }
         .sumOf { it.amount.toDouble() }.toFloat()
-    val percent = ((totalSpend / totalBalance) * 100).roundToInt()
+
+    val percent =
+        if (totalSpend == 0f || totalBalance == 0f) 0 else ((totalSpend / totalBalance) * 100).roundToInt()
 
     return when {
         percent > 150 -> "Осторожно!\nВы многократно превысили бюджет!"

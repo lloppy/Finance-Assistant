@@ -28,6 +28,7 @@ import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
 import com.example.compose.rally.data.category.defaultAccountCategories
+
 /**
  * The Accounts screen.
  */
@@ -58,6 +59,7 @@ fun AccountsScreen(
             AccountRepository.accounts
         },
         amounts = { account -> account.balance },
+        date = { account -> account.date },
         colors = { account -> account.color },
         amountsTotal = if (isFiltering) selectedCategoryTotal else amountsTotal,
         circleLabel = if (isFiltering) selectedCategory else stringResource(R.string.total),
@@ -111,6 +113,7 @@ fun SingleAccountScreen(
         items = listOf(account),
         colors = { account.color },
         amounts = { account.balance },
+        date = {account.date},
         amountsTotal = account.balance,
         circleLabel = account.name,
     ) { row ->

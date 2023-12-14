@@ -139,13 +139,11 @@ fun RallyNavHost(
             route = AddAccount.routeWithArgs,
             arguments = AddAccount.arguments,
             deepLinks = AddAccount.deepLinks
-        ) { navBackStackEntry ->
-            val accountType =
-                navBackStackEntry.arguments?.getString(AddAccount.accountTypeArg)
+        ) {// navBackStackEntry ->
+//            val accountType =
+//                navBackStackEntry.arguments?.getString(AddAccount.accountTypeArg)
 
             AddAccountScreen(
-                accountType,
-
                 onSaveClick = { account ->
                     AccountRepository.addAccount(account)
                     navController.navigateSingleTopTo(Accounts.route)
