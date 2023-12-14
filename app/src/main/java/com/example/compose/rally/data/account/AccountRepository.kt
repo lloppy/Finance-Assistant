@@ -12,7 +12,7 @@ class AccountRepository {
                 LocalDateTime.now(),
                 0,
                 3456,
-                0f,
+                0.000001f,
                 "Default"
             )
         )
