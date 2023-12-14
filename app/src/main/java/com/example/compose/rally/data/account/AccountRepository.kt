@@ -1,6 +1,7 @@
 package com.example.compose.rally.data.account
 
 import android.os.Build
+import android.provider.ContactsContract.Settings.getDefaultAccount
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
 
@@ -27,7 +28,11 @@ class AccountRepository {
         }
 
         fun getAccount(accountName: String?): Account {
-            return accounts.first { it.name == accountName }
+            return try {
+                accounts.first { it.name == accountName }
+            } catch (e: NoSuchElementException) {
+                accounts[1]
+            }
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
