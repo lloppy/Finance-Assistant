@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -36,6 +37,12 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.rally.data.account.AccountRepository
+import com.example.compose.rally.data.bill.BillRepository
+import com.example.compose.rally.data.util.database.readAccountsFromFile
+import com.example.compose.rally.data.util.database.readBillsFromFile
+import com.example.compose.rally.data.util.database.saveAccountsToFile
+import com.example.compose.rally.data.util.database.saveBillsToFile
 import com.example.compose.rally.ui.authentication.AuthenticationScreen
 import com.example.compose.rally.ui.components.RallyTabRow
 import com.example.compose.rally.ui.theme.RallyTheme
@@ -44,9 +51,26 @@ class RallyActivity : FragmentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AccountRepository.setFileAccounts(readAccountsFromFile(this))
+        BillRepository.setFileBills(readBillsFromFile(this))
+        Log.e("database", "context pick! $this")
         setContent {
             RallyAuthenticationWrapper()
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onPause() {
+        super.onPause()
+        saveAccountsToFile(this)
+        saveBillsToFile(this)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onRestart() {
+        super.onRestart()
+        saveAccountsToFile(this)
+        saveBillsToFile(this)
     }
 }
 
@@ -95,8 +119,6 @@ fun RallyApp() {
         val currentScreen =
             rallyTabRowScreens.find { it.route == currentDestination?.route } ?: Home
 
-        // UserRepository.readFile(context)
-
         Scaffold(
             topBar = {
                 RallyTabRow(
@@ -142,7 +164,7 @@ fun PasswordAuthentication(
     var showError by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
-    var context= LocalContext.current
+    var context = LocalContext.current
 
     Column(
         modifier = Modifier

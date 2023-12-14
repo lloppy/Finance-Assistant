@@ -4,6 +4,9 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.example.compose.rally.data.account.Account
+import com.example.compose.rally.data.account.AccountRepository
+import com.google.gson.JsonElement
 import java.time.LocalDateTime
 
 class BillRepository {
@@ -46,6 +49,16 @@ class BillRepository {
                         && it.amount == bill.amount
                         && it.category == bill.category
             }
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun getAllBills(): List<Bill> {
+            return bills
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun setFileBills(billsList: List<Bill>) {
+            BillRepository.bills = billsList
         }
     }
 }

@@ -1,0 +1,74 @@
+package com.example.compose.rally.data.util
+
+import android.content.Context
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.compose.ui.graphics.Color
+import com.example.compose.rally.data.account.Account
+import com.example.compose.rally.data.account.AccountRepository
+import com.example.compose.rally.data.account.AccountRepository.Companion.setFileAccounts
+import java.io.File
+import java.io.IOException
+import java.io.PrintWriter
+import java.nio.file.Files
+import java.time.LocalDateTime
+
+fun saveAccountsToFile(context: Context) {
+    val fileName = "accounts.txt"
+
+    try {
+        val fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE)
+        val writer = PrintWriter(fileOutputStream.bufferedWriter())
+
+        for (account: Account in AccountRepository.getAllAccounts()) {
+            writer.println("${account.name}:" +
+                        "${account.date}:" +
+                        "${account.timesRepeat}:" +
+                        "${account.cardNumber}:" +
+                        "${account.balance}:" +
+                        "${account.category}:" +
+                        "${account.color}:" +
+                        "${account.stringDate}")
+            Log.e("database", "added ${account.name} with balance ${account.balance}")
+
+        }
+        writer.close()
+
+    } catch (e: IOException) {
+        Log.e("database", "database saveFile error")
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun readFile(context: Context) {
+    val filePath = File(context.filesDir, "accounts.txt")
+    Log.e("database", "filePath is $filePath")
+
+    try {
+        val newAccounts = Files.readAllLines(filePath.toPath())
+            .map { it.split(":") }
+            .filter { it.size == 8 }
+            .map {
+                Account(
+                    it[0],
+                    LocalDateTime.parse(it[1]),
+                    it[2].toInt(),
+                    it[3].toInt(),
+                    it[4].toFloat(),
+                    it[5],
+                    Color(it[6].toInt()),
+                    it[7]
+                )
+            }
+        if (newAccounts.isNotEmpty()){
+            Log.e("database", "newAccounts size is ${newAccounts.size}")
+            setFileAccounts(newAccounts)
+        }
+    } catch (e: IOException) {
+        e.printStackTrace()
+        Log.e("database", "readFile error")
+
+    }
+}
+

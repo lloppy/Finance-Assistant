@@ -22,6 +22,10 @@ class AccountRepository {
             return accounts
         }
 
+        fun setFileAccounts(accountsList: List<Account>) {
+            accounts = accountsList
+        }
+
         fun getAccount(accountName: String?): Account {
             return accounts.first { it.name == accountName }
         }
@@ -29,7 +33,6 @@ class AccountRepository {
         @RequiresApi(Build.VERSION_CODES.O)
         fun addAccount(account: Account) {
             accounts += account
-            //   saveFile(context)
         }
 
         fun removeAccount(account: Account) {
