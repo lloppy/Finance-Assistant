@@ -40,8 +40,8 @@ fun <T> StatementBody(
     ) {
         Box(Modifier.padding(16.dp)) {
             val accountsProportion =
-                items.sortedByDescending { date(it) }.extractProportions { amounts(it) }
-            val circleColors = items.sortedByDescending { date(it) }.map { colors(it) }
+                items.extractProportions { amounts(it) }
+            val circleColors = items.map { colors(it) }
             AnimatedCircle(
                 accountsProportion,
                 circleColors,

@@ -23,9 +23,13 @@ data class Account(
 )
 
 val accountCategoryColors: Map<String, Color> = mapOf(
-    "Зарплата" to Color(0xFF004940),
-    "Стипендия" to Color(0xFF005D57),
-    "Инвестиции" to Color(0xFF04B97F),
-    "Default" to Color(0xFF4D4D4D),
-    "Подработка" to Color(0xFF37EFBA)
+    "Зарплата" to Color(0xFF005853),
+    "Перевод средств от организации" to Color(0xFF4CAF6D),
+    "Стипендия" to Color(0xFF4CAF6D),
+    "Инвестиции" to Color(0xFF00413D),
+    "Перевод между счетами" to Color(0xFF27FDC0),
+    "Переводы" to Color(0xFF00BCD4),
+    "Бонусы" to Color(0xFFFFFFFF),
+
+    "Default" to Color(0xFF4D4D4D)
 )
