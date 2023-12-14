@@ -33,7 +33,8 @@ fun HomeScreen(
     onClickAnalyze: () -> Unit = {}
 ) {
     val context = LocalContext.current
-    val amountsTotal = remember { AccountRepository.getAllAccounts().map { account -> account.balance }.sum() }
+    val amountsTotal =
+        remember { AccountRepository.getAllAccounts().map { account -> account.balance }.sum() }
     val billTotal = remember { BillRepository.bills.map { bill -> bill.amount }.sum() }
 
     Column(
