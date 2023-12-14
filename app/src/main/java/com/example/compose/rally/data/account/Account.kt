@@ -29,7 +29,7 @@ val accountCategoryColors: Map<String, Color> = mapOf(
     "Инвестиции" to Color(0xFF00413D),
     "Перевод между счетами" to Color(0xFF27FDC0),
     "Переводы" to Color(0xFF00BCD4),
-    "Бонусы" to Color(0xFFFFFFFF),
+    "Бонусы" to Color(0xFF3F51B5),
 
     "Default" to Color(0xFF4D4D4D)
 )
