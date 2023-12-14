@@ -4,9 +4,6 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.example.compose.rally.data.account.Account
-import com.example.compose.rally.data.account.AccountRepository
-import com.google.gson.JsonElement
 import java.time.LocalDateTime
 
 class BillRepository {
@@ -26,7 +23,11 @@ class BillRepository {
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun getBill(billName: String?): Bill {
-            return bills.first { it.name == billName }
+            return try {
+                bills.first { it.name == billName }
+            } catch (e: NoSuchElementException) {
+                bills[1]
+            }
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
