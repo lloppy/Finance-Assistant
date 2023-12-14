@@ -28,6 +28,7 @@ import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
 import com.example.compose.rally.data.category.defaultAccountCategories
+import com.example.compose.rally.ui.components.StatementBodyWithSmallCircle
 
 /**
  * The Accounts screen.
@@ -109,11 +110,10 @@ fun SingleAccountScreen(
     onDeleteAccountClick: (Account) -> Unit = {}
 ) {
     val account = remember(accountType) { AccountRepository.getAccount(accountType) }
-    StatementBody(
+    StatementBodyWithSmallCircle(
         items = listOf(account),
         colors = { account.color },
         amounts = { account.balance },
-        date = {account.date},
         amountsTotal = account.balance,
         circleLabel = account.name,
     ) { row ->

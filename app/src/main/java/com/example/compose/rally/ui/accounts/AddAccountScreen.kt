@@ -62,7 +62,6 @@ fun AddAccountScreenPreview() {
 @Composable
 fun AddAccountScreen(
     onSaveClick: (Account) -> Unit = {},
-    //   onBackClick: () -> Unit = {},
 ) {
     var selectedCategory by remember { mutableStateOf(defaultAccountCategories.first()) }
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }

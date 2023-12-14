@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,8 +27,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.R
+import com.example.compose.rally.ui.theme.RallyTheme
 import java.text.DecimalFormat
 
 /**
@@ -70,7 +73,7 @@ fun BillRow(
     BaseRow(
         modifier = modifier,
         color = color,
-        title = name,   
+        title = name,
         subtitle = "$stringDate",
         category = category,
         amount = amount,
@@ -95,10 +98,10 @@ private fun BaseRow(
     Row(
         modifier = modifier
             .height(68.dp)
+            .fillMaxWidth()
             .clearAndSetSemantics {
                 contentDescription =
                     "$title account ending in ${subtitle.takeLast(4)}, current balance $rubleSign$formattedAmount"
-
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -108,13 +111,23 @@ private fun BaseRow(
             modifier = Modifier
         )
         Spacer(Modifier.width(12.dp))
-        Column(Modifier) {
-            Text(text = "$category: $title", style = typography.body1)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
+            Text(
+                text = "$category: ${title.take(9)} ...",
+                style = typography.body1
+            )
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                Text(text = subtitle, style = typography.subtitle1)
+                Text(
+                    text = subtitle,
+                    style = typography.subtitle1
+                )
             }
         }
-        Spacer(Modifier.weight(1f))
+        Spacer(Modifier.weight(0.3f))
         Row(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -129,14 +142,13 @@ private fun BaseRow(
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
         }
-        Spacer(Modifier.width(16.dp))
+        Spacer(Modifier.width(6.dp))
 
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Icon(
                 imageVector = Icons.Filled.ChevronRight,
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(end = 12.dp)
                     .size(24.dp)
             )
         }
