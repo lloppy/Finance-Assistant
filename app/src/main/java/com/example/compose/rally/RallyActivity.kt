@@ -70,7 +70,7 @@ fun RallyAuthenticationWrapper() {
                 onAuthenticationFailed = {
                     Toast.makeText(
                         context as FragmentActivity,
-                        "Аутентификация не удалась",
+                        "Ошибка аутентификации",
                         Toast.LENGTH_SHORT
                     ).show()
                     isAuthenticated = false
