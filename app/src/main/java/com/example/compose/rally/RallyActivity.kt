@@ -41,8 +41,10 @@ import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.data.bill.BillRepository
 import com.example.compose.rally.data.util.database.readAccountsFromFile
 import com.example.compose.rally.data.util.database.readBillsFromFile
+import com.example.compose.rally.data.util.database.readCategoriesFromFile
 import com.example.compose.rally.data.util.database.saveAccountsToFile
 import com.example.compose.rally.data.util.database.saveBillsToFile
+import com.example.compose.rally.data.util.database.saveCategoriesToFile
 import com.example.compose.rally.ui.authentication.AuthenticationScreen
 import com.example.compose.rally.ui.components.RallyTabRow
 import com.example.compose.rally.ui.theme.RallyTheme
@@ -53,7 +55,8 @@ class RallyActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         AccountRepository.setFileAccounts(readAccountsFromFile(this))
         BillRepository.setFileBills(readBillsFromFile(this))
-        Log.e("database", "context pick! $this")
+        readCategoriesFromFile(this)
+
         setContent {
             RallyAuthenticationWrapper()
         }
@@ -64,6 +67,7 @@ class RallyActivity : FragmentActivity() {
         super.onPause()
         saveAccountsToFile(this)
         saveBillsToFile(this)
+        saveCategoriesToFile(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -71,6 +75,7 @@ class RallyActivity : FragmentActivity() {
         super.onRestart()
         saveAccountsToFile(this)
         saveBillsToFile(this)
+        saveCategoriesToFile(this)
     }
 }
 

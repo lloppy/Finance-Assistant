@@ -41,7 +41,6 @@ fun readAccountsFromFile(context: Context): List<Account> {
     } catch (e: IOException) {
         e.printStackTrace()
     }
-
     return accounts
 }
 

@@ -40,7 +40,6 @@ fun readBillsFromFile(context: Context): List<Bill> {
     } catch (e: IOException) {
         e.printStackTrace()
     }
-
     return bills
 }
 
