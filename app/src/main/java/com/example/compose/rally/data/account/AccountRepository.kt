@@ -44,9 +44,10 @@ class AccountRepository {
             accounts = accounts.filterNot {
                 it.name == account.name
                         && it.stringDate == account.stringDate
+                        && it.timesRepeat == account.timesRepeat
+                        && it.cardNumber == account.cardNumber
                         && it.balance == account.balance
                         && it.category == account.category
-                        && it.cardNumber == account.cardNumber
             }
         }
     }

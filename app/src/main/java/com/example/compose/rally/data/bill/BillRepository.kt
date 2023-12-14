@@ -47,8 +47,10 @@ class BillRepository {
             bills = bills.filterNot {
                 it.name == bill.name
                         && it.stringDate == bill.stringDate
-                        && it.amount == bill.amount
+                        && it.timesRepeat == bill.timesRepeat
                         && it.category == bill.category
+                        && it.mcc == bill.mcc
+                        && it.amount == bill.amount
             }
         }
 

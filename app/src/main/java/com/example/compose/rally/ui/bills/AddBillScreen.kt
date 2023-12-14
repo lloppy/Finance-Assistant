@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.CalendarView
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -39,11 +40,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.example.compose.rally.Bills
 import com.example.compose.rally.R
 import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
 import com.example.compose.rally.data.category.defaultBillCategories
+import com.example.compose.rally.navigateSingleTopTo
 import com.example.compose.rally.ui.accounts.RepeatDataDropdown
 import java.time.LocalDateTime
 
@@ -53,6 +57,7 @@ import java.time.LocalDateTime
 fun AddBillScreen(
     billType: String? = BillRepository.bills.first().name,
     onSaveClick: (Bill) -> Unit = {},
+    navController: NavHostController
 //    onBackClick: () -> Unit = {},
 ) {
 
@@ -199,6 +204,10 @@ fun AddBillScreen(
         ) {
             Text(text = stringResource(id = R.string.save_bill))
         }
+    }
+
+    BackHandler {
+        navController.navigateSingleTopTo(Bills.route)
     }
 }
 

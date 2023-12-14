@@ -1,5 +1,7 @@
 package com.example.compose.rally.ui.accounts
 
+import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,10 +36,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import com.example.compose.rally.Accounts
+import com.example.compose.rally.Bills
 import com.example.compose.rally.R
 import com.example.compose.rally.data.account.Account
 import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.data.category.defaultAccountCategories
+import com.example.compose.rally.navigateSingleTopTo
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
 
@@ -118,10 +125,15 @@ fun AccountsScreen(
 @Composable
 fun SingleAccountScreen(
     accountType: String? = AccountRepository.getAllAccounts().first().name,
-    onDeleteAccountClick: (Account) -> Unit = {}
+    onDeleteAccountClick: (Account) -> Unit = {},
+    navController: NavHostController
 ) {
     val account = remember(accountType) { AccountRepository.getAccount(accountType) }
     AccountDetailsCard(account = account)
+
+    BackHandler {
+        navController.navigateSingleTopTo(Accounts.route)
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
