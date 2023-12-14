@@ -22,7 +22,7 @@ internal fun <T> OverViewDivider(
     colors: (T) -> Color
 ) {
     Row(Modifier.fillMaxWidth()) {
-        data.forEach { item: T ->
+        data.drop(1).forEach { item: T ->
             Spacer(
                 modifier = Modifier
                     .weight(values(item))
