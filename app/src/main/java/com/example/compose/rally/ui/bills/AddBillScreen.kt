@@ -136,7 +136,7 @@ fun AddBillScreen(
         TextField(
             value = balance,
             onValueChange = { balance = it },
-            label = { Text(stringResource(id = R.string.balance)) },
+            label = { Text(stringResource(id = R.string.balance_bill)) },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number
             ),

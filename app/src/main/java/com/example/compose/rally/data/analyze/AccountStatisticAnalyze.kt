@@ -75,9 +75,7 @@ fun getAccountStatisticReport(): String {
     Поступления по категориям:
     
 ${formatCategoryExpenses(categoryExpenses)}
-    Самый прибыльный день недели: ${mostSpendingDay ?: "нет данных"}
-
-    Благодарим за использование нашего помощника!.""".trimIndent()
+    Самый прибыльный день недели: ${mostSpendingDay ?: "нет данных"}""".trimIndent()
 
     return report
 }
