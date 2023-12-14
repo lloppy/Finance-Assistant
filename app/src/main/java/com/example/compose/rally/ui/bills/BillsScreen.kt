@@ -54,6 +54,7 @@ import com.example.compose.rally.ui.accounts.AccountDetailsCard
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.StatementBody
 import com.example.compose.rally.ui.components.StatementBodyWithSmallCircle
+import java.util.Locale
 
 /**
  * The Bills screen.
@@ -188,7 +189,7 @@ fun BillDetailsCard(bill: Bill) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = bill.name,
+                text = bill.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
                 modifier = Modifier
                     .align(Alignment.Start),
                 style = TextStyle(

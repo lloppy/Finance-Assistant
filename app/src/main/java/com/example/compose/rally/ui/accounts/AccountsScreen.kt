@@ -33,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,6 +48,7 @@ import com.example.compose.rally.data.category.defaultAccountCategories
 import com.example.compose.rally.navigateSingleTopTo
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
+import java.util.Locale
 
 /**
  * The Accounts screen.
@@ -169,7 +171,7 @@ fun AccountDetailsCard(account: Account) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = account.name,
+                text = account.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
                 modifier = Modifier
                     .align(Alignment.Start),
                 style = TextStyle(
