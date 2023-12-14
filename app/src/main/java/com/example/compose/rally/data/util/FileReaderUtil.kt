@@ -19,7 +19,7 @@ fun saveFile(context: Context) {
         val fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE)
         val writer = PrintWriter(fileOutputStream.bufferedWriter())
 
-        for (account: Account in AccountRepository.accounts) {
+        for (account: Account in AccountRepository.getAllAccounts()) {
             writer.println("${account.name}:${account.cardNumber}:${account.balance}")
         }
         writer.close()
@@ -29,30 +29,30 @@ fun saveFile(context: Context) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-fun readFile(context: Context) {
-    val filePath = File(context.filesDir, "accounts.txt")
-    Log.e("database", "filePath is $filePath")
-
-    try {
-        val newAccounts = Files.readAllLines(filePath.toPath())
-            .map { it.split(":") }
-            .filter { it.size == 6 }
-            // нужно проверить эту строчку  - LocalDateTime.parse(it[1]) может крашнуться
-            .map {
-                Account(
-                    it[0],
-                    LocalDateTime.parse(it[1]),
-                    it[2].toInt(),
-                    it[3].toInt(),
-                    it[4].toFloat(),
-                    it[5]
-                )
-            }
-        AccountRepository.accounts = newAccounts
-
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
-}
+//@RequiresApi(Build.VERSION_CODES.O)
+//fun readFile(context: Context) {
+//    val filePath = File(context.filesDir, "accounts.txt")
+//    Log.e("database", "filePath is $filePath")
+//
+//    try {
+//        val newAccounts = Files.readAllLines(filePath.toPath())
+//            .map { it.split(":") }
+//            .filter { it.size == 6 }
+//            // нужно проверить эту строчку  - LocalDateTime.parse(it[1]) может крашнуться
+//            .map {
+//                Account(
+//                    it[0],
+//                    LocalDateTime.parse(it[1]),
+//                    it[2].toInt(),
+//                    it[3].toInt(),
+//                    it[4].toFloat(),
+//                    it[5]
+//                )
+//            }
+//        AccountRepository.getAllAccounts() = newAccounts
+//
+//    } catch (e: IOException) {
+//        e.printStackTrace()
+//    }
+//}
 

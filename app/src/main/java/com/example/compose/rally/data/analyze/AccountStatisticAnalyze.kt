@@ -2,7 +2,7 @@ package com.example.compose.rally.data.analyze
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.compose.rally.data.account.AccountRepository.Companion.accounts
+import com.example.compose.rally.data.account.AccountRepository.Companion.getAllAccounts
 import com.example.compose.rally.data.bill.BillRepository.Companion.bills
 import java.time.DayOfWeek
 
@@ -94,18 +94,18 @@ private fun formatCategoryExpenses(categoryExpenses: Map<String, Float>): String
 }
 
 fun calculateAccountTotalSum(): Float {
-    return accounts.sumOf { it.balance.toDouble() }.toFloat()
+    return getAllAccounts().sumOf { it.balance.toDouble() }.toFloat()
 }
 
 fun calculateAccountCategoryExpenses(): Map<String, Float> {
-    return accounts.groupBy { it.category }
+    return getAllAccounts().groupBy { it.category }
         .mapValues { (_, categoryAccounts) ->
             categoryAccounts.sumOf { it.balance.toDouble() }.toFloat()
         }
 }
 
 fun findAccountMostSpendingDay(): DayOfWeek? {
-    val dayExpenses = accounts.groupBy { it.date.dayOfWeek }
+    val dayExpenses = getAllAccounts().groupBy { it.date.dayOfWeek }
         .mapValues { (_, dayAccounts) ->
             dayAccounts.sumOf { it.balance.toDouble() }.toFloat()
         }

@@ -15,7 +15,7 @@ fun calculateBalance(amountsTotal: Float, billTotal: Float): Float {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun analyzeAlert(): String {
-    val totalBalance = AccountRepository.accounts
+    val totalBalance = AccountRepository.getAllAccounts()
         .filter { it.date.month == LocalDate.now().month }
         .sumOf { it.balance.toDouble() }.toFloat()
     val totalSpend = BillRepository.bills

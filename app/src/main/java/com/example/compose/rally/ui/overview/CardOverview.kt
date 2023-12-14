@@ -1,6 +1,7 @@
 package com.example.compose.rally.ui.overview
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -67,12 +68,12 @@ fun AccountsCard(
     onClickSeeAll: () -> Unit,
     onAccountClick: (String) -> Unit,
 ) {
-    val amount = AccountRepository.accounts.map { account -> account.balance }.sum()
+    val amount = AccountRepository.getAllAccounts().map { account -> account.balance }.sum()
     OverviewScreenCard(
         title = stringResource(R.string.accounts),
         amount = amount,
         onClickSeeAll = onClickSeeAll,
-        data = AccountRepository.accounts,
+        data = AccountRepository.getAllAccounts(),
         colors = { it.color },
         values = { it.balance }
     ) { account ->
