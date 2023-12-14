@@ -48,7 +48,7 @@ fun OverviewScreenCard(
 fun AccountsCard(
     onClickSeeAll: () -> Unit
 ) {
-    val amount = AccountRepository.accounts.map { account -> account.balance }.sum()
+    val amount = AccountRepository.getAllAccounts().map { account -> account.balance }.sum()
     OverviewScreenCard(
         title = stringResource(R.string.accounts),
         amount = amount,

@@ -39,14 +39,14 @@ fun AccountsScreen(
     onAddAccountClick: (String) -> Unit = {}
 ) {
     val amountsTotal = remember {
-        AccountRepository.accounts.map { account -> account.balance }.sum()
+        AccountRepository.getAllAccounts().map { account -> account.balance }.sum()
     }
     val accountCategoriesState by remember { mutableStateOf(defaultAccountCategories) }
     var selectedCategory by remember { mutableStateOf(accountCategoriesState.first()) }
     var isFiltering by remember { mutableStateOf(false) }
     val selectedCategoryTotal = remember(selectedCategory) {
         // Calculate the total for the selected category
-        AccountRepository.accounts
+        AccountRepository.getAllAccounts()
             .filter { it.category == selectedCategory }
             .sumOf { it.balance.toDouble() }
             .toFloat()
@@ -55,9 +55,9 @@ fun AccountsScreen(
     StatementBody(
         modifier = Modifier.semantics { contentDescription = "Счета" },
         items = if (isFiltering) {
-            AccountRepository.accounts.filter { it.category == selectedCategory }
+            AccountRepository.getAllAccounts().filter { it.category == selectedCategory }
         } else {
-            AccountRepository.accounts
+            AccountRepository.getAllAccounts()
         },
         amounts = { account -> account.balance },
         date = { account -> account.date },
@@ -106,7 +106,7 @@ fun AccountsScreen(
  */
 @Composable
 fun SingleAccountScreen(
-    accountType: String? = AccountRepository.accounts.first().name,
+    accountType: String? = AccountRepository.getAllAccounts().first().name,
     onDeleteAccountClick: (Account) -> Unit = {}
 ) {
     val account = remember(accountType) { AccountRepository.getAccount(accountType) }

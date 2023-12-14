@@ -1,0 +1,26 @@
+    fun getAllAccounts(): List<Account> {
+            val currentDay = LocalDateTime.now().dayOfMonth
+            var repeatRuleOptions =
+                listOf("Только один день", "Каждый день", "Каждую неделю", "Каждый месяц")
+
+            for (account in accounts) {
+                val repeatRule = repeatRuleOptions.getOrNull(account.timesRepeat) ?: continue
+
+                var nStep = when (repeatRule) {                                     // для 14 числа
+                    "Каждый день" -> currentDay                                     // 14 шагов - 14 карточек
+                    "Каждую неделю" -> ceil((currentDay / 7).toDouble()).toInt()    // 2 шага   - 2 карточки
+                    "Каждый месяц" -> 1                                             // 1 шаг    - 2 карточка
+                    else -> break                                                       // 1 шаг    - 1 карточка
+                }
+
+
+                for (i in 1..nStep){
+                    val newDate = LocalDateTime.now().minusDays(i.toLong())
+                    val newAccount = account.copy(date = newDate)
+                    Log.e("nStep", "new date is ${newDate.dayOfMonth} ${newDate.dayOfWeek}")
+                    accounts += newAccount
+                }
+            }
+
+            return accounts
+        }

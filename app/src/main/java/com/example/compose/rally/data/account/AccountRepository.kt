@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 class AccountRepository {
     companion object {
-        var accounts: List<Account> = listOf(
+        private var accounts: List<Account> = listOf(
             Account(
                 "add_account",
                 LocalDateTime.now(),
@@ -16,6 +16,12 @@ class AccountRepository {
                 "Default"
             )
         )
+
+
+        fun getAllAccounts(): List<Account> {
+            return accounts
+        }
+
 
         fun getAccount(accountName: String?): Account {
             return accounts.first { it.name == accountName }

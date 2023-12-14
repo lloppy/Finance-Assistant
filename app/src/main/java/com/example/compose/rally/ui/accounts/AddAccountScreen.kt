@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.compose.rally.R
 import com.example.compose.rally.data.account.Account
-import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.data.category.defaultAccountCategories
 import com.example.compose.rally.ui.theme.RallyTheme
 import java.time.LocalDateTime
@@ -160,8 +159,8 @@ fun AddAccountScreen(
                             name = accountName.text,
                             date = selectedDate,
                             timesRepeat = repeatRuleOptions.indexOf(selectedRepeatRule),
-                            cardNumber = cardNumber.text.toInt(),
-                            balance = balance.text.toFloat(),
+                            cardNumber = cardNumber.text.replace(" ", "").toInt(),
+                            balance = balance.text.replace(" ", "").toFloat(),
                             category = selectedCategory
                         )
                     )

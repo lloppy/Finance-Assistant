@@ -189,7 +189,7 @@ fun AddBillScreen(
                             billPhoto = selectedImageUri,
                             category = selectedCategory,
                             mcc = null,
-                            amount = balance.text.toFloat()
+                            amount = balance.text.replace(" ", "").toFloat()
                         )
                     )
                 }

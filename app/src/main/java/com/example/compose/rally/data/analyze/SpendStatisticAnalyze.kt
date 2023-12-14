@@ -2,7 +2,6 @@ package com.example.compose.rally.data.analyze
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.compose.rally.data.account.AccountRepository.Companion.accounts
 import com.example.compose.rally.data.bill.BillRepository.Companion.bills
 import java.time.DayOfWeek
 
@@ -46,16 +45,16 @@ fun calculateBillTotalSum(): Float {
 @RequiresApi(Build.VERSION_CODES.O)
 fun calculateBillCategoryExpenses(): Map<String, Float> {
     return bills.groupBy { it.category }
-        .mapValues { (_, categoryAccounts) ->
-            categoryAccounts.sumOf { it.amount.toDouble() }.toFloat()
+        .mapValues { (_, categoryBills) ->
+            categoryBills.sumOf { it.amount.toDouble() }.toFloat()
         }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun findBillMostSpendingDay(): DayOfWeek? {
     val dayExpenses = bills.groupBy { it.date.dayOfWeek }
-        .mapValues { (_, dayAccounts) ->
-            dayAccounts.sumOf { it.amount.toDouble() }.toFloat()
+        .mapValues { (_, dayBills) ->
+            dayBills.sumOf { it.amount.toDouble() }.toFloat()
         }
 
     return dayExpenses.maxByOrNull { it.value }?.key
