@@ -132,6 +132,8 @@ dependencies {
     // encode
     implementation 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
 
+    // parsing
+    implementation 'org.jsoup:jsoup:1.14.3'
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {

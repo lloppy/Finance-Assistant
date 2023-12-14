@@ -10,6 +10,8 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.compose.rally.data.account.Account
 import com.example.compose.rally.data.account.AccountRepository
+import com.example.compose.rally.data.bill.Bill
+import com.example.compose.rally.data.bill.BillRepository
 import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -33,7 +35,23 @@ class SMSMonitor : BroadcastReceiver() {
             when {
                 it.equals("T2 Market", ignoreCase = true) -> processTele2Sms(messages, context)
                 it.equals("900", ignoreCase = true) -> processBankSms(messages, context)
+                it.equals("Rosbank", ignoreCase = true) -> processRosbankSms(messages, context)
             }
+        }
+    }
+
+    private fun processRosbankSms(messages: Array<SmsMessage>, context: Context) {
+        val body = buildSmsBody(messages)
+        val group = body.split(" ")
+
+        try {
+            if (group[1] == "Pokupka") {
+                processRosbankTransfer(group, context)
+            }
+            startSmsService(context, body)
+            abortBroadcast()
+        } catch (e: Exception) {
+            // Handle exception
         }
     }
 
@@ -100,7 +118,7 @@ class SMSMonitor : BroadcastReceiver() {
         val income = group[6].replace("р", "").split(",")
         AccountRepository.addAccount(
             Account(
-                name = "Tele2",
+                name = "Поступление",
                 date = time,
                 timesRepeat = 0,
                 cardNumber = 0,
@@ -108,6 +126,24 @@ class SMSMonitor : BroadcastReceiver() {
                 category = "Из смс"
             )
         )
+    }
+
+    private fun processRosbankTransfer(group: List<String>, context: Context) {
+        try {
+            val amount = group[2].split(".")
+            BillRepository.addBill(
+                bill = Bill(
+                    name = "Покупка",
+                    date = LocalDateTime.now(),
+                    timesRepeat = 0,
+                    billPhoto = null,
+                    category = "Из смс",
+                    mcc = null,
+                    amount = if (amount[1].isNotEmpty()) amount[0].toFloat() + (amount[1].toFloat() / 100) else amount[0].toFloat()
+                ), context = context
+            )
+        } catch (e: Exception) {}
+
     }
 
     private fun processBankTransfer(group: List<String>) {
