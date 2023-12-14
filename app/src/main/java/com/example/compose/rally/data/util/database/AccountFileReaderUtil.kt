@@ -27,7 +27,7 @@ fun saveAccountsToFile(context: Context) {
 @RequiresApi(Build.VERSION_CODES.O)
 fun readAccountsFromFile(context: Context): List<Account> {
     val fileName = "accounts_data.json"
-    var accounts: List<Account> = emptyList()
+    var accounts: List<Account> = AccountRepository.getAllAccounts()
 
     try {
         context.openFileInput(fileName).use {
