@@ -1,5 +1,6 @@
 package com.example.compose.rally.ui.accounts
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,10 +35,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.compose.rally.Accounts
 import com.example.compose.rally.R
 import com.example.compose.rally.data.account.Account
 import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.data.category.defaultAccountCategories
+import com.example.compose.rally.navigateSingleTopTo
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
 import java.util.Locale
@@ -119,7 +122,7 @@ fun AccountsScreen(
 @Composable
 fun SingleAccountScreen(
     accountType: String? = AccountRepository.getAllAccounts().first().name,
-    onDeleteAccountClick: (Account) -> Unit = {}
+    onDeleteAccountClick: (Account) -> Unit = {},
 ) {
     val account = remember(accountType) { AccountRepository.getAccount(accountType) }
     AccountDetailsCard(account = account)

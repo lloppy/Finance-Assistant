@@ -53,10 +53,10 @@ class RallyActivity : FragmentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        AccountRepository.setFileAccounts(readAccountsFromFile(this))
-//        BillRepository.setFileBills(readBillsFromFile(this))
-//        readCategoriesFromFile(this)
-//        Log.e("database", "onCreate pick!")
+        AccountRepository.setFileAccounts(readAccountsFromFile(this))
+        BillRepository.setFileBills(readBillsFromFile(this))
+        readCategoriesFromFile(this)
+        Log.e("database", "onCreate pick!")
 
         setContent {
             RallyAuthenticationWrapper()
