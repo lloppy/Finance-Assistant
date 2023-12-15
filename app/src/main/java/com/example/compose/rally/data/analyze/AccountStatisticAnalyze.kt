@@ -96,7 +96,7 @@ fun calculateAccountTotalSum(): Float {
 }
 
 fun calculateAccountCategoryExpenses(): Map<String, Float> {
-    return getAllAccounts().groupBy { it.category }
+    return getAllAccounts().drop(1).groupBy { it.category }
         .mapValues { (_, categoryAccounts) ->
             categoryAccounts.sumOf { it.balance.toDouble() }.toFloat()
         }
