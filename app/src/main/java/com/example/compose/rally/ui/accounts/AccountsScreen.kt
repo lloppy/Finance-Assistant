@@ -40,6 +40,7 @@ import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.data.category.defaultAccountCategories
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
+import java.util.Locale
 
 /**
  * The Accounts screen.
@@ -157,7 +158,7 @@ fun AccountDetailsCard(account: Account) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = account.name,
+                text = account.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
                 modifier = Modifier
                     .align(Alignment.Start),
                 style = TextStyle(
