@@ -50,10 +50,8 @@ import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
 import com.example.compose.rally.data.category.defaultBillCategories
 import com.example.compose.rally.navigateSingleTopTo
-import com.example.compose.rally.ui.accounts.AccountDetailsCard
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.StatementBody
-import com.example.compose.rally.ui.components.StatementBodyWithSmallCircle
 import java.util.Locale
 
 /**

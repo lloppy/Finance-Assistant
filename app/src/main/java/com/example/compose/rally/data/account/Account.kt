@@ -19,7 +19,8 @@ data class Account(
     val balance: Float,
     var category: String,
     val color: Color = (accountCategoryColors[category] ?: accountCategoryColors["Default"])!!,
-    val stringDate: String = localDateToString(date)
+    val stringDate: String = localDateToString(date),
+    val id: String = name + stringDate + balance
 )
 
 val accountCategoryColors: Map<String, Color> = mapOf(

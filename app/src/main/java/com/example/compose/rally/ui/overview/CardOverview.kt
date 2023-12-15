@@ -73,9 +73,7 @@ fun AccountsCard(
         title = stringResource(R.string.accounts),
         amount = amount,
         onClickSeeAll = onClickSeeAll,
-
         data = AccountRepository.getAllAccounts().drop(1),
-
         colors = { it.color },
         values = { it.balance }
     ) { account ->

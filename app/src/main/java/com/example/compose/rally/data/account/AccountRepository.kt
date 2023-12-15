@@ -27,12 +27,8 @@ class AccountRepository {
             accounts = accountsList
         }
 
-        fun getAccount(accountName: String?): Account {
-            return try {
-                accounts.first { it.name == accountName }
-            } catch (e: NoSuchElementException) {
-                accounts[1]
-            }
+        fun getAccount(accountId: String?): Account {
+            return accounts.first { it.id == accountId }
         }
 
         @RequiresApi(Build.VERSION_CODES.O)

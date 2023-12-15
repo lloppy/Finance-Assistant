@@ -134,7 +134,6 @@ fun RallyNavHost(
                     navController.navigateSingleTopTo(Accounts.route)
                 }, navController = navController
             )
-
         }
         composable(
             route = AddAccount.routeWithArgs,
