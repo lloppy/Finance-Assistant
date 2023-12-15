@@ -74,9 +74,16 @@ fun takeIncomeSplit(group: List<String>) {
         defaultAccountCategories += group[9]
     }
 
+    var name = group[11]
+    var counter = 0
+
+    while (AccountRepository.accounts.any { account -> account.name == name }) {
+        name = "${group[11]} ${++counter}"
+    }
+
     AccountRepository.addAccount(
         Account(
-            name = group[11],
+            name = name,
             date = LocalDateTime.of(
                 year.toInt(),
                 month.toInt(),
@@ -104,9 +111,16 @@ fun takeExpenseSplit(group: List<String>, context: Context) {
         defaultBillCategories += group[9]
     }
 
+    var name = group[11]
+    var counter = 0
+
+    while (BillRepository.bills.any { bill -> bill.name == name }) {
+        name = "${group[11]} ${++counter}"
+    }
+
     BillRepository.addBill(
         Bill(
-            name = group[11],
+            name = name,
             date = LocalDateTime.of(
                 year.toInt(),
                 month.toInt(),
@@ -117,7 +131,7 @@ fun takeExpenseSplit(group: List<String>, context: Context) {
             timesRepeat = 0,
             billPhoto = null,
             category = group[9],
-            mcc = if(group[10].isNullOrEmpty()) null else group[10].toInt(),
+            mcc = if (group[10].isNullOrEmpty()) null else group[10].toInt(),
             amount = amount[0].toFloat() + (amount[1].toFloat() / 100),
         ),
         context = context

@@ -1,14 +1,13 @@
 package com.example.compose.rally.data.account
 
 import android.os.Build
-import android.provider.ContactsContract.Settings.getDefaultAccount
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
 
 class AccountRepository {
     companion object {
 
-        private var accounts: List<Account> = listOf(
+        var accounts: List<Account> = listOf(
             Account(
                 "add_account",
                 LocalDateTime.now(),
@@ -37,7 +36,13 @@ class AccountRepository {
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun addAccount(account: Account) {
-            accounts += account
+            var name = account.name
+            var counter = 0
+
+            while (accounts.any { it.name == name }) {
+                name = "$name ${++counter}"
+            }
+            accounts += account.copy(name = name)
         }
 
         fun removeAccount(account: Account) {

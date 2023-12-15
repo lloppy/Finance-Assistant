@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.example.compose.rally.data.account.AccountRepository
+import com.example.compose.rally.data.account.AccountRepository.Companion.accounts
 import java.time.LocalDateTime
 
 class BillRepository {
@@ -35,8 +37,15 @@ class BillRepository {
             if ((bill.name != bills.last().name && bill.amount != bills.last().amount)
                 || (bill.category != "QR")
             ) {
-                bills += bill
-            //    Toast.makeText(context, "Покупка добавлена!", Toast.LENGTH_SHORT).show()
+                var name = bill.name
+                var counter = 0
+
+                while (bills.any { it.name == name }) {
+                    name = "$name ${++counter}"
+                }
+                bills += bill.copy(name = name)
+
+                //    Toast.makeText(context, "Покупка добавлена!", Toast.LENGTH_SHORT).show()
                 Log.e("context", "$context")
             }
             //   saveFile(context)
