@@ -30,6 +30,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.R
 import com.example.compose.rally.data.util.hideKeyboard
+import com.example.compose.rally.ui.theme.Ender
 
 @Composable
 fun PasswordSetting(
@@ -72,7 +73,8 @@ fun PasswordSetting(
                         } else {
                             Icons.Filled.VisibilityOff
                         },
-                        contentDescription = stringResource(id = R.string.toggle_password_visibility)
+                        contentDescription = stringResource(id = R.string.toggle_password_visibility),
+                        tint = Ender
                     )
                 }
             },

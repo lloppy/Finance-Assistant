@@ -75,9 +75,7 @@ fun Balance(
                     )
                 }"
             )
-
         }
-
         Column(
             modifier = modifier
                 .fillMaxHeight()

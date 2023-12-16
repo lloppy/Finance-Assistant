@@ -55,7 +55,6 @@ fun addSpend(
                 }
             }
         }
-
     Row(
         horizontalArrangement = Arrangement.SpaceBetween
     )
@@ -69,7 +68,6 @@ fun addSpend(
         ) {
             QRPictureButton(context = context)
         }
-
         Card(
             modifier = Modifier
                 .weight(1f)
@@ -91,9 +89,11 @@ fun addSpend(
                         )
                     //    .border(BorderStroke(2.dp, color = colorResource(id = R.color.boxColor)), shape = RoundedCornerShape(4.dp)),
                 ) {
-                    Text(text = stringResource(R.string.add_spend))
+                    Text(
+                        text = stringResource(R.string.add_spend),
+                        color = Color.White
+                    )
                 }
-
                 TextButton(
                     onClick = {
                         launcher.launch(createChooseFileIntent())
@@ -107,7 +107,10 @@ fun addSpend(
                         )
                     //    .border(BorderStroke(2.dp, color = colorResource(id = R.color.boxColor)), shape = RoundedCornerShape(4.dp)),
                 ) {
-                    Text(text = stringResource(R.string.load_bank_data))
+                    Text(
+                        text = stringResource(R.string.load_bank_data),
+                        color = Color.White
+                    )
                 }
             }
         }
