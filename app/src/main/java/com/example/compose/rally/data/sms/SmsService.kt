@@ -33,11 +33,11 @@ class SmsService : Service() {
             .setContentTitle("Rugball")
             .setContentText(text)
             .setContentIntent(contentIntent)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.enderhead)
             .setAutoCancel(true)
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notification = builder.build()
-        notificationManager.notify(R.drawable.ic_launcher_foreground, notification)
+        notificationManager.notify(R.drawable.enderhead, notification)
     }
 }

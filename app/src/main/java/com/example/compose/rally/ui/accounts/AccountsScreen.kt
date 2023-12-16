@@ -1,6 +1,7 @@
 package com.example.compose.rally.ui.accounts
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,6 +44,7 @@ import com.example.compose.rally.data.category.defaultAccountCategories
 import com.example.compose.rally.navigateSingleTopTo
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
+import com.example.compose.rally.ui.theme.Ender
 import java.util.Locale
 
 /**
@@ -105,6 +107,7 @@ fun AccountsScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
             onClick = { onAddAccountClick("add_account") },
+            backgroundColor = Ender,
             modifier = Modifier
                 .padding(16.dp)
                 .semantics { contentDescription = "Добавить счет" }
@@ -130,14 +133,15 @@ fun SingleAccountScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
             onClick = { onDeleteAccountClick(account) },
+            backgroundColor = Ender,
             modifier = Modifier
                 .padding(16.dp)
                 .semantics { contentDescription = "Удалить account" }
-                .align(alignment = Alignment.BottomEnd)
+                .align(alignment = Alignment.BottomEnd),
         ) {
             Icon(
                 imageVector = Icons.Default.DeleteOutline,
-                contentDescription = "Удалить account"
+                contentDescription = "Удалить account",
             )
         }
     }

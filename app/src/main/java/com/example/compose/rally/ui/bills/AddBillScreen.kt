@@ -173,7 +173,7 @@ fun AddBillScreen(
 
         AsyncImage(
             model = selectedImageUri,
-            placeholder = painterResource(R.drawable.ic_launcher_foreground),
+            placeholder = painterResource(R.drawable.enderhead),
             contentDescription = null,
         )
 

@@ -2,6 +2,7 @@ package com.example.compose.rally.ui.bills
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,6 +50,7 @@ import com.example.compose.rally.ui.accounts.AccountDetailsCard
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.StatementBody
 import com.example.compose.rally.ui.components.StatementBodyWithSmallCircle
+import com.example.compose.rally.ui.theme.Ender
 import java.util.Locale
 
 /**
@@ -112,6 +114,7 @@ fun BillsScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
             onClick = { onAddBillClick("add_bill") },
+            backgroundColor = Ender,
             modifier = Modifier
                 .padding(16.dp)
                 .semantics { contentDescription = "Добавить запись" }
@@ -139,7 +142,7 @@ fun SingleBillScreen(
         Spacer(modifier = Modifier.height(16.dp))
         AsyncImage(
             model = bill.billPhoto,
-            placeholder = painterResource(R.drawable.ic_launcher_foreground),
+            placeholder = painterResource(R.drawable.enderhead),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
@@ -151,6 +154,7 @@ fun SingleBillScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
             onClick = { onDeleteBillClick(bill) },
+            backgroundColor = Ender,
             modifier = Modifier
                 .padding(16.dp)
                 .semantics { contentDescription = "Удалить account" }

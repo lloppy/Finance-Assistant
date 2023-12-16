@@ -4,9 +4,9 @@
     <color name="boxBackground">#25282F</color>
     <color name="boxColor">#30333A</color>
     <color name="lightColor">#4A4D53</color>
-    <color name="greenMaterial">#34AE89</color>
-    <color name="lightGreenMaterial">#3234AE89</color>
+    <color name="pinkMaterial">#DD97DB</color>
+    <color name="lightGreenMaterial">#673AB7</color>
     <color name="noColor">#00000000</color>
-    <color name="green">#4CAF50</color>
+    <color name="green">#9C27B0</color>
 
 </resources>
