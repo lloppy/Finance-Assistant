@@ -24,6 +24,7 @@ import com.example.compose.rally.R
 import com.example.compose.rally.data.analyze.calculateBalance
 import com.example.compose.rally.ui.components.formatAmount
 import com.example.compose.rally.ui.overview.RallyDefaultPadding
+import kotlin.math.ceil
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -58,13 +59,15 @@ fun Balance(
                 style = MaterialTheme.typography.subtitle2
             )
 
+            val balance = calculateBalance(amountsTotal * (1 - checkCoeff(context)), billTotal)
+            val formattedBalance = if (
+                (ceil(balance.toDouble()) == 0.0)
+            ) "0"
+            else
+                formatAmount(balance)
+
             Text(
-                text = "Баланс с учетом накоплений: " + stringResource(R.string.ruble) + formatAmount(
-                    calculateBalance(
-                        amountsTotal * (1 - checkCoeff(context)),
-                        billTotal
-                    )
-                ),
+                text = "Баланс с учетом накоплений: " + stringResource(R.string.ruble) + formattedBalance,
                 style = MaterialTheme.typography.subtitle2
             )
             Log.e(
