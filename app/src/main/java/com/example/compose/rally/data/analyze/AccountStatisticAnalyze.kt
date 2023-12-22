@@ -12,7 +12,7 @@ fun getBillMCCReport(): String {
     val mccExpenses = calculateBillMCCExpenses()
 
     return """
-        Ваш отчет по наибольшими тратами на основе Merchant Category Code (MCC):
+        Ваш отчет по наибольшим тратам на основе Merchant Category Code (MCC):
         
 ${formatTop5MCCExpenses(mccExpenses)}
 
