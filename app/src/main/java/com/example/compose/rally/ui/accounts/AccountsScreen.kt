@@ -153,7 +153,7 @@ fun AccountDetailsCard(account: Account) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp)
+            .height(264.dp)
             .padding(16.dp),
         shape = RoundedCornerShape(8.dp),
         backgroundColor = account.color,
@@ -192,6 +192,7 @@ fun AccountDetailsCard(account: Account) {
 
             Text(
                 text = "Категория: ${account.category}",
+                maxLines = 1,
                 style = TextStyle(color = Color.White, fontSize = 16.sp)
             )
 
@@ -199,8 +200,12 @@ fun AccountDetailsCard(account: Account) {
 
             Text(
                 text = "Дата: ${account.stringDate}",
+                maxLines = 1,
                 style = TextStyle(color = Color.White, fontSize = 16.sp)
             )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
         }
     }
 }

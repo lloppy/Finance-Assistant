@@ -171,7 +171,7 @@ fun BillDetailsCard(bill: Bill) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp)
+            .height(264.dp)
             .padding(16.dp),
         shape = RoundedCornerShape(8.dp),
         backgroundColor = bill.color,
@@ -206,10 +206,11 @@ fun BillDetailsCard(bill: Bill) {
                 Text(text = "Потрачено: ${bill.amount}")
             }
 
-            Spacer(modifier = Modifier.height(64.dp))
+            Spacer(modifier = Modifier.height(58.dp))
 
             Text(
                 text = "Категория: ${bill.category}",
+                maxLines = 1,
                 style = TextStyle(color = Color.White, fontSize = 16.sp)
             )
 
@@ -217,8 +218,10 @@ fun BillDetailsCard(bill: Bill) {
 
             Text(
                 text = "Дата: ${bill.stringDate}",
+                maxLines = 1,
                 style = TextStyle(color = Color.White, fontSize = 16.sp)
             )
+            Spacer(modifier = Modifier.height(4.dp))
         }
     }
 }
