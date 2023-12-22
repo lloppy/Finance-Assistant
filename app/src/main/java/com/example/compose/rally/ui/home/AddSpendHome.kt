@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.app.ComponentActivity
@@ -79,22 +80,6 @@ fun addSpend(
                 verticalArrangement = Arrangement.Center,
             ) {
                 TextButton(
-                    onClick = { onAddBillClick() },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                        .background(
-                            color = colorResource(id = R.color.boxColor),
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                    //    .border(BorderStroke(2.dp, color = colorResource(id = R.color.boxColor)), shape = RoundedCornerShape(4.dp)),
-                ) {
-                    Text(
-                        text = stringResource(R.string.add_spend),
-                        color = Color.White
-                    )
-                }
-                TextButton(
                     onClick = {
                         launcher.launch(createChooseFileIntent())
                     },
@@ -110,6 +95,25 @@ fun addSpend(
                     Text(
                         text = stringResource(R.string.load_bank_data),
                         color = Color.White
+                    )
+                }
+                TextButton(
+                    onClick = { onAddBillClick() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .background(
+                            color = colorResource(id = R.color.boxColor),
+                            shape = RoundedCornerShape(4.dp)
+                        )
+                    //    .border(BorderStroke(2.dp, color = colorResource(id = R.color.boxColor)), shape = RoundedCornerShape(4.dp)),
+                ) {
+                    Text(
+                        text = stringResource(R.string.add_spend),
+                        color = Color.White,
+                        minLines = 2,
+                        maxLines = 2,
+                        textAlign = TextAlign.Start
                     )
                 }
             }

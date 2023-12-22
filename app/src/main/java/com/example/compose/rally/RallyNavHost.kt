@@ -177,7 +177,6 @@ fun RallyNavHost(
             val context = LocalContext.current
             AddBillScreen(
                 billType,
-
                 onSaveClick = { bill ->
                     BillRepository.addBill(bill, context)
                     navController.navigateSingleTopTo(Bills.route)

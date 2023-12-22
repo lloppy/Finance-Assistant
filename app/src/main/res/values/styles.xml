@@ -3,14 +3,24 @@
         <item name="android:statusBarColor">@color/statusBarColor</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:windowBackground">?attr/colorSurface</item>
-
     </style>
 
-    <style name="CustomCalendar" parent="Theme.Rally">
-        <item name="android:textColorPrimary">@color/pinkMaterial</item>
+
+
+    <style name="CustomDay" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/statusBarColor</item>
+    </style>
+    <style name="CustomWeek" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/pinkMaterial</item>
+    </style>
+    <style name="CustomCalendar" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="android:textColorPrimary">@color/statusBarColor</item>
         <item name="colorAccent">@color/pinkMaterial</item>
-        <item name="colorOnPrimary">@color/pinkMaterial</item>
+        <item name="colorOnPrimary">@color/statusBarColor</item>
         <item name="colorSurface">@color/pinkMaterial</item>
+    </style>
+    <style name="CustomDate" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/statusBarColor</item>
     </style>
 
 </resources>

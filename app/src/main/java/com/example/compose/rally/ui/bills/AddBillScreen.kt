@@ -1,10 +1,13 @@
 package com.example.compose.rally.ui.bills
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.CalendarView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -32,6 +35,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,11 +43,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.example.compose.rally.R
 import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
 import com.example.compose.rally.data.category.defaultBillCategories
+import com.example.compose.rally.ui.accounts.CategoryDropdown
 import com.example.compose.rally.ui.accounts.RepeatDataDropdown
 import java.time.LocalDateTime
 
@@ -207,8 +213,12 @@ fun AddBillScreen(
 fun showDatePicker(onDateSelected: (LocalDateTime) -> Unit) {
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
 
-    AndroidView(
-        { CalendarView(it) },
+    AndroidView({
+        CalendarView(android.view.ContextThemeWrapper(it, R.style.CustomCalendar)).apply {
+            dateTextAppearance = R.style.CustomDate
+            weekDayTextAppearance = R.style.CustomWeek
+        }
+    },
         modifier = Modifier.wrapContentWidth(),
         update = { views ->
             views.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
