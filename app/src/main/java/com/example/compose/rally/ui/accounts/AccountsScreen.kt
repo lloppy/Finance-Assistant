@@ -153,7 +153,7 @@ fun AccountDetailsCard(account: Account) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(264.dp)
+            .height(260.dp)
             .padding(16.dp),
         shape = RoundedCornerShape(8.dp),
         backgroundColor = account.color,
@@ -168,6 +168,8 @@ fun AccountDetailsCard(account: Account) {
                 text = account.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
                 modifier = Modifier
                     .align(Alignment.Start),
+                maxLines = 1,
+
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 20.sp,
@@ -203,9 +205,6 @@ fun AccountDetailsCard(account: Account) {
                 maxLines = 1,
                 style = TextStyle(color = Color.White, fontSize = 16.sp)
             )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
         }
     }
 }
