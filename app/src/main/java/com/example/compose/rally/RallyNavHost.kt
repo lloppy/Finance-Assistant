@@ -132,7 +132,7 @@ fun RallyNavHost(
                     AccountRepository.removeAccount(it)
                     Log.e("delete", "Стало: " + AccountRepository.getAllAccounts().size.toString())
                     navController.navigateSingleTopTo(Accounts.route)
-                }
+                }, navController = navController
             )
         }
         composable(
@@ -142,12 +142,11 @@ fun RallyNavHost(
         ) {// navBackStackEntry ->
 //            val accountType =
 //                navBackStackEntry.arguments?.getString(AddAccount.accountTypeArg)
-
             AddAccountScreen(
                 onSaveClick = { account ->
                     AccountRepository.addAccount(account)
                     navController.navigateSingleTopTo(Accounts.route)
-                }
+                }, navController = navController
             )
         }
         composable(
@@ -164,7 +163,7 @@ fun RallyNavHost(
                     BillRepository.removeBill(it)
                     Log.e("delete", "Стало: " + BillRepository.bills.size.toString())
                     navController.navigateSingleTopTo(Bills.route)
-                }
+                }, navController = navController
             )
         }
         composable(
@@ -180,7 +179,8 @@ fun RallyNavHost(
                 onSaveClick = { bill ->
                     BillRepository.addBill(bill, context)
                     navController.navigateSingleTopTo(Bills.route)
-                }
+                },
+                navController = navController
             )
         }
     }

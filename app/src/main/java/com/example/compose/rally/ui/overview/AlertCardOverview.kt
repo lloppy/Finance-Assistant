@@ -2,6 +2,7 @@
 
 package com.example.compose.rally.ui.overview
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.preference.PreferenceManager
@@ -114,6 +115,7 @@ private fun AlertItem(message: String, context: Context) {
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 private fun readGoalFromSharedPreferences(context: Context): String? {
     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         return sharedPreferences.getString("current_goal", null)

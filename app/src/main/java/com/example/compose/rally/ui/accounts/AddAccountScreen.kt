@@ -2,6 +2,7 @@ package com.example.compose.rally.ui.accounts
 
 import android.util.Log
 import android.widget.CalendarView
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -39,9 +40,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavHostController
+import com.example.compose.rally.Accounts
 import com.example.compose.rally.R
 import com.example.compose.rally.data.account.Account
 import com.example.compose.rally.data.category.defaultAccountCategories
+import com.example.compose.rally.navigateSingleTopTo
 import com.example.compose.rally.ui.theme.RallyTheme
 import java.time.LocalDateTime
 
@@ -49,18 +53,9 @@ import java.time.LocalDateTime
  * Composable for the screen where a user can manually add a new account.
  */
 @Composable
-@Preview
-fun AddAccountScreenPreview() {
-    RallyTheme {
-        Surface {
-            AddAccountScreen()
-        }
-    }
-}
-
-@Composable
 fun AddAccountScreen(
     onSaveClick: (Account) -> Unit = {},
+    navController: NavHostController
 ) {
     var selectedCategory by remember { mutableStateOf(defaultAccountCategories.first()) }
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
@@ -171,6 +166,10 @@ fun AddAccountScreen(
         ) {
             Text(text = stringResource(id = R.string.save_account))
         }
+    }
+
+    BackHandler {
+        navController.navigateSingleTopTo(Accounts.route)
     }
 }
 

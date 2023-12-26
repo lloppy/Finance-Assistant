@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
+import com.example.compose.rally.Bills
 import com.example.compose.rally.R
 import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
@@ -59,6 +60,7 @@ import java.time.LocalDateTime
 fun AddBillScreen(
     billType: String? = BillRepository.bills.first().name,
     onSaveClick: (Bill) -> Unit = {},
+    navController: NavHostController
 //    onBackClick: () -> Unit = {},
 ) {
 
@@ -205,6 +207,10 @@ fun AddBillScreen(
         ) {
             Text(text = stringResource(id = R.string.save_bill))
         }
+    }
+
+    BackHandler {
+        navController.navigateSingleTopTo(Bills.route)
     }
 }
 

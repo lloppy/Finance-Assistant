@@ -84,7 +84,7 @@ fun AccountsScreen(
         rows = { account ->
             AccountRow(
                 modifier = Modifier.clickable {
-                    onAccountClick(account.name)
+                    onAccountClick(account.id)
                 },
                 name = account.name,
                 stringDate = account.stringDate,
@@ -129,6 +129,10 @@ fun SingleAccountScreen(
 ) {
     val account = remember(accountType) { AccountRepository.getAccount(accountType) }
     AccountDetailsCard(account = account)
+
+    BackHandler {
+        navController.navigateSingleTopTo(Accounts.route)
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(

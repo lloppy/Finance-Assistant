@@ -19,8 +19,6 @@ data class Bill constructor(
     val stringDate: String = localDateTimeToString(date)
 )
 
-
-
 val billCategoryColors: Map<String, Color> = mapOf(
     "Квартира" to Color(0xFFAD06A9),
     "Дом и ремонт" to Color(0xFFA509DD),

@@ -1,6 +1,7 @@
 package com.example.compose.rally.ui.bills
 
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,7 +39,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.example.compose.rally.Accounts
+import com.example.compose.rally.Bills
 import com.example.compose.rally.R
 import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
@@ -127,7 +131,8 @@ fun BillsScreen(
 @Composable
 fun SingleBillScreen(
     billType: String? = BillRepository.bills.first().name,
-    onDeleteBillClick: (Bill) -> Unit = {}
+    onDeleteBillClick: (Bill) -> Unit = {},
+    navController: NavHostController
 ) {
     val bill: Bill = remember(billType) { BillRepository.getBill(billType) }
     Column {
@@ -145,16 +150,20 @@ fun SingleBillScreen(
         )
     }
 
+    BackHandler {
+        navController.navigateSingleTopTo(Bills.route)
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
             onClick = { onDeleteBillClick(bill) },
             backgroundColor = Ender,
             modifier = Modifier
                 .padding(16.dp)
-                .semantics { contentDescription = "Удалить account" }
+                .semantics { contentDescription = "Удалить bill" }
                 .align(alignment = Alignment.BottomEnd)
         ) {
-            Icon(imageVector = Icons.Default.DeleteOutline, contentDescription = "Удалить account")
+            Icon(imageVector = Icons.Default.DeleteOutline, contentDescription = "Удалить bill")
         }
     }
 }

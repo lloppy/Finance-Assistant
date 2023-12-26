@@ -24,11 +24,7 @@ class BillRepository {
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun getBill(billName: String?): Bill {
-            return try {
-                bills.first { it.name == billName }
-            } catch (e: NoSuchElementException) {
-                bills[1]
-            }
+            return bills.first { it.name == billName }
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
@@ -108,8 +104,10 @@ class BillRepository {
             bills = bills.filterNot {
                 it.name == bill.name
                         && it.stringDate == bill.stringDate
-                        && it.amount == bill.amount
+                        && it.timesRepeat == bill.timesRepeat
                         && it.category == bill.category
+                        && it.mcc == bill.mcc
+                        && it.amount == bill.amount
             }
         }
 

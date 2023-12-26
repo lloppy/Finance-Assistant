@@ -67,7 +67,7 @@ fun <T> StatementBody(
         Card {
             Column(modifier = Modifier.padding(12.dp)) {
                 Log.e("row", "row is $rows")
-                items.drop(1).sortedByDescending { date(it) }.forEach { item ->
+                items.sortedByDescending { date(it) }.forEach { item ->
                     rows(item)
                 }
             }
