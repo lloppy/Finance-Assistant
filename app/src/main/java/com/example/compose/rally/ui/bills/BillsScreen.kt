@@ -19,7 +19,6 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.MoneyOff
@@ -45,13 +44,12 @@ import coil.compose.AsyncImage
 import com.example.compose.rally.Accounts
 import com.example.compose.rally.Bills
 import com.example.compose.rally.R
-import com.example.compose.rally.data.account.Account
 import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
 import com.example.compose.rally.data.category.defaultBillCategories
-import com.example.compose.rally.navigateSingleTopTo
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.StatementBody
+import com.example.compose.rally.ui.theme.Ender
 import java.util.Locale
 
 /**
@@ -69,7 +67,6 @@ fun BillsScreen(
     var isFiltering by remember { mutableStateOf(false) }
 
     val billsTotal = remember(selectedCategory) {
-        // Calculate the total for the selected category
         bills
             .filter { it.category == selectedCategory }
             .sumOf { it.amount.toDouble() }
@@ -115,6 +112,7 @@ fun BillsScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
             onClick = { onAddBillClick("add_bill") },
+            backgroundColor = Ender,
             modifier = Modifier
                 .padding(16.dp)
                 .semantics { contentDescription = "Добавить запись" }
@@ -143,7 +141,7 @@ fun SingleBillScreen(
         Spacer(modifier = Modifier.height(16.dp))
         AsyncImage(
             model = bill.billPhoto,
-            placeholder = painterResource(R.drawable.ic_launcher_foreground),
+            placeholder = painterResource(R.drawable.enderhead),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
@@ -159,6 +157,7 @@ fun SingleBillScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
             onClick = { onDeleteBillClick(bill) },
+            backgroundColor = Ender,
             modifier = Modifier
                 .padding(16.dp)
                 .semantics { contentDescription = "Удалить bill" }
@@ -175,7 +174,7 @@ fun BillDetailsCard(bill: Bill) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp)
+            .height(260.dp)
             .padding(16.dp),
         shape = RoundedCornerShape(8.dp),
         backgroundColor = bill.color,
@@ -187,9 +186,11 @@ fun BillDetailsCard(bill: Bill) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = bill.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
+                text = bill.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                    .dropLastWhile { !it.isLetter() },
                 modifier = Modifier
                     .align(Alignment.Start),
+                maxLines = 1,
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 20.sp,
@@ -210,10 +211,11 @@ fun BillDetailsCard(bill: Bill) {
                 Text(text = "Потрачено: ${bill.amount}")
             }
 
-            Spacer(modifier = Modifier.height(64.dp))
+            Spacer(modifier = Modifier.height(58.dp))
 
             Text(
                 text = "Категория: ${bill.category}",
+                maxLines = 1,
                 style = TextStyle(color = Color.White, fontSize = 16.sp)
             )
 
@@ -221,6 +223,7 @@ fun BillDetailsCard(bill: Bill) {
 
             Text(
                 text = "Дата: ${bill.stringDate}",
+                maxLines = 1,
                 style = TextStyle(color = Color.White, fontSize = 16.sp)
             )
         }

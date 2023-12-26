@@ -44,7 +44,7 @@ fun calculateBillTotalSum(): Float {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun calculateBillCategoryExpenses(): Map<String, Float> {
-    return bills.groupBy { it.category }
+    return bills.drop(1).groupBy { it.category }
         .mapValues { (_, categoryBills) ->
             categoryBills.sumOf { it.amount.toDouble() }.toFloat()
         }

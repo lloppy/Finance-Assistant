@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rally</string>
+    <string name="app_name">Moneycraft</string>
     <string name="total">Всего поступило</string>
     <string name="due">Всего потрачено</string>
     <string name="account_redacted">• • • • • </string>

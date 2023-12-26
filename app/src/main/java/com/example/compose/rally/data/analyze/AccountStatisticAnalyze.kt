@@ -12,7 +12,7 @@ fun getBillMCCReport(): String {
     val mccExpenses = calculateBillMCCExpenses()
 
     return """
-        Ваш отчет по наибольшими тратами на основе Merchant Category Code (MCC):
+        Ваш отчет по наибольшим тратам на основе Merchant Category Code (MCC):
         
 ${formatTop5MCCExpenses(mccExpenses)}
 
@@ -96,7 +96,7 @@ fun calculateAccountTotalSum(): Float {
 }
 
 fun calculateAccountCategoryExpenses(): Map<String, Float> {
-    return getAllAccounts().groupBy { it.category }
+    return getAllAccounts().drop(1).groupBy { it.category }
         .mapValues { (_, categoryAccounts) ->
             categoryAccounts.sumOf { it.balance.toDouble() }.toFloat()
         }

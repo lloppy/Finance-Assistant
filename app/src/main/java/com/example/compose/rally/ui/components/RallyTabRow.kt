@@ -30,6 +30,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.RallyDestination
+import com.example.compose.rally.ui.theme.Ender
 import java.util.Locale
 
 @Composable
@@ -63,7 +64,7 @@ private fun RallyTab(
     onSelected: () -> Unit,
     selected: Boolean
 ) {
-    val color = MaterialTheme.colors.onSurface
+    // val color = MaterialTheme.colors.onSurface
     val durationMillis = if (selected) TabFadeInAnimationDuration else TabFadeOutAnimationDuration
     val animSpec = remember {
         tween<Color>(
@@ -73,7 +74,7 @@ private fun RallyTab(
         )
     }
     val tabTintColor by animateColorAsState(
-        targetValue = if (selected) color else color.copy(alpha = InactiveTabOpacity),
+        targetValue = if (selected) Ender else Ender.copy(alpha = InactiveTabOpacity),
         animationSpec = animSpec,
         label = ""
     )

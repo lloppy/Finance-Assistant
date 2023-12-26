@@ -50,7 +50,6 @@ fun AccountRow(
         modifier = modifier,
         color = color,
         title = name,
-        //subtitle = stringResource(R.string.account_redacted) + AccountDecimalFormat.format(number),
         subtitle = "$stringDate",
         category = category,
         amount = amount,
@@ -117,8 +116,9 @@ private fun BaseRow(
                 .weight(1f)
         ) {
             Text(
-                text = "$category: ${title.take(9)} ...",
-                style = typography.body1
+                text = "$category: ${title.take(9)}".dropLastWhile { !it.isLetter() },
+                style = typography.body1,
+                maxLines = 1
             )
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                 Text(

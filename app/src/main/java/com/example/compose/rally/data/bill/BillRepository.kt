@@ -5,6 +5,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
+import kotlin.math.ceil
 
 class BillRepository {
     companion object {
@@ -31,11 +32,71 @@ class BillRepository {
             if ((bill.name != bills.last().name && bill.amount != bills.last().amount)
                 || (bill.category != "QR")
             ) {
-                bills += bill
-            //    Toast.makeText(context, "Покупка добавлена!", Toast.LENGTH_SHORT).show()
-                Log.e("context", "$context")
+                var name = bill.name
+                var counter = 0
+
+                while (bills.any { it.name == name }) {
+                    name = "$name ${++counter}"
+                }
+
+                when (bill.timesRepeat) {
+                    0 -> {
+                        bills += bill.copy(name = name)
+                    }
+
+                    1 -> {
+                        for (n in 0..30 - bill.date.dayOfMonth) {
+                            while (bills.any { it.name == name }) {
+                                name = "$name ${++counter}"
+                            }
+                            bills += Bill(
+                                name = name,
+                                date = bill.date.plusDays(n.toLong()),
+                                timesRepeat = 0,
+                                amount = bill.amount,
+                                category = bill.category,
+                                billPhoto = bill.billPhoto,
+                                mcc = bill.mcc
+                            )
+                        }
+                    }
+
+                    2 -> {
+                        for (n in 0..ceil((30 - bill.date.dayOfMonth) / 7.0).toInt()) {
+                            while (bills.any { it.name == name }) {
+                                name = "$name ${++counter}"
+                            }
+                            bills += Bill(
+                                name = name,
+                                date = bill.date.plusWeeks(n.toLong()),
+                                timesRepeat = 0,
+                                amount = bill.amount,
+                                category = bill.category,
+                                billPhoto = bill.billPhoto,
+                                mcc = bill.mcc
+                            )
+                        }
+                    }
+
+                    3 -> {
+                        for (n in 0 until ceil((30 - bill.date.dayOfMonth) / 30.0).toInt()) {
+                            while (bills.any { it.name == name }) {
+                                name = "$name ${++counter}"
+                            }
+                            bills += Bill(
+                                name = name,
+                                date = bill.date.plusMonths(n.toLong()),
+                                timesRepeat = 0,
+                                amount = bill.amount,
+                                category = bill.category,
+                                billPhoto = bill.billPhoto,
+                                mcc = bill.mcc
+                            )
+                        }
+                        Log.e("context", "$context")
+                    }
+                }
             }
-            //   saveFile(context)
         }
 
         @RequiresApi(Build.VERSION_CODES.O)

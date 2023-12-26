@@ -4,4 +4,6 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:windowBackground">?attr/colorSurface</item>
     </style>
+
+
 </resources>

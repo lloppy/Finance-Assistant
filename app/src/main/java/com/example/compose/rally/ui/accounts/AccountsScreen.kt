@@ -1,6 +1,7 @@
 package com.example.compose.rally.ui.accounts
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,7 +36,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.example.compose.rally.Accounts
 import com.example.compose.rally.R
 import com.example.compose.rally.data.account.Account
@@ -44,6 +44,7 @@ import com.example.compose.rally.data.category.defaultAccountCategories
 import com.example.compose.rally.navigateSingleTopTo
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
+import com.example.compose.rally.ui.theme.Ender
 import java.util.Locale
 
 /**
@@ -106,6 +107,7 @@ fun AccountsScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
             onClick = { onAddAccountClick("add_account") },
+            backgroundColor = Ender,
             modifier = Modifier
                 .padding(16.dp)
                 .semantics { contentDescription = "Добавить счет" }
@@ -122,9 +124,8 @@ fun AccountsScreen(
  */
 @Composable
 fun SingleAccountScreen(
-    accountType: String? = AccountRepository.getAllAccounts().first().id,
+    accountType: String? = AccountRepository.getAllAccounts().first().name,
     onDeleteAccountClick: (Account) -> Unit = {},
-    navController: NavHostController
 ) {
     val account = remember(accountType) { AccountRepository.getAccount(accountType) }
     AccountDetailsCard(account = account)
@@ -136,14 +137,15 @@ fun SingleAccountScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
             onClick = { onDeleteAccountClick(account) },
+            backgroundColor = Ender,
             modifier = Modifier
                 .padding(16.dp)
                 .semantics { contentDescription = "Удалить account" }
-                .align(alignment = Alignment.BottomEnd)
+                .align(alignment = Alignment.BottomEnd),
         ) {
             Icon(
                 imageVector = Icons.Default.DeleteOutline,
-                contentDescription = "Удалить account"
+                contentDescription = "Удалить account",
             )
         }
     }
@@ -155,7 +157,7 @@ fun AccountDetailsCard(account: Account) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp)
+            .height(260.dp)
             .padding(16.dp),
         shape = RoundedCornerShape(8.dp),
         backgroundColor = account.color,
@@ -167,9 +169,11 @@ fun AccountDetailsCard(account: Account) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = account.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
+                text = account.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                    .dropLastWhile { !it.isLetter() },
                 modifier = Modifier
                     .align(Alignment.Start),
+                maxLines = 1,
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 20.sp,
@@ -194,6 +198,7 @@ fun AccountDetailsCard(account: Account) {
 
             Text(
                 text = "Категория: ${account.category}",
+                maxLines = 1,
                 style = TextStyle(color = Color.White, fontSize = 16.sp)
             )
 
@@ -201,6 +206,7 @@ fun AccountDetailsCard(account: Account) {
 
             Text(
                 text = "Дата: ${account.stringDate}",
+                maxLines = 1,
                 style = TextStyle(color = Color.White, fontSize = 16.sp)
             )
         }

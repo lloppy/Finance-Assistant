@@ -5,7 +5,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
-import com.example.compose.rally.data.bill.BillRepository.Companion.bills
 import com.example.compose.rally.data.bill.BillRepository.Companion.getAllBills
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -28,7 +27,7 @@ fun saveBillsToFile(context: Context) {
 @RequiresApi(Build.VERSION_CODES.O)
 fun readBillsFromFile(context: Context): List<Bill> {
     val fileName = "bills_data.json"
-    var bills: List<Bill> = BillRepository.getAllBills()
+    var bills: List<Bill> = getAllBills()
 
     try {
         context.openFileInput(fileName).use {

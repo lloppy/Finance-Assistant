@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 @Immutable
 data class Account(
     var name: String,
-    val date: LocalDateTime,
+    var date: LocalDateTime,
     val timesRepeat: Int,
     val cardNumber: Int,
     val balance: Float,
@@ -24,13 +24,13 @@ data class Account(
 )
 
 val accountCategoryColors: Map<String, Color> = mapOf(
-    "Зарплата" to Color(0xFF005853),
-    "Перевод средств от организации" to Color(0xFF4CAF6D),
-    "Стипендия" to Color(0xFF4CAF6D),
-    "Инвестиции" to Color(0xFF00413D),
-    "Перевод между счетами" to Color(0xFF27FDC0),
-    "Переводы" to Color(0xFF00BCD4),
-    "Бонусы" to Color(0xFF3F51B5),
+    "Зарплата" to Color(0xFFDD1ED8),
+    "Перевод средств от организации" to Color(0xFFEBAEE9),
+    "Стипендия" to Color(0xFFC027EB),
+    "Инвестиции" to Color(0xFFF507C2),
+    "Перевод между счетами" to Color(0xFF8A0CE2),
+    "Переводы" to Color(0xFFDA91D8),
+    "Бонусы" to Color(0xFFB96EEC),
 
     "Default" to Color(0xFF4D4D4D)
 )

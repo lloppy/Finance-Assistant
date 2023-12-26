@@ -217,8 +217,12 @@ fun CategoryDropdown(
 @Composable
 fun showDatePicker(onDateSelected: (LocalDateTime) -> Unit) {
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
-    AndroidView(
-        { CalendarView(it) },
+    AndroidView({
+        CalendarView(android.view.ContextThemeWrapper(it, R.style.CustomCalendar)).apply {
+            dateTextAppearance = R.style.CustomDate
+            weekDayTextAppearance = R.style.CustomWeek
+        }
+    },
         modifier = Modifier.wrapContentWidth(),
         update = { views ->
             views.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
@@ -228,7 +232,7 @@ fun showDatePicker(onDateSelected: (LocalDateTime) -> Unit) {
 
                 Log.e("datePick", "$calendarView, $year, $month, $dayOfMonth")
             }
-        }
+        } ,
     )
 }
 
