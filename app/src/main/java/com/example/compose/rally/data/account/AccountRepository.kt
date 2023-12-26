@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
+import kotlin.math.ceil
 
 class AccountRepository {
     companion object {
@@ -43,19 +44,56 @@ class AccountRepository {
             while (accounts.any { it.name == name }) {
                 name = "$name ${++counter}"
             }
-            accounts += account.copy(name = name)
 
-            if (account.timesRepeat == 1) {
-                for (n in 1..6) {
-                    while (accounts.any { it.name == name }) {
-                        name = "$name ${++counter}"
+            // listOf("Только один день", "Каждый день", "Каждую неделю", "Каждый месяц")
+            when (account.timesRepeat) {
+                0 -> {
+                    accounts += account.copy(name = name)
+                }
+                1 -> {
+                    for (n in 0..30 - account.date.dayOfMonth) {
+                        while (accounts.any { it.name == name }) {
+                            name = "$name ${++counter}"
+                        }
+                        accounts += Account(
+                            name = name,
+                            date = account.date.plusDays(n.toLong()),
+                            timesRepeat = 0,
+                            cardNumber = account.cardNumber,
+                            balance = account.balance,
+                            category = account.category
+                        )
                     }
-
-                    accounts += account.copy(
-                        name = name,
-                        timesRepeat = 0,
-                        date = account.date.minusDays(n.toLong()),
-                    )
+                }
+                2 -> {
+                    for (n in 0 .. ceil((30 - account.date.dayOfMonth) / 7.0).toInt()) {
+                        while (accounts.any { it.name == name }) {
+                            name = "$name ${++counter}"
+                        }
+                        accounts += Account(
+                            name = name,
+                            date = account.date.plusWeeks(n.toLong()),
+                            timesRepeat = 0,
+                            cardNumber = account.cardNumber,
+                            balance = account.balance,
+                            category = account.category
+                        )
+                    }
+                }
+                3 -> {
+                    for (n in 0 until ceil((30 - account.date.dayOfMonth) / 30.0).toInt()) {
+                        while (accounts.any { it.name == name }) {
+                            name = "$name ${++counter}"
+                        }
+                        accounts += Account(
+                            name = name,
+                            date = account.date.plusMonths(n.toLong()),
+                            timesRepeat = 0,
+                            cardNumber = account.cardNumber,
+                            balance = account.balance,
+                            category = account.category
+                        )
+                    }
                 }
             }
         }
