@@ -83,7 +83,7 @@ fun AddBillScreen(
             Log.e("picImg", "imageUri change to: $imageUri")
         }
     }
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
