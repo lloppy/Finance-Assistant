@@ -165,11 +165,11 @@ fun AccountDetailsCard(account: Account) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = account.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
+                text = account.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                    .dropLastWhile { !it.isLetter() },
                 modifier = Modifier
                     .align(Alignment.Start),
                 maxLines = 1,
-
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 20.sp,

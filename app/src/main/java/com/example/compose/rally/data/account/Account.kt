@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 @Immutable
 data class Account(
     var name: String,
-    val date: LocalDateTime,
+    var date: LocalDateTime,
     val timesRepeat: Int,
     val cardNumber: Int,
     val balance: Float,

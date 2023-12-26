@@ -2,7 +2,6 @@ package com.example.compose.rally.ui.bills
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,7 +18,6 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.MoneyOff
@@ -42,14 +40,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose.rally.R
-import com.example.compose.rally.data.account.Account
 import com.example.compose.rally.data.bill.Bill
 import com.example.compose.rally.data.bill.BillRepository
 import com.example.compose.rally.data.category.defaultBillCategories
-import com.example.compose.rally.ui.accounts.AccountDetailsCard
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.StatementBody
-import com.example.compose.rally.ui.components.StatementBodyWithSmallCircle
 import com.example.compose.rally.ui.theme.Ender
 import java.util.Locale
 
@@ -68,7 +63,6 @@ fun BillsScreen(
     var isFiltering by remember { mutableStateOf(false) }
 
     val billsTotal = remember(selectedCategory) {
-        // Calculate the total for the selected category
         bills
             .filter { it.category == selectedCategory }
             .sumOf { it.amount.toDouble() }
@@ -183,7 +177,8 @@ fun BillDetailsCard(bill: Bill) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = bill.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
+                text = bill.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                    .dropLastWhile { !it.isLetter() },
                 modifier = Modifier
                     .align(Alignment.Start),
                 maxLines = 1,

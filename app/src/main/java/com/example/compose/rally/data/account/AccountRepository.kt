@@ -1,6 +1,7 @@
 package com.example.compose.rally.data.account
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
 
@@ -43,6 +44,20 @@ class AccountRepository {
                 name = "$name ${++counter}"
             }
             accounts += account.copy(name = name)
+
+            if (account.timesRepeat == 1) {
+                for (n in 1..6) {
+                    while (accounts.any { it.name == name }) {
+                        name = "$name ${++counter}"
+                    }
+
+                    accounts += account.copy(
+                        name = name,
+                        timesRepeat = 0,
+                        date = account.date.minusDays(n.toLong()),
+                    )
+                }
+            }
         }
 
         fun removeAccount(account: Account) {
