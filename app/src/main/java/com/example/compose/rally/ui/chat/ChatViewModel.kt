@@ -28,11 +28,12 @@ class ChatViewModel : ViewModel() {
                     messages.add(response.choices.first().message)
                 } catch (e: Exception) {
                     Log.e("gpt", "Exception is ${e.message}")
-
-                    messages.add(Message(getBillSpendStatisticReport(), "user"))
-                    messages.add(Message(getAccountStatisticReport(), "user"))
-                    messages.add(Message(getBillMCCReport(), "user"))
-                    toastErrorMessage(context, e)
+                    if (text.contains("анализ")) {
+                        messages.add(Message(getAccountStatisticReport(), "ai"))
+                        messages.add(Message(getBillSpendStatisticReport(), "ai"))
+                        messages.add(Message(getBillMCCReport(), "ai"))
+                        toastErrorMessage(context, e)
+                    }
                     //errorMessage(messages, context, e)
                     //errorMessage(messages, context, e)
                 }
@@ -62,7 +63,7 @@ private fun toastErrorMessage(context: Context, e: Exception) {
     Toast.makeText(
         context,
         response,
-        Toast.LENGTH_SHORT
+        Toast.LENGTH_LONG
     ).show()
 }
 

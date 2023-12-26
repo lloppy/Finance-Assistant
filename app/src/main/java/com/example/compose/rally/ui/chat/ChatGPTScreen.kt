@@ -3,6 +3,7 @@ package com.example.compose.rally.ui.chat
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -47,16 +49,15 @@ import com.example.compose.rally.R
 fun ChatGPTScreen(viewModel: ChatViewModel) {
     var context = LocalContext.current
 
-    Box (modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd){
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
         Image(
             painter = painterResource(id = R.drawable.enderman),
             contentDescription = "enderman",
             modifier = Modifier
                 .fillMaxHeight(0.5f)
-                .padding(start = 8.dp,  bottom = 32.dp)
+                .padding(start = 8.dp, bottom = 32.dp)
         )
     }
-
 
     Column(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
@@ -67,9 +68,9 @@ fun ChatGPTScreen(viewModel: ChatViewModel) {
         ) {
             items(viewModel.messages.reversed()) { message ->
                 if (message.isUser) {
-                    MessageBubble(message.content, Alignment.End)
+                    MessageBubble(message.content, Alignment.End, Color.Transparent, Color.Black)
                 } else {
-                    MessageBubble(message.content, Alignment.Start)
+                    MessageBubble(message.content, Alignment.Start, colorResource(id = R.color.pinkMaterial), Color.White)
                 }
             }
         }
@@ -94,7 +95,7 @@ fun ChatGPTScreen(viewModel: ChatViewModel) {
 
             IconButton(
                 onClick = {
-                    viewModel.sendMessage(inputText,true, context)
+                    viewModel.sendMessage(inputText, true, context)
                     inputText = ""
                 },
                 modifier = Modifier.padding(
@@ -115,18 +116,25 @@ fun ChatGPTScreen(viewModel: ChatViewModel) {
 }
 
 @Composable
-fun MessageBubble(text: String, alignment: Alignment.Horizontal) {
+fun MessageBubble(
+    text: String,
+    alignment: Alignment.Horizontal,
+    color: Color,
+    textColor: Color
+) {
     Surface(
         shape = MaterialTheme.shapes.medium,
         tonalElevation = 4.dp,
         modifier = Modifier
             .padding(vertical = 4.dp)
-            .wrapContentWidth(alignment)
+            .fillMaxWidth()
+            .wrapContentWidth(alignment),
     ) {
         Text(
             text = text,
-            modifier = Modifier.padding(16.dp),
-            fontSize = 16.sp
+            modifier = Modifier.background(color).padding(16.dp),
+            fontSize = 16.sp,
+            color = textColor
         )
     }
 }
