@@ -70,7 +70,7 @@ fun getAccountStatisticReport(): String {
 
 Всего: ${totalSum.toInt()} руб
 
-Категории:
+Поступления по категориям:
     
 ${formatCategoryExpenses(categoryExpenses)}
 Больше всего средств посупило в ${mostSpendingDay ?: "неизвестно"}""".trimIndent()
@@ -81,7 +81,7 @@ private fun formatCategoryExpenses(categoryExpenses: Map<String, Float>): String
     val formattedExpenses = StringBuilder()
 
     for ((category, expense) in categoryExpenses) {
-        formattedExpenses.append("$category: ${expense.toInt()}\n")
+        formattedExpenses.append("$category: ${expense.toInt()} руб\n")
     }
 
     return formattedExpenses.toString()
