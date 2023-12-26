@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import com.example.compose.rally.data.account.AccountRepository
 import com.example.compose.rally.data.bill.BillRepository
 import java.time.LocalDate
+import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 
@@ -27,7 +28,7 @@ fun analyzeAlert(): String {
 
     return when {
         percent > 150 -> "Осторожно!\nВы многократно превысили бюджет!"
-        percent <= 150 && totalBalance / 2 < totalSpend -> "Предупреждение!\nВы израсходовали более $percent% вашего бюджета"
+        percent <= 150 && totalBalance / 2 < totalSpend && ceil(totalBalance) != 1f -> "Предупреждение!\nВы израсходовали более $percent% вашего бюджета"
         percent <= 150 -> "Ваши траты под контролем!"
         else -> "Вы израсходовали $percent% вашего бюджета на покупки в этом месяце"
     }
