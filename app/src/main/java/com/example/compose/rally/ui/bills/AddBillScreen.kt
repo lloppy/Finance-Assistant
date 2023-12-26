@@ -1,13 +1,10 @@
 package com.example.compose.rally.ui.bills
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.CalendarView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -35,7 +32,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -43,7 +39,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.example.compose.rally.R
 import com.example.compose.rally.data.bill.Bill
@@ -88,8 +83,7 @@ fun AddBillScreen(
             Log.e("picImg", "imageUri change to: $imageUri")
         }
     }
-
-
+    
     Column(
         modifier = Modifier
             .fillMaxSize()
