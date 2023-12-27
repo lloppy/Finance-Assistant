@@ -58,7 +58,6 @@ fun ChatGPTScreen(viewModel: ChatViewModel) {
                 .padding(start = 8.dp, bottom = 32.dp)
         )
     }
-
     Column(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
@@ -68,9 +67,21 @@ fun ChatGPTScreen(viewModel: ChatViewModel) {
         ) {
             items(viewModel.messages.reversed()) { message ->
                 if (message.isUser) {
-                    MessageBubble(message.content, Alignment.End, Color.Transparent, Color.Black)
+                    MessageBubble(
+                        message.content,
+                        Alignment.End,
+                        Color.Transparent,
+                        Color.Black,
+                        Modifier.padding(start = 46.dp)
+                    )
                 } else {
-                    MessageBubble(message.content, Alignment.Start, colorResource(id = R.color.pinkMaterial), Color.White)
+                    MessageBubble(
+                        message.content,
+                        Alignment.Start,
+                        colorResource(id = R.color.pinkMaterial),
+                        Color.White,
+                        Modifier.padding(end = 46.dp)
+                    )
                 }
             }
         }
@@ -92,7 +103,6 @@ fun ChatGPTScreen(viewModel: ChatViewModel) {
                     inputText = ""
                 })
             )
-
             IconButton(
                 onClick = {
                     viewModel.sendMessage(inputText, true, context)
@@ -120,19 +130,22 @@ fun MessageBubble(
     text: String,
     alignment: Alignment.Horizontal,
     color: Color,
-    textColor: Color
+    textColor: Color,
+    modifier: Modifier
 ) {
     Surface(
         shape = MaterialTheme.shapes.medium,
         tonalElevation = 4.dp,
-        modifier = Modifier
+        modifier = modifier
             .padding(vertical = 4.dp)
             .fillMaxWidth()
             .wrapContentWidth(alignment),
     ) {
         Text(
             text = text,
-            modifier = Modifier.background(color).padding(16.dp),
+            modifier = Modifier
+                .background(color)
+                .padding(16.dp),
             fontSize = 16.sp,
             color = textColor
         )

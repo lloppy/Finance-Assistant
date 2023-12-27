@@ -16,7 +16,7 @@ fun getBillMCCReport(): String {
         
 ${formatTop5MCCExpenses(mccExpenses)}
 
-Благодарим за использование нашего помощника!.""".trimIndent()
+Благодарим за использование нашего помощника!""".trimIndent()
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
