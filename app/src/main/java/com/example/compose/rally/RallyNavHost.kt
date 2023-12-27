@@ -147,7 +147,8 @@ fun RallyNavHost(
                 onSaveClick = { account ->
                     AccountRepository.addAccount(account)
                     navController.navigateSingleTopTo(Accounts.route)
-                }
+                },
+                LocalContext.current
             )
         }
         composable(
@@ -180,7 +181,8 @@ fun RallyNavHost(
                 onSaveClick = { bill ->
                     BillRepository.addBill(bill, context)
                     navController.navigateSingleTopTo(Bills.route)
-                }
+                },
+                LocalContext.current
             )
         }
     }

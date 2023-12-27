@@ -1,10 +1,12 @@
 package com.example.compose.rally.ui.bills
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.CalendarView
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -54,6 +56,7 @@ import java.time.LocalDateTime
 fun AddBillScreen(
     billType: String? = BillRepository.bills.first().name,
     onSaveClick: (Bill) -> Unit = {},
+    context: Context,
 //    onBackClick: () -> Unit = {},
 ) {
 
@@ -192,6 +195,8 @@ fun AddBillScreen(
                             amount = balance.text.replace(" ", "").toFloat()
                         )
                     )
+                } else {
+                    Toast.makeText(context, "Заполните все поля!", Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier

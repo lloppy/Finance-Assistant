@@ -1,7 +1,9 @@
 package com.example.compose.rally.ui.accounts
 
+import android.content.Context
 import android.util.Log
 import android.widget.CalendarView
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -49,18 +51,9 @@ import java.time.LocalDateTime
  * Composable for the screen where a user can manually add a new account.
  */
 @Composable
-@Preview
-fun AddAccountScreenPreview() {
-    RallyTheme {
-        Surface {
-            AddAccountScreen()
-        }
-    }
-}
-
-@Composable
 fun AddAccountScreen(
     onSaveClick: (Account) -> Unit = {},
+    context: Context
 ) {
     var selectedCategory by remember { mutableStateOf(defaultAccountCategories.first()) }
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
@@ -164,6 +157,8 @@ fun AddAccountScreen(
                             category = selectedCategory
                         )
                     )
+                } else {
+                    Toast.makeText(context, "Заполните все поля!", Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier
@@ -218,12 +213,13 @@ fun CategoryDropdown(
 @Composable
 fun showDatePicker(onDateSelected: (LocalDateTime) -> Unit) {
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
-    AndroidView({
-        CalendarView(android.view.ContextThemeWrapper(it, R.style.CustomCalendar)).apply {
-            dateTextAppearance = R.style.CustomDate
-            weekDayTextAppearance = R.style.CustomWeek
-        }
-    },
+    AndroidView(
+        {
+            CalendarView(android.view.ContextThemeWrapper(it, R.style.CustomCalendar)).apply {
+                dateTextAppearance = R.style.CustomDate
+                weekDayTextAppearance = R.style.CustomWeek
+            }
+        },
         modifier = Modifier.wrapContentWidth(),
         update = { views ->
             views.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
@@ -233,7 +229,7 @@ fun showDatePicker(onDateSelected: (LocalDateTime) -> Unit) {
 
                 Log.e("datePick", "$calendarView, $year, $month, $dayOfMonth")
             }
-        } ,
+        },
     )
 }
 
