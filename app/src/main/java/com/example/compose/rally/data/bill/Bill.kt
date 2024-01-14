@@ -22,7 +22,7 @@ data class Bill constructor(
 
 
 val billCategoryColors: Map<String, Color> = mapOf(
-    "Квартира" to Color(0xFFAD06A9),
+    "Квартира" to Color(0xFF7B06AD),
     "Дом и ремонт" to Color(0xFFA509DD),
     "Проезд" to Color(0xFF673AB7),
     "Супермаркеты" to Color(0xFFDA91D8),
