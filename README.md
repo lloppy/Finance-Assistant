@@ -1,6 +1,6 @@
 # MoneyCraft
 
-## Версия: 1.2
+## Версия: 1.2 [https://drive.google.com/drive/folders/1Jy1kMbPBR5o22QhU-c_1MuGSR9eUFC_h?usp=sharing](Google-диск)
 
 ### Описание
 
@@ -21,7 +21,7 @@
 
 Чтобы установить приложение, выполните следующие шаги:
 
-1. Откройте Google-диск.
+1. Откройте Google-диск по ссылке [https://drive.google.com/drive/folders/1Jy1kMbPBR5o22QhU-c_1MuGSR9eUFC_h?usp=sharing](Google-диск)
 2. Скачайте файл "Moneycraft".
 3. Нажмите «Установить».
 
