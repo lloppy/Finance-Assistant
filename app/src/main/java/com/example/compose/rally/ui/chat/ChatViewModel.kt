@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.compose.rally.data.analyze.getAccountStatisticReport
 import com.example.compose.rally.data.analyze.getBillMCCReport
 import com.example.compose.rally.data.analyze.getBillSpendStatisticReport
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ChatViewModel : ViewModel() {
@@ -28,11 +29,15 @@ class ChatViewModel : ViewModel() {
                     messages.add(response.choices.first().message)
                 } catch (e: Exception) {
                     Log.e("gpt", "Exception is ${e.message}")
-
-                    messages.add(Message(getBillSpendStatisticReport(), "user"))
-                    messages.add(Message(getAccountStatisticReport(), "user"))
-                    messages.add(Message(getBillMCCReport(), "user"))
-                    toastErrorMessage(context, e)
+                    if (text.contains("анализ")) {
+                        toastErrorMessage(context, e)
+                        delay(500)
+                        messages.add(Message(getAccountStatisticReport(), "ai"))
+                        delay(1000)
+                        messages.add(Message(getBillSpendStatisticReport(), "ai"))
+                        delay(1500)
+                        messages.add(Message(getBillMCCReport(), "ai"))
+                    }
                     //errorMessage(messages, context, e)
                     //errorMessage(messages, context, e)
                 }
@@ -62,7 +67,7 @@ private fun toastErrorMessage(context: Context, e: Exception) {
     Toast.makeText(
         context,
         response,
-        Toast.LENGTH_SHORT
+        Toast.LENGTH_LONG
     ).show()
 }
 

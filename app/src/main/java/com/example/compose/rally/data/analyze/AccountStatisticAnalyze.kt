@@ -12,11 +12,11 @@ fun getBillMCCReport(): String {
     val mccExpenses = calculateBillMCCExpenses()
 
     return """
-        Ваш отчет по наибольшим тратам на основе Merchant Category Code (MCC):
+Ваш отчет по наибольшим тратам на основе MCC-кодов:
         
 ${formatTop5MCCExpenses(mccExpenses)}
 
-Благодарим за использование нашего помощника!.""".trimIndent()
+Благодарим за использование нашего помощника!""".trimIndent()
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -60,24 +60,20 @@ private fun formatTop5MCCExpenses(mccExpenses: Map<Int, Double>): String {
 }
 
 
-
 fun getAccountStatisticReport(): String {
     val totalSum = calculateAccountTotalSum()
     val categoryExpenses = calculateAccountCategoryExpenses()
     val mostSpendingDay = findAccountMostSpendingDay()
 
-    val report = """
-    Ваша финансовая статистика за последнее время выглядит следующим образом:
+    return """
+ПОСТУПЛЕНИЯ:
 
-    Общая сумма поступлений: $totalSum
+Всего: ${totalSum.toInt()} руб
 
-
-    Поступления по категориям:
+Поступления по категориям:
     
 ${formatCategoryExpenses(categoryExpenses)}
-    Самый прибыльный день недели: ${mostSpendingDay ?: "нет данных"}""".trimIndent()
-
-    return report
+Больше всего средств посупило в ${mostSpendingDay ?: "неизвестно"}""".trimIndent()
 }
 
 
@@ -85,7 +81,7 @@ private fun formatCategoryExpenses(categoryExpenses: Map<String, Float>): String
     val formattedExpenses = StringBuilder()
 
     for ((category, expense) in categoryExpenses) {
-        formattedExpenses.append("$category: $expense\n")
+        formattedExpenses.append("$category: ${expense.toInt()} руб\n")
     }
 
     return formattedExpenses.toString()

@@ -1,7 +1,9 @@
 package com.example.compose.rally.ui.accounts
 
+import android.content.Context
 import android.util.Log
 import android.widget.CalendarView
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,7 +23,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -37,7 +38,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
@@ -46,7 +46,6 @@ import com.example.compose.rally.R
 import com.example.compose.rally.data.account.Account
 import com.example.compose.rally.data.category.defaultAccountCategories
 import com.example.compose.rally.navigateSingleTopTo
-import com.example.compose.rally.ui.theme.RallyTheme
 import java.time.LocalDateTime
 
 /**
@@ -55,7 +54,7 @@ import java.time.LocalDateTime
 @Composable
 fun AddAccountScreen(
     onSaveClick: (Account) -> Unit = {},
-    navController: NavHostController
+    context: Context
 ) {
     var selectedCategory by remember { mutableStateOf(defaultAccountCategories.first()) }
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
@@ -159,6 +158,8 @@ fun AddAccountScreen(
                             category = selectedCategory
                         )
                     )
+                } else {
+                    Toast.makeText(context, "Заполните все поля!", Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier
@@ -166,10 +167,6 @@ fun AddAccountScreen(
         ) {
             Text(text = stringResource(id = R.string.save_account))
         }
-    }
-
-    BackHandler {
-        navController.navigateSingleTopTo(Accounts.route)
     }
 }
 
@@ -217,12 +214,13 @@ fun CategoryDropdown(
 @Composable
 fun showDatePicker(onDateSelected: (LocalDateTime) -> Unit) {
     var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
-    AndroidView({
-        CalendarView(android.view.ContextThemeWrapper(it, R.style.CustomCalendar)).apply {
-            dateTextAppearance = R.style.CustomDate
-            weekDayTextAppearance = R.style.CustomWeek
-        }
-    },
+    AndroidView(
+        {
+            CalendarView(android.view.ContextThemeWrapper(it, R.style.CustomCalendar)).apply {
+                dateTextAppearance = R.style.CustomDate
+                weekDayTextAppearance = R.style.CustomWeek
+            }
+        },
         modifier = Modifier.wrapContentWidth(),
         update = { views ->
             views.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
@@ -232,7 +230,7 @@ fun showDatePicker(onDateSelected: (LocalDateTime) -> Unit) {
 
                 Log.e("datePick", "$calendarView, $year, $month, $dayOfMonth")
             }
-        } ,
+        },
     )
 }
 

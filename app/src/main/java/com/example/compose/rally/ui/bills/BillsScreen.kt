@@ -132,7 +132,6 @@ fun BillsScreen(
 fun SingleBillScreen(
     billType: String? = BillRepository.bills.first().name,
     onDeleteBillClick: (Bill) -> Unit = {},
-    navController: NavHostController
 ) {
     val bill: Bill = remember(billType) { BillRepository.getBill(billType) }
     Column {
@@ -148,10 +147,6 @@ fun SingleBillScreen(
                 .padding(bottom = 40.dp),
             alignment = Alignment.Center
         )
-    }
-
-    BackHandler {
-        navController.navigateSingleTopTo(Bills.route)
     }
 
     Box(modifier = Modifier.fillMaxSize()) {

@@ -13,15 +13,14 @@ fun getBillSpendStatisticReport(): String {
     val mostSpendingDay = findBillMostSpendingDay()
 
     val report = """
-    Ваша финансовая статистика за последнее время выглядит следующим образом:
+РАСХОДЫ:
 
-    Общая сумма расходов: $totalSum
+Всего: ${totalSum.toInt()} руб
 
-
-    Расходы по категориям:
+Расходы по категориям:
     
 ${formatCategoryExpenses(categoryExpenses)}
-    Самый "дорогой" день недели: ${mostSpendingDay ?: "нет данных"}""".trimIndent()
+Больше всего средств вы потратили в ${mostSpendingDay ?: "неизвестно"}""".trimIndent()
 
     return report
 }
@@ -31,7 +30,7 @@ private fun formatCategoryExpenses(categoryExpenses: Map<String, Float>): String
     val formattedExpenses = StringBuilder()
 
     for ((category, expense) in categoryExpenses) {
-        formattedExpenses.append("$category: $expense\n")
+        formattedExpenses.append("$category: ${expense.toInt()} руб\n")
     }
 
     return formattedExpenses.toString()

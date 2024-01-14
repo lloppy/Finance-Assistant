@@ -1,7 +1,6 @@
 package com.example.compose.rally.data.account
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
 import kotlin.math.ceil
