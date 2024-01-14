@@ -27,6 +27,7 @@ fun analyzeAlert(): String {
         if (totalSpend == 0f || totalBalance == 0f) 0 else ((totalSpend / totalBalance) * 100).roundToInt()
 
     return when {
+        totalBalance == 0f &&  totalSpend!= 0f -> "Осторожно!\nВы многократно превысили бюджет!"
         percent > 150 -> "Осторожно!\nВы многократно превысили бюджет!"
         percent <= 150 && totalBalance / 2 < totalSpend && ceil(totalBalance) != 1f -> "Предупреждение!\nВы израсходовали более $percent% вашего бюджета"
         percent <= 150 -> "Ваши траты под контролем!"
