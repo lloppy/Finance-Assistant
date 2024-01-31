@@ -1,60 +1,61 @@
 # MoneyCraft
 
-## Версия: 1.2 [Google-диск](https://drive.google.com/drive/folders/1Jy1kMbPBR5o22QhU-c_1MuGSR9eUFC_h?usp=sharing)
+## Version: 1.2 [Google drive](https://drive.google.com/drive/folders/1Jy1kMbPBR5o22QhU-c_1MuGSR9eUFC_h?usp=sharing)
+## See: [Appetize link](https://appetize.io/app/qd2gn4n43stdektcuzm2kwbfo4)
 
-### Описание
+### Description
 
-**MoneyCraft** - ваш надежный и удобный финансовый помощник, созданный для контроля над вашими финансами без затраты вашего времени. 
-Приложение предоставляет удобные возможности:
+**MoneyCraft** is your reliable and convenient financial assistant, designed to control your finances without wasting your time. 
+The application provides convenient features:
 
-- Отслеживание доходов и расходов
-- Создание персональных бюджетов
-- Анализ трат с выбором выгодной MCC-категории
+- Tracking income and expenses
+- Create personal budgets
+- Spending analysis with selection of profitable MCC category
 
-- Полный функционал по [ссылке](https://mm.tt/app/map/3116855325?t=QiOMPbhAsV)
+- Full functionality at [link](https://mm.tt/app/map/3116855325?t=QiOMPbhAsV)
 
-### Особенности
+### Features
 
-- Добавление расходов с использованием QR-кода чека
-- Автоматическое считывание SMS-уведомлений от банков о транзакциях
-- Загрузка выписок из банка (в формате CSV, например, из Тинькофф), с автоматическим созданием карточек
-- Чат-бот, предоставляющий анализ трат и поступлений
+- Add expenses using QR code of receipt
+- Automatically read SMS notifications from banks about transactions
+- Uploading bank statements (in CSV format, e.g. from Tinkoff), with automatic card creation
+- Chat-bot providing analysis of spending and receipts
 
-### Установка
+### Installation
 
-Чтобы установить приложение, выполните следующие шаги:
+To install the app, follow the steps below:
 
-1. Откройте Google-диск по ссылке [Google-диск](https://drive.google.com/drive/folders/1Jy1kMbPBR5o22QhU-c_1MuGSR9eUFC_h?usp=sharing)
-2. Скачайте файл "Moneycraft".
-3. Нажмите «Установить».
+1. Open Google drive at [Google drive](https://drive.google.com/drive/folders/1Jy1kMbPBR5o22QhU-c_1MuGSR9eUFC_h?usp=sharing)
+2. Download the "Moneycraft" file.
+3. click "Install".
 
 
 
-#### Подробнее о технологиях
-
-```
-Приложение было написано на Kotlin Compose в Android Studio.
-
-Основные технологии, которые используются в приложении:
-для внесений операций с помощью QR-кодов приложение использует библиотеку CameraX от андроид для запуска камеры и Zxing для QR-кодов: Zxing распознает изображение, преобразовав его в байтовый массив, и, декодируя бинарное изображения, извлекает данные о транзакции.
-
-Когда пользователь сканирует чек или считывает данные из выписки CSV, автоматически добавляется и MCC-категория. MCC-код (Merchant category code) — это стандартизованный код услуги, которую предоставляет получатель. По этому коду банк определяет, товар какой категории приобрёл клиент. Это позволяет нам делать отчет на экране чата и отображать MCC-категории, которые наиболее выгодны для выбора кэшбека. MCC-категории считываются через регулярное выражение.
-
-Для обработки отпечатка пальца и реализации биометрической аутентификации в приложении используется стороннюю андроид библиотеку biometric. С помощью BiometricPrompt отображаю диалоговое окно и обрабатываю результаты в BiometricPrompt.AuthenticationCallback. После успешной обработки запускается основной экран приложения.
-Для безопасности данных пользователя используется внутреннее хранилище андроид для хранение данных поступлений и трат и Shared Preferences для пароля и процента, который пользователь откладывает (spend goal).
-
-Так как вся информация о данных по поступлениям и тратам хранится во внутреннем хранилище, мне потребовалась библиотека Coil для загрузки изображений в фоновом потоке. Она предоставляет удобный API для загрузки изображений из различных источников, включая сеть, локальное хранилище и ресурсы приложения. С помощью AsyncImage - виджета Jetpack Compose, который позволяет отображать изображения, загруженные с помощью coil – и загрузить картинку из URI в фоновом потоке, которая хранится во внутренней памяти телефона пользователя и отобразить её на экране.
-
-Также, когда приложение запущено, оно считывает все входящие СМС (пользователь может не разрешать приложению считывание, по умолчанию функция выключена). Для извлечения данных были написаны регулярные выражения для обработки поступающих данных.
-
-Для чтения выписки из банков используюется BufferedReader, открывая и считывая файл в новом потоке, благодаря чему приложение не останавливается и не лагает. Для чтения данных из CSV-файла также используются регулярные выражения RegEx.
-
-Также сделалан кастомный дизайн для календарей из библиотеки виджетов андроид, которые используются при создании карточек трат и поступлений, а для отображения статистики -  анимация из библиотеки compose animation.
+#### Learn more about technology
 
 ```
+The application was written in Kotlin Compose in Android Studio.
 
-### Поддержка
+The main technologies used in the app are:
+for entering transactions using QR codes, the app uses android's CameraX library to run the camera and Zxing for QR codes: Zxing recognizes the image by converting it into a byte array and by decoding the binary image, it extracts the transaction data.
 
-Если у вас возникли вопросы или проблемы с приложением, не стесняйтесь обращаться по адресу [ankudinovapol@gmail.com](mailto:ankudinovapol@gmail.com).
+When a user scans a check or reads data from a CSV statement, the MCC category is automatically added as well. The MCC code (Merchant category code) is a standardized code for the service the payee is providing. This code is used by the bank to determine which category of goods the customer has purchased. This allows us to make a report on the chat screen and display MCC-categories, which are the most favorable for the selection of cashback. MCC categories are read through a regular expression.
 
-Спасибо, что выбрали приложение **MoneyCraft**!
+To process fingerprint and implement biometric authentication, the app uses third party android library biometric. Using BiometricPrompt, I display a dialog box and process the results in BiometricPrompt.AuthenticationCallback. After successful processing, the main application screen is launched.
+For user data security, internal android storage is used to store the receipts and spending data and Shared Preferences for password and the percentage that the user is saving (spending goal).
+
+Since all the information about receipts and spending data is stored in the internal storage, I needed the Coil library to load images in the background thread. It provides a convenient API for loading images from a variety of sources, including the network, local storage, and application resources. Using AsyncImage - a Jetpack Compose widget that allows you to display images loaded using coil - and load an image from a URI in the background stream that is stored in the internal memory of the user's phone and display it on the screen.
+
+Also, when the app is running, it reads all incoming SMS (the user can choose not to allow the app to read, the feature is disabled by default). To extract the data, regular expressions were written to process the incoming data.
+
+To read bank statements, BufferedReader is used, opening and reading the file in a new thread, so the application does not stop or lag. RegEx regular expressions are also used to read data from a CSV file.
+
+Also made custom design for calendars from android widget library, which are used to create cards of spending and receipts, and for displaying statistics - animation from compose animation library.
+
+```
+
+### Support
+
+If you have any questions or problems with the app, feel free to contact [ankudinovapol@gmail.com](mailto:ankudinovapol@gmail.com).
+
+Thank you for choosing the **MoneyCraft** application!
