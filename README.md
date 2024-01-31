@@ -1,5 +1,5 @@
 # MoneyCraft [Google drive](https://drive.google.com/drive/folders/1Jy1kMbPBR5o22QhU-c_1MuGSR9eUFC_h?usp=sharing)
-## Launch: [Appetize link](https://appetize.io/app/qd2gn4n43stdektcuzm2kwbfo4)
+## Launch with [Appetize link](https://appetize.io/app/qd2gn4n43stdektcuzm2kwbfo4)
 
 ### Description
 
